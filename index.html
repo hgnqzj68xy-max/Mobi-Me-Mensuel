@@ -3,236 +3,258 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="color-scheme" content="dark">
 <title>Sorties Jeux Mobile — Mars 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-:root {
-  --bg:         #12111a;
-  --bg2:        #1a1826;
-  --bg3:        #211f30;
-  --card:       #1e1c2c;
-  --card-h:     #252338;
-  --purple:     #7c4dff;
-  --purple-l:   #9c6fff;
-  --purple-dim: rgba(124,77,255,0.15);
-  --purple-brd: rgba(124,77,255,0.38);
-  --pink:       #ff4d8f;
-  --ios-bg:     rgba(68,138,255,0.15);
-  --ios-brd:    rgba(68,138,255,0.4);
-  --ios-txt:    #82b1ff;
-  --and-bg:     rgba(0,212,170,0.13);
-  --and-brd:    rgba(0,212,170,0.38);
-  --and-txt:    #64ffda;
-  --text:       #e8e6f4;
-  --muted:      #7b7899;
-  --border:     rgba(255,255,255,0.07);
-}
-html, body { background: #12111a; color: #e8e6f4; }
-body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+/* ─── RESET ─── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{background:#12111a;color-scheme:dark}
+body{
+  background:#12111a;color:#e8e6f4;
+  font-family:'Nunito',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  min-height:100vh;
 }
 
-/* NAVBAR */
-.navbar {
-background: var(–bg2);
-border-bottom: 2px solid var(–purple);
-padding: 0 16px;
-display: flex; align-items: center; justify-content: space-between;
-position: sticky; top: 0; z-index: 100;
-height: 52px; gap: 8px;
-}
-.nav-logo {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-size: 19px; font-weight: 800; color: #fff;
-display: flex; align-items: center; gap: 5px; white-space: nowrap;
-}
-.nav-logo b { color: var(–purple-l); }
-.nav-center {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-size: 16px; font-weight: 700; color: var(–purple-l); letter-spacing: 1px;
-}
-.visit-badge {
-display: flex; align-items: center; gap: 5px;
-background: var(–purple-dim); border: 1px solid var(–purple-brd);
-border-radius: 100px; padding: 4px 10px;
-font-size: 11px; font-weight: 800; color: var(–purple-l); white-space: nowrap;
+/* ─── TOKENS ─── */
+:root{
+–bg:#12111a;–bg2:#1a1826;–bg3:#1e1b2e;
+–card:#1e1c2c;–card2:#242238;
+–pu:#7c4dff;–pul:#9c6fff;–pu2:rgba(124,77,255,.18);–pub:rgba(124,77,255,.4);
+–pk:#ff4d8f;
+–ib:rgba(68,138,255,.4);–it:rgba(68,138,255,.15);–ic:#82b1ff;
+–ab:rgba(0,212,170,.38);–at:rgba(0,212,170,.13);–ac:#64ffda;
+–mu:#6b6888;–bd:rgba(255,255,255,.07);
 }
 
-/* HERO */
-.hero {
-background: linear-gradient(160deg, #1d1535 0%, var(–bg) 55%);
-padding: 28px 16px 22px;
-border-bottom: 1px solid var(–border);
+/* ─── NAVBAR ─── */
+.nav{
+position:sticky;top:0;z-index:200;
+background:var(–bg2);
+border-bottom:2px solid var(–pu);
+display:flex;align-items:center;justify-content:space-between;
+padding:0 14px;height:50px;gap:8px;
 }
-.eyebrow {
-font-size: 10px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase;
-color: var(–purple-l); margin-bottom: 8px;
-display: flex; align-items: center; gap: 6px;
+.nav-logo{
+font-family:‘Barlow Condensed’,sans-serif;
+font-size:18px;font-weight:800;color:#fff;
+display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;
 }
-.eyebrow::before { content:’’; width:16px; height:2px; background:var(–purple); display:block; flex-shrink:0; }
-.hero-title {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-size: 44px; font-weight: 800; line-height: 1; color: #fff; margin-bottom: 8px;
+.nav-logo span{color:var(–pul);}
+.nav-month{
+font-family:‘Barlow Condensed’,sans-serif;
+font-size:15px;font-weight:700;color:var(–pul);
+letter-spacing:.8px;white-space:nowrap;
 }
-.hero-title span {
-background: linear-gradient(90deg, var(–purple-l) 0%, var(–pink) 100%);
--webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.hero-sub { font-size: 13px; color: var(–muted); margin-bottom: 16px; }
-.pills { display: flex; gap: 7px; flex-wrap: wrap; }
-.pill {
-background: rgba(255,255,255,0.05); border: 1px solid var(–border);
-border-radius: 100px; padding: 5px 12px;
-font-size: 12px; font-weight: 800; color: var(–text);
-}
-.pill b { color: var(–purple-l); }
-
-/* STRIP */
-.strip-wrap {
-background: var(–bg2);
-border-bottom: 1px solid var(–border);
-padding: 14px 16px 16px;
-}
-.section-label {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-color: var(–purple-l);
-display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
-}
-.section-label::after { content:’’; flex:1; height:1px; background:var(–border); }
-
-.strip {
-display: flex; gap: 10px;
-overflow-x: auto; -webkit-overflow-scrolling: touch;
-scrollbar-width: none; padding-bottom: 2px;
-}
-.strip::-webkit-scrollbar { display: none; }
-
-.sc {
-flex-shrink: 0; width: 130px;
-background: var(–card); border: 1px solid var(–purple-brd);
-border-radius: 12px; padding: 10px 8px 10px;
-display: flex; flex-direction: column; align-items: center; gap: 7px;
-cursor: pointer; -webkit-tap-highlight-color: transparent;
-position: relative; overflow: hidden;
-}
-.sc::before {
-content:’’; position:absolute; top:0; left:0; right:0; height:2px;
-background: linear-gradient(90deg, var(–purple), var(–pink));
-}
-.sc:active { transform: scale(0.96); }
-.sc-img {
-width: 54px; height: 54px; border-radius: 14px; object-fit: cover;
-background: var(–bg3); border: 1px solid var(–border);
-display: flex; align-items: center; justify-content: center;
-font-size: 26px; overflow: hidden; flex-shrink: 0;
-}
-.sc-img img { width:100%; height:100%; object-fit:cover; border-radius:13px; display:block; }
-.sc-name {
-font-weight: 800; font-size: 11px; color: #fff; text-align: center;
-overflow: hidden; display: -webkit-box;
--webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1.3;
-width: 100%;
-}
-.sc-date {
-font-size: 10px; color: var(–purple-l); font-weight: 700;
-background: var(–purple-dim); padding: 2px 8px; border-radius: 100px;
+.nav-badge{
+display:flex;align-items:center;gap:4px;
+background:var(–pu2);border:1px solid var(–pub);
+border-radius:100px;padding:4px 10px;
+font-size:11px;font-weight:800;color:var(–pul);white-space:nowrap;flex-shrink:0;
 }
 
-/* MAIN */
-.main { padding: 20px 16px 80px; }
+/* ─── HERO ─── */
+.hero{
+background:linear-gradient(160deg,#1d1535 0%,#12111a 55%);
+padding:24px 16px 20px;
+border-bottom:1px solid var(–bd);
+}
+.eyebrow{
+font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;
+color:var(–pul);margin-bottom:8px;
+display:flex;align-items:center;gap:6px;
+}
+.eyebrow::before{content:’’;width:14px;height:2px;background:var(–pu);display:block;flex-shrink:0;}
+.hero-title{
+font-family:‘Barlow Condensed’,sans-serif;
+font-size:40px;font-weight:800;line-height:.95;color:#fff;margin-bottom:8px;
+}
+.hero-title span{
+background:linear-gradient(90deg,var(–pul),var(–pk));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:13px;color:var(–mu);margin-bottom:14px;}
+.pills{display:flex;gap:7px;flex-wrap:wrap;}
+.pill{
+background:rgba(255,255,255,.05);border:1px solid var(–bd);
+border-radius:100px;padding:5px 12px;
+font-size:12px;font-weight:800;color:#ccc;
+}
+.pill b{color:var(–pul);}
 
-/* LEGEND */
-.legend {
-display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-background: var(–bg2); border: 1px solid var(–border);
-border-radius: 12px; padding: 12px 14px; margin-bottom: 28px;
+/* ─── STRIP ─── */
+.strip-wrap{
+background:var(–bg2);border-bottom:1px solid var(–bd);
+padding:14px 16px 14px;
 }
-.li { display:flex; align-items:center; gap:7px; font-size:12px; color:var(–muted); font-weight:700; }
-.dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.sec-lbl{
+font-family:‘Barlow Condensed’,sans-serif;
+font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+color:var(–pul);
+display:flex;align-items:center;gap:8px;margin-bottom:12px;
+}
+.sec-lbl::after{content:’’;flex:1;height:1px;background:var(–bd);}
+.strip{
+display:flex;gap:9px;
+overflow-x:auto;-webkit-overflow-scrolling:touch;
+scrollbar-width:none;padding-bottom:2px;
+}
+.strip::-webkit-scrollbar{display:none;}
 
-/* DAY GROUP */
-.dg { margin-bottom: 36px; }
-.dh { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-.dt {
-background: var(–purple); border-radius: 8px; padding: 4px 12px;
-display:flex; align-items:baseline; gap:5px; flex-shrink:0;
+/* Strip card */
+.sc{
+flex-shrink:0;width:110px;
+background:var(–card);
+border:1px solid var(–pub);
+border-radius:12px;
+padding:10px 8px;
+display:flex;flex-direction:column;align-items:center;gap:6px;
+cursor:pointer;-webkit-tap-highlight-color:transparent;
+position:relative;overflow:hidden;
+transition:transform .15s;
 }
-.dn { font-family:‘Barlow Condensed’,sans-serif; font-size:24px; font-weight:800; color:#fff; line-height:1; }
-.dw { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,0.7); }
-.dhr { flex:1; height:1px; background:var(–border); }
-.dc { font-size:11px; font-weight:700; color:var(–muted); white-space:nowrap; }
-
-/* GAME GRID */
-.gg { display:flex; flex-direction:column; gap:8px; }
-@media(min-width:580px){ .gg{ display:grid; grid-template-columns:repeat(2,1fr); } }
-@media(min-width:900px){ .gg{ grid-template-columns:repeat(3,1fr); } }
-
-/* GAME CARD */
-.gc {
-background: var(–card); border: 1px solid var(–border); border-radius: 12px;
-padding: 12px; display:flex; flex-direction:column; gap:10px;
-position:relative; overflow:hidden;
-transition: border-color .2s;
+.sc::before{
+content:’’;position:absolute;top:0;left:0;right:0;height:2px;
+background:linear-gradient(90deg,var(–pu),var(–pk));
 }
-.gc.hot { border-color: var(–purple-brd); }
-.ribbon {
-position:absolute; top:0; right:12px;
-background: linear-gradient(135deg, var(–purple), var(–pink));
-color:#fff; font-size:9px; font-weight:800; letter-spacing:1px; text-transform:uppercase;
-padding:2px 8px 3px; border-radius:0 0 6px 6px;
+.sc:active{transform:scale(.95);}
+.sc-img{
+width:52px;height:52px;border-radius:12px;
+background:var(–bg3);border:1px solid var(–bd);
+overflow:hidden;flex-shrink:0;
+display:flex;align-items:center;justify-content:center;
 }
-.ct { display:flex; align-items:center; gap:10px; }
-.ci {
-width:52px; height:52px; border-radius:12px; flex-shrink:0; overflow:hidden;
-background:var(–bg3); border:1px solid var(–border);
-display:flex; align-items:center; justify-content:center; font-size:26px;
+.sc-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.sc-name{
+font-weight:800;font-size:10px;color:#fff;text-align:center;
+overflow:hidden;display:-webkit-box;
+-webkit-line-clamp:2;-webkit-box-orient:vertical;
+line-height:1.3;width:100%;
 }
-.ci img { width:100%; height:100%; object-fit:cover; border-radius:11px; display:block; }
-.cinfo { flex:1; min-width:0; }
-.cn { font-weight:900; font-size:13px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:5px; }
-.ctags { display:flex; flex-wrap:wrap; gap:3px; }
-.tag {
-font-size:10px; font-weight:700; padding:2px 7px; border-radius:100px;
-background:var(–bg3); color:var(–muted); border:1px solid var(–border);
+.sc-date{
+font-size:10px;color:var(–pul);font-weight:700;
+background:var(–pu2);padding:2px 7px;border-radius:100px;
+white-space:nowrap;
 }
 
-/* STORE ROW */
-.sr { display:flex; gap:6px; }
-.bs {
-flex:1; display:flex; align-items:center; justify-content:center; gap:5px;
-padding:8px 4px; border-radius:8px;
-text-decoration:none; font-size:12px; font-weight:800;
-border:1px solid transparent; -webkit-tap-highlight-color:transparent;
-transition: opacity .15s;
-}
-.bs:active { opacity:.7; }
-.bi  { background:var(–ios-bg);  border-color:var(–ios-brd);  color:var(–ios-txt); }
-.ba  { background:var(–and-bg);  border-color:var(–and-brd);  color:var(–and-txt); }
-.bna { background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.07); color:rgba(255,255,255,.2); pointer-events:none; }
-.bs  { background:var(–purple-dim); border-color:var(–purple-brd); color:var(–purple-l); pointer-events:none; }
+/* ─── MAIN ─── */
+.main{padding:18px 14px 80px;}
 
-/* FOOTER */
-footer {
-background: var(–bg2); border-top:1px solid var(–border);
-padding:20px 16px; font-size:11px; color:var(–muted); text-align:center; line-height:1.8;
+/* Legend */
+.legend{
+display:grid;grid-template-columns:1fr 1fr;gap:6px;
+background:var(–bg2);border:1px solid var(–bd);
+border-radius:12px;padding:12px 14px;margin-bottom:24px;
+}
+.li{display:flex;align-items:center;gap:7px;font-size:12px;color:var(–mu);font-weight:700;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+
+/* Day group */
+.dg{margin-bottom:32px;}
+.dh{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+.dt{
+background:var(–pu);border-radius:8px;padding:4px 11px;
+display:flex;align-items:baseline;gap:5px;flex-shrink:0;
+}
+.dn{font-family:‘Barlow Condensed’,sans-serif;font-size:24px;font-weight:800;color:#fff;line-height:1;}
+.dw{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.dhr{flex:1;height:1px;background:var(–bd);}
+.dc{font-size:11px;font-weight:700;color:var(–mu);white-space:nowrap;}
+
+/* Game grid - single col mobile, 2 col tablet+ */
+.gg{display:flex;flex-direction:column;gap:8px;}
+@media(min-width:560px){.gg{display:grid;grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.gg{grid-template-columns:repeat(3,1fr);}}
+
+/* Game card */
+.gc{
+background:var(–card);
+border:1px solid var(–bd);
+border-radius:12px;
+padding:12px;
+display:flex;flex-direction:column;gap:10px;
+position:relative;overflow:hidden;
+}
+.gc.hot{border-color:var(–pub);}
+.ribbon{
+position:absolute;top:0;right:12px;
+background:linear-gradient(135deg,var(–pu),var(–pk));
+color:#fff;font-size:9px;font-weight:800;
+letter-spacing:1px;text-transform:uppercase;
+padding:2px 8px 3px;border-radius:0 0 6px 6px;
+}
+
+/* Card top row */
+.ct{display:flex;align-items:center;gap:10px;}
+
+/* Game icon */
+.ci{
+width:50px;height:50px;border-radius:11px;flex-shrink:0;
+overflow:hidden;background:var(–bg3);border:1px solid var(–bd);
+display:flex;align-items:center;justify-content:center;
+}
+.ci img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px;}
+.ci svg{width:30px;height:30px;opacity:.5;}
+
+/* Card info */
+.cinfo{flex:1;min-width:0;}
+.cn{
+font-weight:900;font-size:13px;color:#fff;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+margin-bottom:5px;
+}
+.ctags{display:flex;flex-wrap:wrap;gap:3px;}
+.tag{
+font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;
+background:var(–bg3);color:var(–mu);border:1px solid var(–bd);
+}
+
+/* Store buttons */
+.sr{display:flex;gap:6px;}
+.bs{
+flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
+padding:9px 6px;border-radius:9px;
+text-decoration:none;
+font-family:‘Nunito’,sans-serif;
+font-size:12px;font-weight:800;
+border:1px solid transparent;
+-webkit-tap-highlight-color:transparent;
+transition:opacity .15s;
+cursor:pointer;
+}
+.bs:active{opacity:.7;}
+/* iOS */
+a.bi{background:var(–it);border-color:var(–ib);color:var(–ic);}
+/* Android */
+a.ba{background:var(–at);border-color:var(–ab);color:var(–ac);}
+/* N/A */
+.bna{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.06);color:rgba(255,255,255,.2);pointer-events:none;}
+/* Bientôt */
+.bsoon{background:var(–pu2);border-color:var(–pub);color:var(–pul);pointer-events:none;}
+
+/* ─── FOOTER ─── */
+footer{
+background:var(–bg2);border-top:1px solid var(–bd);
+padding:18px 16px;
+font-size:11px;color:var(–mu);text-align:center;line-height:1.8;
 }
 </style>
 
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-logo">🎮 <b>Mobile</b></div>
-  <div class="nav-center">Mars 2026</div>
-  <div class="visit-badge">👁 <span id="vc">…</span></div>
+<!-- NAV -->
+
+<nav class="nav">
+  <div class="nav-logo">🎮 <span>Mobile</span></div>
+  <div class="nav-month">Mars 2026</div>
+  <div class="nav-badge">👁 <span id="vc">…</span></div>
 </nav>
+
+<!-- HERO -->
 
 <div class="hero">
   <div class="eyebrow">Calendrier · iOS &amp; Android</div>
@@ -245,201 +267,233 @@ padding:20px 16px; font-size:11px; color:var(–muted); text-align:center; line-
   </div>
 </div>
 
+<!-- STRIP -->
+
 <div class="strip-wrap">
-  <div class="section-label">⭐ Les incontournables</div>
+  <div class="sec-lbl">⭐ Les incontournables</div>
   <div class="strip" id="strip"></div>
 </div>
 
+<!-- MAIN -->
+
 <div class="main">
   <div class="legend">
-    <div class="li"><div class="dot" style="background:var(--ios-txt)"></div>App Store (iOS)</div>
-    <div class="li"><div class="dot" style="background:var(--and-txt)"></div>Google Play</div>
-    <div class="li"><div class="dot" style="background:var(--purple-l)"></div>Titre mis en avant</div>
-    <div class="li"><div class="dot" style="background:rgba(255,255,255,.2)"></div>N/A = indisponible</div>
+    <div class="li"><div class="dot" style="background:var(--ic)"></div>App Store (iOS)</div>
+    <div class="li"><div class="dot" style="background:var(--ac)"></div>Google Play</div>
+    <div class="li"><div class="dot" style="background:var(--pul)"></div>Titre mis en avant</div>
+    <div class="li"><div class="dot" style="background:rgba(255,255,255,.15)"></div>N/A = indisponible</div>
   </div>
   <div id="list"></div>
 </div>
 
 <footer>
-  📡 Source : GamingOnPhone · Mars 2026 · iOS &amp; Android<br>
+  📡 Source : GamingOnPhone · Mars 2026<br>
   Les dates et disponibilités peuvent évoluer sans préavis.
 </footer>
 
 <script>
-const GAMES=[
-  {d:"01",day:"Dim",name:"Fortalis",               tags:["Tower Defense"],       ios:"6754587635", and:null,                                                                       hot:false},
-  {d:"01",day:"Dim",name:"Beasts Evolved 2",        tags:["RPG"],                ios:"6751095369", and:"com.ntfusion.beastsevolved2",                                              hot:false},
-  {d:"01",day:"Dim",name:"Hyper Bouncy Ball",       tags:["Arcade","Casual"],     ios:"6755916701", and:"com.crearthor.bouncyball",                                                 hot:false},
-  {d:"01",day:"Dim",name:"Crazy Gunner: Pixel",     tags:["Survivor","Pixel"],    ios:"6757685841", and:"com.leguas.gunstorm",                                                      hot:false},
-  {d:"02",day:"Lun",name:"Sea Fantasy",             tags:["RPG"],                ios:"6753211881", and:"com.YSK.SF",                                                               hot:false},
-  {d:"03",day:"Mar",name:"Let's Go School",         tags:["Casual"],             ios:"6756289950", and:"com.run.school",                                                           hot:false},
-  {d:"03",day:"Mar",name:"Iron Saga: ZERO",         tags:["RPG","Mecha"],        ios:"6754362752", and:"com.gameduchy.jdzdZero.jp",                                                hot:false},
-  {d:"04",day:"Mer",name:"Nowhere Prophet",         tags:["Card","Roguelike"],   ios:"6740233187", and:"com.SharkbombStudios.NowhereProphet",                                       hot:true },
-  {d:"04",day:"Mer",name:"Hatch Dragons",           tags:["Simulation"],         ios:"6746389113", and:"com.runawayplay.dragons",                                                  hot:false},
-  {d:"05",day:"Jeu",name:"Neo Artifacts",           tags:["RPG Tactique"],       ios:"6569253108", and:"com.cipaishe.wuhua.google",                                                hot:true },
-  {d:"05",day:"Jeu",name:"Taimanin Squad",          tags:["Action RPG"],         ios:"6755016024", and:"com.GREMORYGames.TaimaninSquad",                                           hot:false},
-  {d:"05",day:"Jeu",name:"StoneAge: Idle",          tags:["Idle","RPG"],         ios:"6737408689", and:"com.netmarble.stonkey",                                                    hot:false},
-  {d:"05",day:"Jeu",name:"Heavenhells: Anime Squad",tags:["Anime","RPG"],        ios:"6755996889", and:"com.clovergames.avalonclient",                                             hot:false},
-  {d:"06",day:"Ven",name:"Catch & Build: Pals",     tags:["Catch-em-all"],       ios:"6752563811", and:"com.sgclglo.google",                                                       hot:false},
-  {d:"06",day:"Ven",name:"Fantamon: Idle RPG",      tags:["Idle","RPG"],         ios:"6476379307", and:"com.sdg.socglobal",                                                        hot:false},
-  {d:"06",day:"Ven",name:"Dungeon Antiqua 2",       tags:["Dungeon","RPG"],      ios:"6759427578", and:null,                                                                       hot:false},
-  {d:"06",day:"Ven",name:"Wicked Defense",          tags:["Tower Defense"],      ios:"6748435197", and:"com.superplanet.defense",                                                  hot:false},
-  {d:"06",day:"Ven",name:"Pop Epoch",               tags:["Casual"],             ios:"6754275296", and:"com.nexwave.popepoch.android",                                             hot:false},
-  {d:"07",day:"Sam",name:"Knightbound: Dark Fantasy",tags:["Dark Fantasy","RPG"],ios:"6751602047", and:null,                                                                       hot:false},
-  {d:"10",day:"Mar",name:"Nova Drift",              tags:["Roguelike","Spatial"],ios:"6744329971", and:null,                                                                       hot:true },
-  {d:"10",day:"Mar",name:"Subnautica: Below Zero",  tags:["Survival","Aventure"],ios:"6749406060", and:"com.unknownworlds.subnauticabelowzero",                                    hot:true },
-  {d:"11",day:"Mer",name:"Kuroko's Basketball SR",  tags:["Sport","Anime"],      ios:"6756696362", and:"com.lmdgame.kuroko.sea",                                                   hot:false},
-  {d:"11",day:"Mer",name:"MOCHI-O",                 tags:["Casual","Puzzle"],    ios:"6670490274", and:"com.zxima.mochio",                                                         hot:false},
-  {d:"12",day:"Jeu",name:"Mattel Match",            tags:["Match","Puzzle"],     ios:"6621181299", and:"com.uken.mattel.match",                                                    hot:false},
-  {d:"12",day:"Jeu",name:"Ragnarok Sharing Hero",   tags:["RPG"],                ios:"6756650624", and:"com.funigloo.android.sharing.hero",                                        hot:false},
-  {d:"12",day:"Jeu",name:"Stray Cat Doors 3",       tags:["Escape","Puzzle"],    ios:"6755174113", and:"com.pulsmo.StrayCatDoors32nd",                                             hot:false},
-  {d:"13",day:"Ven",name:"BALL x PIT",              tags:["Devolver","Roguelite"],ios:"6738703497",and:"com.devolverdigital.ballxpit",                                             hot:true },
-  {d:"13",day:"Ven",name:"BeyBlade X Xone",         tags:["Anime","Action"],     ios:"6752970992", and:"com.crunchyroll.gv.beybladexxone.game",                                    hot:false},
-  {d:"14",day:"Sam",name:"Iron Defenders",          tags:["Tower Defense"],      ios:"6751635131", and:"com.superbox.aos.ttdefense",                                               hot:false},
-  {d:"16",day:"Lun",name:"Dino Cataclysm",          tags:["Survival","Strategy"],ios:"6757999357", and:"com.slg.dinocataclysm",                                                   hot:false},
-  {d:"16",day:"Lun",name:"City Island 5: Deluxe",   tags:["City Builder"],       ios:"6757596108", and:"com.sparklingsociety.cityisland5rebuildittownsimskylinelegacyempire",       hot:false},
-  {d:"17",day:"Mar",name:"Baseball Hits 26",        tags:["Sport","MLB"],        ios:"6736774022", and:"com.ares.baseball",                                                        hot:false},
-  {d:"17",day:"Mar",name:"Crazy Tractor",           tags:["Arcade"],             ios:"6747202202", and:null,                                                                       hot:false},
-  {d:"17",day:"Mar",name:"Genesis War",             tags:["Strategy"],           ios:"6749479176", and:"com.linegames.gmg",                                                        hot:false},
-  {d:"17",day:"Mar",name:"Tomorrow: A World Beyond",tags:["Aventure"],           ios:"6759113803", and:null,                                                                       hot:false},
-  {d:"18",day:"Mer",name:"Scritchy Scratchy",       tags:["Casual","Créatif"],   ios:"6758328352", and:null,                                                                       hot:false},
-  {d:"19",day:"Jeu",name:"Jetpack Joyride Racing",  tags:["Racing","Arcade"],    ios:"6740550251", and:"com.halfbrick.aeroracer",                                                  hot:true },
-  {d:"19",day:"Jeu",name:"StarSavior",              tags:["RPG","Cosmique"],     ios:"6443597557", and:"com.studiobside.starMain",                                                 hot:false},
-  {d:"19",day:"Jeu",name:"Art of Flora",            tags:["Puzzle","Cosy"],      ios:"6743834964", and:null,                                                                       hot:false},
-  {d:"19",day:"Jeu",name:"EDEN: The Last Line",     tags:["RPG"],                ios:"6754559095", and:"net.gameduo.dfd",                                                          hot:false},
-  {d:"20",day:"Ven",name:"Furia Rising",            tags:["Idle","Action"],      ios:"6739352636", and:"com.idle.furia",                                                           hot:false},
-  {d:"20",day:"Ven",name:"Order of Kings",          tags:["Stratégie"],          ios:"6756338531", and:"com.dequ.m3dw2",                                                           hot:false},
-  {d:"26",day:"Jeu",name:"CookieRun: OvenSmash",    tags:["Combat","Strategy"],  ios:null,         and:null,                                                                       hot:true },
+// ═══════════════════════════════
+//  DONNÉES
+// ═══════════════════════════════
+const G=[
+  {d:"01",w:"Dim",n:"Fortalis",               t:["Tower Defense"], i:"6754587635", a:null,                                                                     hot:false},
+  {d:"01",w:"Dim",n:"Beasts Evolved 2",        t:["RPG"],           i:"6751095369", a:"com.ntfusion.beastsevolved2",                                             hot:false},
+  {d:"01",w:"Dim",n:"Hyper Bouncy Ball",       t:["Arcade","Casual"],i:"6755916701", a:"com.crearthor.bouncyball",                                               hot:false},
+  {d:"01",w:"Dim",n:"Crazy Gunner: Pixel",     t:["Survivor"],      i:"6757685841", a:"com.leguas.gunstorm",                                                     hot:false},
+  {d:"02",w:"Lun",n:"Sea Fantasy",             t:["RPG"],           i:"6753211881", a:"com.YSK.SF",                                                              hot:false},
+  {d:"03",w:"Mar",n:"Let's Go School",         t:["Casual"],        i:"6756289950", a:"com.run.school",                                                          hot:false},
+  {d:"03",w:"Mar",n:"Iron Saga: ZERO",         t:["RPG","Mecha"],   i:"6754362752", a:"com.gameduchy.jdzdZero.jp",                                               hot:false},
+  {d:"04",w:"Mer",n:"Nowhere Prophet",         t:["Card","Roguelike"],i:"6740233187",a:"com.SharkbombStudios.NowhereProphet",                                    hot:true },
+  {d:"04",w:"Mer",n:"Hatch Dragons",           t:["Simulation"],    i:"6746389113", a:"com.runawayplay.dragons",                                                 hot:false},
+  {d:"05",w:"Jeu",n:"Neo Artifacts",           t:["RPG Tactique"],  i:"6569253108", a:"com.cipaishe.wuhua.google",                                               hot:true },
+  {d:"05",w:"Jeu",n:"Taimanin Squad",          t:["Action RPG"],    i:"6755016024", a:"com.GREMORYGames.TaimaninSquad",                                          hot:false},
+  {d:"05",w:"Jeu",n:"StoneAge: Idle",          t:["Idle","RPG"],    i:"6737408689", a:"com.netmarble.stonkey",                                                   hot:false},
+  {d:"05",w:"Jeu",n:"Heavenhells: Anime Squad",t:["Anime","RPG"],   i:"6755996889", a:"com.clovergames.avalonclient",                                            hot:false},
+  {d:"06",w:"Ven",n:"Catch & Build: Pals",     t:["Catch-em-all"],  i:"6752563811", a:"com.sgclglo.google",                                                      hot:false},
+  {d:"06",w:"Ven",n:"Fantamon: Idle RPG",      t:["Idle","RPG"],    i:"6476379307", a:"com.sdg.socglobal",                                                       hot:false},
+  {d:"06",w:"Ven",n:"Dungeon Antiqua 2",       t:["Dungeon","RPG"], i:"6759427578", a:null,                                                                     hot:false},
+  {d:"06",w:"Ven",n:"Wicked Defense",          t:["Tower Defense"], i:"6748435197", a:"com.superplanet.defense",                                                 hot:false},
+  {d:"06",w:"Ven",n:"Pop Epoch",               t:["Casual"],        i:"6754275296", a:"com.nexwave.popepoch.android",                                            hot:false},
+  {d:"07",w:"Sam",n:"Knightbound: Dark Fantasy",t:["Dark Fantasy"],  i:"6751602047", a:null,                                                                    hot:false},
+  {d:"10",w:"Mar",n:"Nova Drift",              t:["Roguelike"],     i:"6744329971", a:null,                                                                     hot:true },
+  {d:"10",w:"Mar",n:"Subnautica: Below Zero",  t:["Survival"],      i:"6749406060", a:"com.unknownworlds.subnauticabelowzero",                                   hot:true },
+  {d:"11",w:"Mer",n:"Kuroko's Basketball SR",  t:["Sport","Anime"], i:"6756696362", a:"com.lmdgame.kuroko.sea",                                                  hot:false},
+  {d:"11",w:"Mer",n:"MOCHI-O",                 t:["Casual"],        i:"6670490274", a:"com.zxima.mochio",                                                        hot:false},
+  {d:"12",w:"Jeu",n:"Mattel Match",            t:["Match","Puzzle"],i:"6621181299", a:"com.uken.mattel.match",                                                   hot:false},
+  {d:"12",w:"Jeu",n:"Ragnarok Sharing Hero",   t:["RPG"],           i:"6756650624", a:"com.funigloo.android.sharing.hero",                                       hot:false},
+  {d:"12",w:"Jeu",n:"Stray Cat Doors 3",       t:["Puzzle","Escape"],i:"6755174113",a:"com.pulsmo.StrayCatDoors32nd",                                            hot:false},
+  {d:"13",w:"Ven",n:"BALL x PIT",              t:["Roguelite"],     i:"6738703497", a:"com.devolverdigital.ballxpit",                                            hot:true },
+  {d:"13",w:"Ven",n:"BeyBlade X Xone",         t:["Anime","Action"],i:"6752970992", a:"com.crunchyroll.gv.beybladexxone.game",                                   hot:false},
+  {d:"14",w:"Sam",n:"Iron Defenders",          t:["Tower Defense"], i:"6751635131", a:"com.superbox.aos.ttdefense",                                              hot:false},
+  {d:"16",w:"Lun",n:"Dino Cataclysm",          t:["Survival"],      i:"6757999357", a:"com.slg.dinocataclysm",                                                  hot:false},
+  {d:"16",w:"Lun",n:"City Island 5: Deluxe",   t:["City Builder"],  i:"6757596108", a:"com.sparklingsociety.cityisland5rebuildittownsimskylinelegacyempire",      hot:false},
+  {d:"17",w:"Mar",n:"Baseball Hits 26",        t:["Sport"],         i:"6736774022", a:"com.ares.baseball",                                                       hot:false},
+  {d:"17",w:"Mar",n:"Crazy Tractor",           t:["Arcade"],        i:"6747202202", a:null,                                                                     hot:false},
+  {d:"17",w:"Mar",n:"Genesis War",             t:["Strategy"],      i:"6749479176", a:"com.linegames.gmg",                                                       hot:false},
+  {d:"17",w:"Mar",n:"Tomorrow: A World Beyond",t:["Aventure"],      i:"6759113803", a:null,                                                                     hot:false},
+  {d:"18",w:"Mer",n:"Scritchy Scratchy",       t:["Casual"],        i:"6758328352", a:null,                                                                     hot:false},
+  {d:"19",w:"Jeu",n:"Jetpack Joyride Racing",  t:["Racing","Arcade"],i:"6740550251",a:"com.halfbrick.aeroracer",                                                 hot:true },
+  {d:"19",w:"Jeu",n:"StarSavior",              t:["RPG"],           i:"6443597557", a:"com.studiobside.starMain",                                                hot:false},
+  {d:"19",w:"Jeu",n:"Art of Flora",            t:["Puzzle","Cosy"], i:"6743834964", a:null,                                                                     hot:false},
+  {d:"19",w:"Jeu",n:"EDEN: The Last Line",     t:["RPG"],           i:"6754559095", a:"net.gameduo.dfd",                                                         hot:false},
+  {d:"20",w:"Ven",n:"Furia Rising",            t:["Idle","Action"], i:"6739352636", a:"com.idle.furia",                                                          hot:false},
+  {d:"20",w:"Ven",n:"Order of Kings",          t:["Stratégie"],     i:"6756338531", a:"com.dequ.m3dw2",                                                          hot:false},
+  {d:"26",w:"Jeu",n:"CookieRun: OvenSmash",    t:["Combat"],        i:null,         a:null,                                                                     hot:true },
 ];
 
-// Fallback emojis par genre
-const EMO={"Tower Defense":"🏰","RPG":"⚔️","Roguelike":"🗺️","Survival":"🌊","Casual":"🎯","Arcade":"🕹️","Idle":"⏳","Action RPG":"💥","Sport":"🏀","Puzzle":"🧩","City Builder":"🏙️","Simulation":"🐲","Mecha":"🤖","Anime":"🌀","Strategy":"♟️","Roguelite":"💣","Spatial":"🚀","Card":"🃏","Aventure":"🗺️","Devolver":"💥","Dark Fantasy":"🗡️"};
-const emo=t=>EMO[t]||"🎮";
+// ── Fallback SVG avatar (initiales colorées) ──
+function svgAvatar(name){
+  const colors=[["#7c4dff","#311b92"],["#ff4d8f","#880e4f"],["#00d4aa","#004d40"],
+                ["#448aff","#0d47a1"],["#ffca28","#e65100"],["#ea4335","#4e342e"]];
+  const idx=name.charCodeAt(0)%colors.length;
+  const [c1,c2]=colors[idx];
+  const letters=(name.match(/\b\w/g)||[name[0]]).slice(0,2).join('').toUpperCase();
+  return `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/>
+      </linearGradient></defs>
+      <rect width="100" height="100" rx="22" fill="url(#g)"/>
+      <text x="50" y="64" font-family="Arial Black,sans-serif" font-size="38"
+        font-weight="900" fill="white" text-anchor="middle">${letters}</text>
+    </svg>`
+  )}`;
+}
 
-// Cache + JSONP loader (sans CORS)
+// ── JSONP icon loader ──
 const CACHE={};
-let cbN=0;
+let N=0;
 function loadIcon(id,cb){
   if(!id){cb(null);return;}
-  if(CACHE[id]!==undefined){cb(CACHE[id]);return;}
-  const fn=`_ic${cbN++}`;
+  if(id in CACHE){cb(CACHE[id]);return;}
+  const fn=`_c${N++}`;
   const s=document.createElement('script');
   s.src=`https://itunes.apple.com/lookup?id=${id}&country=fr&callback=${fn}`;
+  s.onerror=()=>{s.remove();CACHE[id]=null;cb(null);};
+  let done=false;
   window[fn]=d=>{
+    if(done)return;done=true;
     s.remove();delete window[fn];
     const url=d?.results?.[0]?.artworkUrl100||null;
     CACHE[id]=url;cb(url);
   };
-  s.onerror=()=>{s.remove();CACHE[id]=null;cb(null);};
+  // timeout fallback
+  setTimeout(()=>{if(!done){done=true;s.remove();if(window[fn])delete window[fn];CACHE[id]=null;cb(null);}},5000);
   document.head.appendChild(s);
 }
 
-function makeIconEl(game,size){
-  const w=document.createElement('div');
-  w.className='ci';
-  w.style.width=w.style.height=size+'px';
-  w.textContent=emo(game.tags[0]);
-  if(game.ios){
-    loadIcon(game.ios,url=>{
-      if(!url)return;
-      w.textContent='';
-      const i=document.createElement('img');
-      i.src=url;i.alt=game.name;i.loading='lazy';
-      w.appendChild(i);
+// Build <div class="ci"> with progressive icon load
+function makeCI(game,size=50){
+  const d=document.createElement('div');
+  d.className='ci';
+  d.style.cssText=`width:${size}px;height:${size}px;border-radius:${Math.round(size*.22)}px;`;
+  // Immediate: SVG avatar
+  const img=document.createElement('img');
+  img.src=svgAvatar(game.n);
+  img.alt=game.n;
+  img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;';
+  d.appendChild(img);
+  // Progressive: replace with real icon
+  if(game.i){
+    loadIcon(game.i,url=>{
+      if(url){img.src=url;}
     });
   }
-  return w;
+  return d;
 }
 
-function iosUrl(id){return id?`https://apps.apple.com/app/id${id}`:null;}
-function andUrl(p){return p?`https://play.google.com/store/apps/details?id=${p}`:null;}
-
-function buildStoreRow(g){
-  const noStore=!g.ios&&!g.and;
-  function btn(href,ic,label,cls){
-    if(noStore)return`<span class="${cls} bs">⏳ Bientôt</span>`;
-    if(href)return`<a class="${cls}" href="${href}" target="_blank" rel="noopener">${ic} ${label}</a>`;
-    return`<span class="bna bs">${ic} N/A</span>`;
-  }
-  if(noStore)return`<div class="sr"><span class="bs" style="flex:1;background:var(--purple-dim);border:1px solid var(--purple-brd);color:var(--purple-l)">⏳ Bientôt disponible</span></div>`;
-  return`<div class="sr">${btn(iosUrl(g.ios),'🍎','App Store','bi bs')}${btn(andUrl(g.and),'🤖','Play','ba bs')}</div>`;
+// Store button
+function btn(href,ic,label,cls){
+  if(!href) return `<span class="bs bna">${ic} N/A</span>`;
+  return `<a class="bs ${cls}" href="${href}" target="_blank" rel="noopener noreferrer">${ic} ${label}</a>`;
+}
+function storeRow(g){
+  if(!g.i&&!g.a) return `<div class="sr"><span class="bs bsoon" style="flex:1">⏳ Bientôt disponible</span></div>`;
+  const ios=g.i?`https://apps.apple.com/app/id${g.i}`:null;
+  const and=g.a?`https://play.google.com/store/apps/details?id=${g.a}`:null;
+  return `<div class="sr">${btn(ios,'🍎','App Store','bi')}${btn(and,'🤖','Play','ba')}</div>`;
 }
 
-// Strip highlights
+// ── Render strip ──
 function renderStrip(){
   const el=document.getElementById('strip');
-  GAMES.filter(g=>g.hot).forEach(g=>{
+  G.filter(g=>g.hot).forEach(g=>{
     const c=document.createElement('div');
     c.className='sc';
-    const iw=document.createElement('div');
+    const iw=makeCI(g,52);
     iw.className='sc-img';
-    iw.textContent=emo(g.tags[0]);
-    if(g.ios){
-      loadIcon(g.ios,url=>{
-        if(!url)return;
-        iw.textContent='';
-        const i=document.createElement('img');
-        i.src=url;i.alt=g.name;
-        iw.appendChild(i);
-      });
-    }
+    iw.style.cssText='width:52px;height:52px;border-radius:12px;background:var(--bg3);border:1px solid var(--bd);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;';
     c.appendChild(iw);
-    c.innerHTML+=`<div class="sc-name">${g.name}</div><div class="sc-date">${g.d} Mars</div>`;
+    c.innerHTML+=`<div class="sc-name">${g.n}</div><div class="sc-date">${g.d} Mars</div>`;
     c.addEventListener('click',()=>{
       const t=document.getElementById('day'+g.d);
-      if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+      if(t)t.closest('.dg').scrollIntoView({behavior:'smooth',block:'start'});
     });
     el.appendChild(c);
   });
 }
 
-// Main list
+// ── Render list ──
 function renderList(){
   const list=document.getElementById('list');
   const grp={};
-  GAMES.forEach(g=>{if(!grp[g.d])grp[g.d]={day:g.day,items:[]};grp[g.d].items.push(g);});
+  G.forEach(g=>{if(!grp[g.d])grp[g.d]={w:g.w,items:[]};grp[g.d].items.push(g);});
+
   Object.keys(grp).sort().forEach(date=>{
-    const{day,items}=grp[date];
+    const{w,items}=grp[date];
     const sec=document.createElement('div');
     sec.className='dg';sec.id='day'+date;
-    sec.innerHTML=`<div class="dh"><div class="dt"><span class="dn">${date}</span><span class="dw">${day}</span></div><div class="dhr"></div><div class="dc">${items.length} sortie${items.length>1?'s':''}</div></div>`;
+
+    // Header
+    const hdr=document.createElement('div');
+    hdr.className='dh';
+    hdr.innerHTML=`
+      <div class="dt"><span class="dn">${date}</span><span class="dw">${w}</span></div>
+      <div class="dhr"></div>
+      <div class="dc">${items.length} sortie${items.length>1?'s':''}</div>`;
+    sec.appendChild(hdr);
+
     const grid=document.createElement('div');
     grid.className='gg';
+
     items.forEach(g=>{
       const card=document.createElement('div');
       card.className='gc'+(g.hot?' hot':'');
-      if(g.hot)card.innerHTML='<div class="ribbon">⭐ Top</div>';
+      if(g.hot) card.innerHTML='<div class="ribbon">⭐ Top</div>';
+
+      // Top row
       const top=document.createElement('div');
       top.className='ct';
-      top.appendChild(makeIconEl(g,52));
-      top.innerHTML+=`<div class="cinfo"><div class="cn">${g.name}</div><div class="ctags">${g.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`;
+      top.appendChild(makeCI(g,50));
+      top.innerHTML+=`
+        <div class="cinfo">
+          <div class="cn">${g.n}</div>
+          <div class="ctags">${g.t.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        </div>`;
       card.appendChild(top);
-      card.insertAdjacentHTML('beforeend',buildStoreRow(g));
+      card.insertAdjacentHTML('beforeend',storeRow(g));
       grid.appendChild(card);
     });
+
     sec.appendChild(grid);
     list.appendChild(sec);
   });
 }
 
-// Visitor counter
+// ── Visitor counter ──
 function initVisits(){
-  const url=encodeURIComponent(location.href.split('?')[0]);
-  const src=`https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=${url}&count_bg=%237C4DFF&title_bg=%231E1C2C&title=vues&edge_flat=true`;
-  const img=new Image();
-  img.onload=()=>{
-    fetch(src).then(r=>r.text()).then(svg=>{
-      const m=svg.match(/>(\d[\d,]*)</g);
-      if(m&&m.length>=2){
-        const n=m[m.length-1].replace(/[<>]/g,'').replace(',','');
-        document.getElementById('vc').textContent=n+' vues';
-      } else {document.getElementById('vc').textContent='actif';}
-    }).catch(()=>{document.getElementById('vc').textContent='actif';});
-  };
-  img.onerror=()=>{document.getElementById('vc').textContent='actif';};
-  img.src=src;
+  const u=encodeURIComponent(location.href.split('?')[0]);
+  const src=`https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=${u}&count_bg=%237C4DFF&title_bg=%231E1C2C&title=vues&edge_flat=true`;
+  fetch(src).then(r=>r.text()).then(svg=>{
+    const m=svg.match(/>(\d[\d,]*)</g);
+    if(m&&m.length){
+      const n=m[m.length-1].replace(/[<>]/g,'').replace(/,/g,'');
+      document.getElementById('vc').textContent=n;
+    } else document.getElementById('vc').textContent='actif';
+  }).catch(()=>{document.getElementById('vc').textContent='actif';});
 }
 
+// ── Init ──
 renderStrip();
 renderList();
 initVisits();
