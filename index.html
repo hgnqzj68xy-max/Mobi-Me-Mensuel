@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorties Jeux Mobile — Mars 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #12111a;
+    --bg2:       #1a1826;
+    --bg3:       #211f30;
+    --card:      #1e1c2c;
+    --card-h:    #252338;
+    --purple:    #7c4dff;
+    --purple-l:  #9c6fff;
+    --purple-dim:rgba(124,77,255,0.14);
+    --purple-brd:rgba(124,77,255,0.32);
+    --pink:      #ff4d8f;
+    --teal:      #00d4aa;
+    --ios-bg:    rgba(68,138,255,0.14);
+    --ios-brd:   rgba(68,138,255,0.35);
+    --ios-txt:   #82b1ff;
+    --and-bg:    rgba(0,212,170,0.12);
+    --and-brd:   rgba(0,212,170,0.3);
+    --and-txt:   #64ffda;
+    --text:      #e8e6f4;
+    --muted:     #7b7899;
+    --border:    rgba(255,255,255,0.06);
+    --r:         14px;
+    --r-sm:      8px;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘Nunito’, sans-serif;
+overflow-x: hidden;
+}
+
+/* ── NAV BAR ── */
+.navbar {
+background: var(–bg2);
+border-bottom: 1px solid var(–border);
+padding: 0 32px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+position: sticky; top: 0; z-index: 100;
+backdrop-filter: blur(12px);
+}
+.nav-left { display:flex; align-items:center; gap:4px; }
+.nav-logo {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 22px; font-weight: 800;
+color: var(–purple-l);
+letter-spacing: 1px;
+padding: 14px 16px 14px 0;
+border-right: 1px solid var(–border);
+margin-right: 8px;
+}
+.nav-link {
+color: var(–muted);
+text-decoration: none;
+font-size: 13px; font-weight: 700;
+padding: 14px 14px;
+border-bottom: 3px solid transparent;
+transition: all .2s;
+white-space: nowrap;
+}
+.nav-link:hover { color: var(–text); }
+.nav-link.active { color: var(–purple-l); border-color: var(–purple); }
+.nav-right {
+display: flex; align-items: center; gap: 12px;
+}
+.visit-badge {
+display: flex; align-items: center; gap: 6px;
+background: var(–purple-dim);
+border: 1px solid var(–purple-brd);
+border-radius: 100px;
+padding: 5px 12px;
+font-size: 11px; font-weight: 800;
+color: var(–purple-l);
+}
+
+/* ── HERO BANNER ── */
+.hero {
+background: linear-gradient(135deg, #1a1527 0%, #12111a 50%, #1a1030 100%);
+border-bottom: 1px solid var(–border);
+padding: 40px 32px 32px;
+position: relative; overflow: hidden;
+}
+.hero::before {
+content: ‘’;
+position: absolute; top:-120px; right:-60px;
+width: 500px; height: 500px;
+background: radial-gradient(circle, rgba(124,77,255,0.18) 0%, transparent 70%);
+pointer-events: none;
+}
+.hero-inner {
+max-width: 1280px; margin: 0 auto;
+display: flex; flex-direction: column; gap: 24px;
+position: relative;
+}
+.hero-top {
+display: flex; align-items: flex-end;
+justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.hero-eyebrow {
+font-size: 11px; font-weight: 800;
+letter-spacing: 3px; text-transform: uppercase;
+color: var(–purple-l);
+display: flex; align-items: center; gap: 8px;
+margin-bottom: 10px;
+}
+.hero-eyebrow::before {
+content: ‘’; display: block;
+width: 20px; height: 2px; background: var(–purple);
+}
+.hero-title {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: clamp(36px, 6vw, 68px);
+font-weight: 800; line-height: 1;
+color: #fff; letter-spacing: 1px;
+}
+.hero-title span {
+background: linear-gradient(90deg, var(–purple-l), var(–pink));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.hero-sub { font-size: 14px; color: var(–muted); margin-top: 8px; }
+.hero-stats {
+display: flex; gap: 20px; flex-wrap: wrap;
+}
+.stat-pill {
+background: rgba(255,255,255,0.05);
+border: 1px solid var(–border);
+border-radius: 100px;
+padding: 8px 18px;
+font-size: 13px; font-weight: 800;
+color: var(–text);
+white-space: nowrap;
+}
+.stat-pill span { color: var(–purple-l); }
+
+/* ── FEATURED STRIP ── */
+.featured-strip {
+background: var(–bg2);
+border-top: 1px solid var(–border);
+border-bottom: 1px solid var(–border);
+padding: 20px 32px;
+overflow: hidden;
+}
+.strip-inner { max-width: 1280px; margin: 0 auto; }
+.strip-label {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 12px; font-weight: 700;
+letter-spacing: 2px; text-transform: uppercase;
+color: var(–purple-l);
+margin-bottom: 14px;
+display: flex; align-items: center; gap: 8px;
+}
+.strip-label::after {
+content: ‘’; flex: 1;
+height: 1px; background: var(–border);
+}
+.strip-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+gap: 10px;
+}
+.strip-card {
+background: var(–card);
+border: 1px solid var(–border);
+border-radius: var(–r-sm);
+padding: 10px 12px;
+display: flex; align-items: center; gap: 10px;
+transition: all .2s;
+text-decoration: none;
+cursor: pointer;
+position: relative; overflow: hidden;
+}
+.strip-card::before {
+content: ‘’;
+position: absolute; top: 0; left: 0; right: 0; height: 2px;
+background: linear-gradient(90deg, var(–purple), var(–pink));
+opacity: 0; transition: opacity .2s;
+}
+.strip-card:hover { background: var(–card-h); border-color: var(–purple-brd); }
+.strip-card:hover::before { opacity: 1; }
+.strip-img {
+width: 40px; height: 40px;
+border-radius: 9px; object-fit: cover;
+background: var(–bg3); flex-shrink: 0;
+border: 1px solid var(–border);
+}
+.strip-info { min-width: 0; }
+.strip-name {
+font-weight: 800; font-size: 12px; color: #fff;
+white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.strip-date { font-size: 10px; color: var(–purple-l); font-weight: 700; }
+
+/* ── MAIN ── */
+.container { max-width: 1280px; margin: 0 auto; padding: 40px 32px 80px; }
+
+/* ── LEGEND ── */
+.legend {
+display: flex; align-items: center; gap: 20px;
+background: var(–bg2);
+border: 1px solid var(–border);
+border-radius: var(–r);
+padding: 12px 20px;
+margin-bottom: 40px;
+flex-wrap: wrap;
+}
+.legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(–muted); font-weight:700; }
+.dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+/* ── DAY GROUP ── */
+.day-group { margin-bottom: 44px; }
+.day-header { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+.day-tag {
+background: var(–purple);
+border-radius: var(–r-sm);
+padding: 5px 14px;
+display: flex; align-items: baseline; gap: 6px;
+flex-shrink: 0;
+}
+.day-num {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 26px; font-weight: 800; color: #fff; line-height: 1;
+}
+.day-name { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+.day-hr { flex: 1; height: 1px; background: var(–border); }
+.day-count { font-size: 11px; font-weight: 700; color: var(–muted); white-space: nowrap; }
+
+/* ── GAME GRID ── */
+.games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+
+/* ── GAME CARD ── */
+.game-card {
+background: var(–card);
+border: 1px solid var(–border);
+border-radius: var(–r);
+padding: 14px;
+display: flex; flex-direction: column; gap: 12px;
+transition: all .2s;
+position: relative; overflow: hidden;
+}
+.game-card:hover { background: var(–card-h); border-color: var(–purple-brd); transform: translateY(-2px); }
+.game-card.hot { border-color: rgba(124,77,255,.28); }
+.game-card.hot:hover { border-color: var(–purple); box-shadow: 0 6px 28px rgba(124,77,255,.15); }
+.hot-ribbon {
+position: absolute; top: 0; right: 14px;
+background: linear-gradient(135deg, var(–purple), var(–pink));
+color: #fff; font-size: 9px; font-weight: 800;
+letter-spacing: 1.2px; text-transform: uppercase;
+padding: 3px 8px 4px; border-radius: 0 0 6px 6px;
+}
+.card-top { display: flex; align-items: center; gap: 12px; }
+.card-icon {
+width: 50px; height: 50px;
+border-radius: 12px; object-fit: cover;
+background: var(–bg3);
+border: 1px solid var(–border);
+flex-shrink: 0;
+display: flex; align-items: center; justify-content: center;
+font-size: 24px; overflow: hidden;
+}
+.card-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 11px; }
+.card-info { flex: 1; min-width: 0; }
+.card-name {
+font-weight: 900; font-size: 14px; color: #fff;
+white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+margin-bottom: 4px;
+}
+.card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag {
+font-size: 10px; font-weight: 700;
+padding: 2px 7px; border-radius: 100px;
+background: var(–bg3); color: var(–muted);
+border: 1px solid var(–border); white-space: nowrap;
+}
+
+/* ── STORE BUTTONS ── */
+.store-row { display: flex; gap: 7px; }
+.btn-store {
+flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px;
+padding: 7px 8px; border-radius: var(–r-sm);
+text-decoration: none; font-size: 11px; font-weight: 800;
+transition: all .18s; border: 1px solid transparent;
+}
+.btn-store .ic { font-size: 12px; }
+.btn-ios { background: var(–ios-bg); border-color: var(–ios-brd); color: var(–ios-txt); }
+.btn-ios:hover { background: rgba(68,138,255,.24); border-color: rgba(68,138,255,.6); color: #c0d7ff; }
+.btn-and { background: var(–and-bg); border-color: var(–and-brd); color: var(–and-txt); }
+.btn-and:hover { background: rgba(0,212,170,.22); border-color: rgba(0,212,170,.55); color: #a7ffeb; }
+.btn-na { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.06); color: rgba(255,255,255,.2); pointer-events: none; }
+
+/* ── FOOTER ── */
+footer {
+margin-top: 80px; border-top: 1px solid var(–border);
+padding: 28px 32px;
+display: flex; justify-content: space-between;
+align-items: center; flex-wrap: wrap; gap: 12px;
+background: var(–bg2);
+}
+.footer-note { font-size: 11px; color: rgba(255,255,255,.15); }
+.footer-source { font-size: 12px; color: var(–muted); }
+
+@media (max-width: 640px) {
+.navbar { padding: 0 16px; }
+.nav-link { display: none; }
+.nav-link.active { display: block; }
+.hero { padding: 28px 16px; }
+.container { padding: 24px 16px 60px; }
+.featured-strip { padding: 16px; }
+.strip-grid { grid-template-columns: 1fr 1fr; }
+.games-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="nav-logo">🎮 Mobile</div>
+    <a href="#" class="nav-link active">Mars 2026</a>
+    <a href="#" class="nav-link">News</a>
+    <a href="#" class="nav-link">Guides</a>
+    <a href="#" class="nav-link">Top jeux</a>
+  </div>
+  <div class="nav-right">
+    <div class="visit-badge">
+      👁 Vues : <span id="visit-count">…</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div>
+        <div class="hero-eyebrow">Calendrier des sorties · iOS &amp; Android</div>
+        <div class="hero-title">Sorties Jeux Mobile<br><span>Mars 2026</span></div>
+        <div class="hero-sub">Tous les jeux mobiles qui sortent ce mois-ci avec liens directs vers les stores.</div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-pill">🎮 <span>60+</span> sorties</div>
+        <div class="stat-pill">📅 <span>Mars</span> 2026</div>
+        <div class="stat-pill">📱 <span>iOS</span> &amp; Android</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEATURED STRIP ── -->
+
+<div class="featured-strip">
+  <div class="strip-inner">
+    <div class="strip-label">⭐ Les incontournables du mois</div>
+    <div class="strip-grid" id="strip-grid">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+
+<div class="container">
+
+  <!-- LEGEND -->
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:var(--ios-txt)"></div> App Store (iOS)</div>
+    <div class="legend-item"><div class="dot" style="background:var(--and-txt)"></div> Google Play (Android)</div>
+    <div class="legend-item"><div class="dot" style="background:var(--purple-l)"></div> Titre mis en avant</div>
+    <div class="legend-item"><div class="dot" style="background:rgba(255,255,255,.15)"></div> N/A = non disponible</div>
+  </div>
+
+  <!-- ░░ GAMES LIST (rendered by JS) ░░ -->
+
+  <div id="games-list"></div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+
+<footer>
+  <div class="footer-source">📡 Source : GamingOnPhone · Mars 2026 · iOS &amp; Android uniquement<br>Les liens et dates peuvent être modifiés sans préavis.</div>
+  <div class="footer-note">Les dates peuvent évoluer — Dernière mise à jour : Mars 2026</div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA — Jeux de Mars 2026
+═══════════════════════════════════════════════ */
+const games = [
+  // Date, Nom, Tags, iOS appId, Android packageId, hot
+  { date:"01", day:"Dim", name:"Fortalis",                   tags:["Tower Defense"],            ios:"6754587635",                                     and:null,                                                                   hot:false },
+  { date:"01", day:"Dim", name:"Beasts Evolved 2",           tags:["RPG"],                      ios:"6751095369",                                     and:"com.ntfusion.beastsevolved2",                                          hot:false },
+  { date:"01", day:"Dim", name:"Hyper Bouncy Ball",          tags:["Arcade","Casual"],           ios:"6755916701",                                     and:"com.crearthor.bouncyball",                                             hot:false },
+  { date:"01", day:"Dim", name:"Crazy Gunner: Pixel Survivor",tags:["Survivor","Pixel"],         ios:"6757685841",                                     and:"com.leguas.gunstorm",                                                  hot:false },
+
+  { date:"02", day:"Lun", name:"Sea Fantasy",                tags:["RPG"],                      ios:"6753211881",                                     and:"com.YSK.SF",                                                           hot:false },
+
+  { date:"03", day:"Mar", name:"Let's Go School",            tags:["Casual"],                   ios:"6756289950",                                     and:"com.run.school",                                                       hot:false },
+  { date:"03", day:"Mar", name:"Iron Saga: ZERO",            tags:["RPG","Mecha"],              ios:"6754362752",                                     and:"com.gameduchy.jdzdZero.jp",                                            hot:false },
+
+  { date:"04", day:"Mer", name:"Nowhere Prophet",            tags:["Card","Roguelike"],         ios:"6740233187",                                     and:"com.SharkbombStudios.NowhereProphet",                                   hot:true  },
+  { date:"04", day:"Mer", name:"Hatch Dragons",              tags:["Simulation"],               ios:"6746389113",                                     and:"com.runawayplay.dragons",                                              hot:false },
+
+  { date:"05", day:"Jeu", name:"Neo Artifacts",              tags:["RPG Tactique","Grille"],    ios:"6569253108",                                     and:"com.cipaishe.wuhua.google",                                            hot:true  },
+  { date:"05", day:"Jeu", name:"Taimanin Squad",             tags:["Action RPG"],               ios:"6755016024",                                     and:"com.GREMORYGames.TaimaninSquad",                                       hot:false },
+  { date:"05", day:"Jeu", name:"StoneAge: Idle Adventure",   tags:["Idle","RPG"],               ios:"6737408689",                                     and:"com.netmarble.stonkey",                                                hot:false },
+  { date:"05", day:"Jeu", name:"Heavenhells: Anime Squad RPG",tags:["Anime","RPG"],             ios:"6755996889",                                     and:"com.clovergames.avalonclient",                                         hot:false },
+
+  { date:"06", day:"Ven", name:"Catch & Build: Lands of Pals",tags:["Catch-em-all","Builder"], ios:"6752563811",                                     and:"com.sgclglo.google",                                                   hot:false },
+  { date:"06", day:"Ven", name:"Fantamon: Idle RPG",         tags:["Idle","RPG"],               ios:"6476379307",                                     and:"com.sdg.socglobal",                                                    hot:false },
+  { date:"06", day:"Ven", name:"Dungeon Antiqua 2",          tags:["Dungeon","RPG"],            ios:"6759427578",                                     and:null,                                                                   hot:false },
+  { date:"06", day:"Ven", name:"Wicked Defense",             tags:["Tower Defense"],            ios:"6748435197",                                     and:"com.superplanet.defense",                                              hot:false },
+  { date:"06", day:"Ven", name:"Pop Epoch",                  tags:["Casual"],                   ios:"6754275296",                                     and:"com.nexwave.popepoch.android",                                         hot:false },
+
+  { date:"07", day:"Sam", name:"Knightbound: Dark Fantasy",  tags:["Dark Fantasy","RPG"],       ios:"6751602047",                                     and:null,                                                                   hot:false },
+
+  { date:"10", day:"Mar", name:"Nova Drift",                 tags:["Roguelike","Spatial"],      ios:"6744329971",                                     and:null,                                                                   hot:true  },
+  { date:"10", day:"Mar", name:"Subnautica: Below Zero",     tags:["Survival","Aventure"],      ios:"6749406060",                                     and:"com.unknownworlds.subnauticabelowzero",                                hot:true  },
+
+  { date:"11", day:"Mer", name:"Kuroko's Basketball SR",     tags:["Sport","Anime"],            ios:"6756696362",                                     and:"com.lmdgame.kuroko.sea",                                               hot:false },
+  { date:"11", day:"Mer", name:"MOCHI-O",                    tags:["Casual","Puzzle"],          ios:"6670490274",                                     and:"com.zxima.mochio",                                                     hot:false },
+
+  { date:"12", day:"Jeu", name:"Mattel Match",               tags:["Match","Puzzle"],           ios:"6621181299",                                     and:"com.uken.mattel.match",                                                hot:false },
+  { date:"12", day:"Jeu", name:"Ragnarok Sharing Hero",      tags:["RPG"],                      ios:"6756650624",                                     and:"com.funigloo.android.sharing.hero",                                    hot:false },
+  { date:"12", day:"Jeu", name:"Stray Cat Doors 3: Ch.2",    tags:["Escape","Puzzle"],          ios:"6755174113",                                     and:"com.pulsmo.StrayCatDoors32nd",                                         hot:false },
+
+  { date:"13", day:"Ven", name:"BALL x PIT",                 tags:["Devolver","Roguelite"],     ios:"6738703497",                                     and:"com.devolverdigital.ballxpit",                                         hot:true  },
+  { date:"13", day:"Ven", name:"BeyBlade X Xone",            tags:["Anime","Action"],           ios:"6752970992",                                     and:"com.crunchyroll.gv.beybladexxone.game",                                hot:false },
+
+  { date:"14", day:"Sam", name:"Iron Defenders",             tags:["Tower Defense"],            ios:"6751635131",                                     and:"com.superbox.aos.ttdefense",                                           hot:false },
+
+  { date:"16", day:"Lun", name:"Dino Cataclysm: Survival",  tags:["Survival","Strategy"],      ios:"6757999357",                                     and:"com.slg.dinocataclysm",                                                hot:false },
+  { date:"16", day:"Lun", name:"City Island 5: Deluxe",      tags:["City Builder"],             ios:"6757596108",                                     and:"com.sparklingsociety.cityisland5rebuildittownsimskylinelegacyempire",   hot:false },
+
+  { date:"17", day:"Mar", name:"Baseball Hits 26",           tags:["Sport","MLB"],              ios:"6736774022",                                     and:"com.ares.baseball",                                                    hot:false },
+  { date:"17", day:"Mar", name:"Crazy Tractor",              tags:["Arcade"],                   ios:"6747202202",                                     and:null,                                                                   hot:false },
+  { date:"17", day:"Mar", name:"Genesis War",                tags:["Strategy"],                 ios:"6749479176",                                     and:"com.linegames.gmg",                                                    hot:false },
+  { date:"17", day:"Mar", name:"Tomorrow: A World Beyond",   tags:["Aventure"],                 ios:"6759113803",                                     and:null,                                                                   hot:false },
+
+  { date:"18", day:"Mer", name:"Scritchy Scratchy",          tags:["Casual","Créatif"],         ios:"6758328352",                                     and:null,                                                                   hot:false },
+
+  { date:"19", day:"Jeu", name:"Jetpack Joyride Racing",     tags:["Racing","Arcade"],          ios:"6740550251",                                     and:"com.halfbrick.aeroracer",                                              hot:true  },
+  { date:"19", day:"Jeu", name:"StarSavior",                 tags:["RPG","Cosmique"],           ios:"6443597557",                                     and:"com.studiobside.starMain",                                             hot:false },
+  { date:"19", day:"Jeu", name:"Art of Flora: Cozy Puzzles", tags:["Puzzle","Cosy"],            ios:"6743834964",                                     and:null,                                                                   hot:false },
+  { date:"19", day:"Jeu", name:"EDEN: The Last Line",        tags:["RPG"],                      ios:"6754559095",                                     and:"net.gameduo.dfd",                                                      hot:false },
+
+  { date:"20", day:"Ven", name:"Furia Rising",               tags:["Idle","Action"],            ios:"6739352636",                                     and:"com.idle.furia",                                                       hot:false },
+  { date:"20", day:"Ven", name:"Order of Kings",             tags:["Stratégie"],                ios:"6756338531",                                     and:"com.dequ.m3dw2",                                                       hot:false },
+
+  { date:"26", day:"Jeu", name:"CookieRun: OvenSmash",       tags:["Combat","Strategy"],        ios:null,                                             and:null,                                                                   hot:true  },
+];
+
+/* ── iOS icon fetcher via iTunes Lookup API ── */
+const iconCache = {};
+
+async function getIosIcon(appId) {
+  if (!appId) return null;
+  if (iconCache[appId]) return iconCache[appId];
+  try {
+    const res = await fetch(`https://itunes.apple.com/lookup?id=${appId}`);
+    const data = await res.json();
+    if (data.results && data.results[0]) {
+      const url = data.results[0].artworkUrl100 || data.results[0].artworkUrl60;
+      iconCache[appId] = url;
+      return url;
+    }
+  } catch(e) {}
+  return null;
+}
+
+/* ── Build card icon ── */
+function buildIconEl(game) {
+  const div = document.createElement('div');
+  div.className = 'card-icon';
+  div.textContent = '🎮'; // fallback emoji
+  if (game.ios) {
+    getIosIcon(game.ios).then(url => {
+      if (url) {
+        div.innerHTML = `<img src="${url}" alt="${game.name}" loading="lazy">`;
+      }
+    });
+  }
+  return div;
+}
+
+/* ── Build store buttons ── */
+function storeBtn(label, icon, href, cls) {
+  if (href) {
+    return `<a class="btn-store ${cls}" href="${href}" target="_blank" rel="noopener"><span class="ic">${icon}</span> ${label}</a>`;
+  }
+  return `<span class="btn-store btn-na"><span class="ic">${icon}</span> N/A</span>`;
+}
+
+function iosHref(id)  { return id  ? `https://apps.apple.com/app/id${id}` : null; }
+function andHref(pkg) { return pkg ? `https://play.google.com/store/apps/details?id=${pkg}` : null; }
+
+/* ── Group games by date ── */
+function groupByDate(arr) {
+  const map = {};
+  arr.forEach(g => {
+    if (!map[g.date]) map[g.date] = { day: g.day, games: [] };
+    map[g.date].games.push(g);
+  });
+  return map;
+}
+
+/* ── RENDER ── */
+function render() {
+  const grouped = groupByDate(games);
+  const listEl = document.getElementById('games-list');
+
+  Object.keys(grouped).sort().forEach(date => {
+    const { day, games: dayGames } = grouped[date];
+    const group = document.createElement('div');
+    group.className = 'day-group';
+
+    group.innerHTML = `
+      <div class="day-header">
+        <div class="day-tag">
+          <span class="day-num">${date}</span>
+          <span class="day-name">${day}</span>
+        </div>
+        <div class="day-hr"></div>
+        <div class="day-count">${dayGames.length} sortie${dayGames.length > 1 ? 's' : ''}</div>
+      </div>
+      <div class="games-grid" id="grid-${date}"></div>
+    `;
+
+    listEl.appendChild(group);
+
+    const grid = group.querySelector(`#grid-${date}`);
+    dayGames.forEach(game => {
+      const card = document.createElement('div');
+      card.className = `game-card${game.hot ? ' hot' : ''}`;
+
+      if (game.hot) {
+        card.innerHTML = `<div class="hot-ribbon">⭐ Top</div>`;
+      }
+
+      const top = document.createElement('div');
+      top.className = 'card-top';
+      const iconEl = buildIconEl(game);
+      top.appendChild(iconEl);
+      top.innerHTML += `
+        <div class="card-info">
+          <div class="card-name">${game.name}</div>
+          <div class="card-tags">${game.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        </div>
+      `;
+
+      card.appendChild(top);
+      card.innerHTML += `
+        <div class="store-row">
+          ${storeBtn('App Store', '🍎', iosHref(game.ios), 'btn-ios')}
+          ${game.and === null && game.ios === null
+            ? `<span class="btn-store btn-na"><span class="ic">🤖</span> Bientôt</span>`
+            : storeBtn('Play', '🤖', andHref(game.and), 'btn-and')
+          }
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  });
+}
+
+/* ── FEATURED STRIP ── */
+function renderStrip() {
+  const hot = games.filter(g => g.hot);
+  const strip = document.getElementById('strip-grid');
+  hot.forEach(game => {
+    const card = document.createElement('div');
+    card.className = 'strip-card';
+
+    const img = document.createElement('img');
+    img.className = 'strip-img';
+    img.alt = game.name;
+    img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"/>';
+
+    if (game.ios) {
+      getIosIcon(game.ios).then(url => {
+        if (url) img.src = url;
+      });
+    }
+
+    card.appendChild(img);
+    card.innerHTML += `
+      <div class="strip-info">
+        <div class="strip-name">${game.name}</div>
+        <div class="strip-date">${game.date} Mars</div>
+      </div>
+    `;
+
+    // click scrolls to day section
+    card.addEventListener('click', () => {
+      const target = document.getElementById(`grid-${game.date}`);
+      if (target) target.closest('.day-group').scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+
+    strip.appendChild(card);
+  });
+}
+
+/* ── VISITOR COUNTER (hits.seeyoufarm.com) ── */
+function loadVisitorCount() {
+  // Uses a transparent 1x1 tracking pixel + public count API
+  // Replace YOUR-GITHUB-USER/YOUR-REPO with your actual repo
+  const url = 'https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2FYOUR-GITHUB-USER.github.io%2FYOUR-REPO&count_bg=%237C4DFF&title_bg=%231E1C2C&icon=gamepad&icon_color=%23E7E7E7&title=vues&edge_flat=true';
+
+  // Load invisible badge to increment counter
+  const img = new Image();
+  img.src = url;
+  img.onload = () => {
+    // Parse SVG to extract count (hits.seeyoufarm returns SVG)
+    fetch(url)
+      .then(r => r.text())
+      .then(svg => {
+        // Extract the "today/total" numbers from SVG text
+        const matches = svg.match(/>(\d+)\s*<\/text>/g);
+        if (matches && matches.length >= 2) {
+          const nums = matches.map(m => m.replace(/<[^>]+>/g,'').trim());
+          document.getElementById('visit-count').textContent = `${nums[nums.length-1]} total`;
+        } else {
+          document.getElementById('visit-count').textContent = '…';
+        }
+      })
+      .catch(() => {
+        document.getElementById('visit-count').textContent = 'activé';
+      });
+  };
+  img.onerror = () => {
+    document.getElementById('visit-count').textContent = 'activé';
+  };
+}
+
+/* ── INIT ── */
+render();
+renderStrip();
+loadVisitorCount();
+</script>
+
+</body>
+</html>
