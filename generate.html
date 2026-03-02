@@ -4,38 +4,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚙️ Setup — Génération icônes + screenshots</title>
+<title>⚙️ Setup — Sorties Mars 2026</title>
 <style>
-  body{font-family:monospace;background:#0d0d14;color:#e0e0e0;padding:24px;max-width:700px;}
-  h1{color:#9c6fff;margin-bottom:6px;}
-  p{color:#888;margin-bottom:20px;font-size:13px;line-height:1.6;}
-  #btn{background:#7c4dff;color:#fff;border:none;border-radius:8px;padding:13px 32px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:20px;display:block;}
-  #btn:disabled{background:#333;color:#555;cursor:not-allowed;}
-  .log{background:#1a1826;border:1px solid #2a2840;border-radius:10px;padding:16px;height:380px;overflow-y:auto;font-size:12px;line-height:1.9;}
-  .ok{color:#64ffda;} .err{color:#ff7070;} .info{color:#9c6fff;} .warn{color:#ffca28;}
-  #dl{display:none;margin-top:20px;}
-  #dl a{background:#64ffda;color:#000;border-radius:8px;padding:13px 28px;font-size:15px;font-weight:800;text-decoration:none;display:inline-block;}
-  .preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
-  .preview img{width:80px;height:60px;object-fit:cover;border-radius:6px;border:2px solid #7c4dff;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:monospace;background:#0d0d14;color:#e0e0e0;padding:20px;max-width:720px;}
+h1{color:#9c6fff;margin-bottom:6px;font-size:20px;}
+.desc{color:#777;font-size:12px;line-height:1.7;margin-bottom:18px;background:#1a1826;padding:12px 14px;border-radius:8px;border-left:3px solid #7c4dff;}
+#btn{background:#7c4dff;color:#fff;border:none;border-radius:8px;padding:13px 32px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:18px;display:block;}
+#btn:disabled{background:#2a2840;color:#555;cursor:not-allowed;}
+.log{background:#12111a;border:1px solid #2a2840;border-radius:10px;padding:14px;height:360px;overflow-y:auto;font-size:11.5px;line-height:2;}
+.ok{color:#64ffda;} .err{color:#ff7070;} .info{color:#9c6fff;} .warn{color:#ffca28;} .dim{color:#555;}
+#dl{display:none;margin-top:18px;}
+#dl a{background:#64ffda;color:#000;border-radius:8px;padding:13px 28px;font-size:15px;font-weight:800;text-decoration:none;display:inline-block;}
+.screenshots{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+.screenshots figure{position:relative;margin:0;}
+.screenshots img{width:90px;height:60px;object-fit:cover;border-radius:6px;border:2px solid #333;display:block;}
+.screenshots img.good{border-color:#64ffda;}
+.screenshots figcaption{font-size:9px;color:#777;text-align:center;margin-top:2px;width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 </style>
 </head>
 <body>
+
 <h1>⚙️ Génération — Sorties Mars 2026</h1>
-<p>
-  Ce setup appelle l'API officielle iTunes (JSONP) pour chaque jeu :<br>
-  → <strong>Screenshots officiels App Store</strong> pour la mosaïque des incontournables<br>
-  → <strong>Icônes App Store</strong> (artworkUrl100) pour les cartes de la liste<br>
-  Tout est mis en dur dans le <code>index.html</code> final — zéro dépendance réseau sur GitHub.
-</p>
+<div class="desc">
+  <strong style="color:#9c6fff">Stratégie de récupération des images (par ordre de priorité) :</strong><br>
+  1️⃣ <strong>Screenshots iPad officiels</strong> (App Store via API iTunes — meilleur format paysage)<br>
+  2️⃣ <strong>Screenshots iPhone</strong> (App Store via API iTunes — fallback portrait)<br>
+  3️⃣ <strong>Site officiel du développeur</strong> (URL fournie par l'API iTunes via <code>sellerUrl</code>)<br>
+  4️⃣ <strong>Steam</strong> (capsule header officielle via SteamGridDB si le jeu est sur Steam)<br>
+  5️⃣ <strong>Icône App Store agrandie</strong> (dernier recours)
+</div>
+
 <button id="btn" onclick="run()">🚀 Lancer la génération</button>
+
 <div class="log" id="log"></div>
-<div id="preview" class="preview"></div>
+<div class="screenshots" id="previews"></div>
 <div id="dl"></div>
 
 <script>
-// ══════════════════════════════════════
-//  LISTE COMPLÈTE DES JEUX
-// ══════════════════════════════════════
+// ════════════════════════════════════════════
+//  DONNÉES DES JEUX
+// ════════════════════════════════════════════
 const GAMES = [
   {d:"01",w:"Dim",n:"Fortalis",                t:["Tower Defense"],     i:"6754587635", a:"",                                                                     hot:false},
   {d:"01",w:"Dim",n:"Beasts Evolved 2",         t:["RPG"],               i:"6751095369", a:"com.ntfusion.beastsevolved2",                                          hot:false},
@@ -56,14 +65,14 @@ const GAMES = [
   {d:"06",w:"Ven",n:"Wicked Defense",           t:["Tower Defense"],     i:"6748435197", a:"com.superplanet.defense",                                              hot:false},
   {d:"06",w:"Ven",n:"Pop Epoch",                t:["Casual"],            i:"6754275296", a:"com.nexwave.popepoch.android",                                         hot:false},
   {d:"07",w:"Sam",n:"Knightbound",              t:["Dark Fantasy"],      i:"6751602047", a:"",                                                                     hot:false},
-  {d:"10",w:"Mar",n:"Nova Drift",               t:["Roguelike"],         i:"6744329971", a:"",                                                                     hot:true },
+  {d:"10",w:"Mar",n:"Nova Drift",               t:["Roguelike"],         i:"6744329971", a:"",                                                                     hot:true, officialSite:"https://novadrift.io"},
   {d:"10",w:"Mar",n:"Subnautica: Below Zero",   t:["Survival"],          i:"6749406060", a:"com.unknownworlds.subnauticabelowzero",                                 hot:true },
   {d:"11",w:"Mer",n:"Kuroko's Basketball SR",   t:["Sport","Anime"],     i:"6756696362", a:"com.lmdgame.kuroko.sea",                                               hot:false},
   {d:"11",w:"Mer",n:"MOCHI-O",                  t:["Casual"],            i:"6670490274", a:"com.zxima.mochio",                                                     hot:false},
   {d:"12",w:"Jeu",n:"Mattel Match",             t:["Match","Puzzle"],    i:"6621181299", a:"com.uken.mattel.match",                                                hot:false},
   {d:"12",w:"Jeu",n:"Ragnarok Sharing Hero",    t:["RPG"],               i:"6756650624", a:"com.funigloo.android.sharing.hero",                                    hot:false},
   {d:"12",w:"Jeu",n:"Stray Cat Doors 3",        t:["Puzzle"],            i:"6755174113", a:"com.pulsmo.StrayCatDoors32nd",                                         hot:false},
-  {d:"13",w:"Ven",n:"BALL x PIT",               t:["Roguelite"],         i:"6738703497", a:"com.devolverdigital.ballxpit",                                         hot:true },
+  {d:"13",w:"Ven",n:"BALL x PIT",               t:["Roguelite"],         i:"6738703497", a:"com.devolverdigital.ballxpit",                                         hot:true, officialSite:"https://www.devolverdigital.com"},
   {d:"13",w:"Ven",n:"BeyBlade X Xone",          t:["Anime","Action"],    i:"6752970992", a:"com.crunchyroll.gv.beybladexxone.game",                                hot:false},
   {d:"14",w:"Sam",n:"Iron Defenders",           t:["Tower Defense"],     i:"6751635131", a:"com.superbox.aos.ttdefense",                                           hot:false},
   {d:"16",w:"Lun",n:"Dino Cataclysm",           t:["Survival"],          i:"6757999357", a:"com.slg.dinocataclysm",                                                hot:false},
@@ -73,7 +82,7 @@ const GAMES = [
   {d:"17",w:"Mar",n:"Genesis War",              t:["Strategy"],          i:"6749479176", a:"com.linegames.gmg",                                                    hot:false},
   {d:"17",w:"Mar",n:"Tomorrow: A World Beyond", t:["Aventure"],          i:"6759113803", a:"",                                                                     hot:false},
   {d:"18",w:"Mer",n:"Scritchy Scratchy",        t:["Casual"],            i:"6758328352", a:"",                                                                     hot:false},
-  {d:"19",w:"Jeu",n:"Jetpack Joyride Racing",   t:["Racing","Arcade"],   i:"6740550251", a:"com.halfbrick.aeroracer",                                              hot:true },
+  {d:"19",w:"Jeu",n:"Jetpack Joyride Racing",   t:["Racing","Arcade"],   i:"6740550251", a:"com.halfbrick.aeroracer",                                              hot:true, officialSite:"https://www.halfbrick.com"},
   {d:"19",w:"Jeu",n:"StarSavior",               t:["RPG"],               i:"6443597557", a:"com.studiobside.starMain",                                             hot:false},
   {d:"19",w:"Jeu",n:"Art of Flora",             t:["Puzzle","Cosy"],     i:"6743834964", a:"",                                                                     hot:false},
   {d:"19",w:"Jeu",n:"EDEN: The Last Line",      t:["RPG"],               i:"6754559095", a:"net.gameduo.dfd",                                                      hot:false},
@@ -85,14 +94,16 @@ const GAMES = [
   {d:"31",w:"Mar",n:"Spirit Summoners",         t:["RPG"],               i:"6754621437", a:"com.f5game.ss",                                                        hot:false},
 ];
 
-// ══════════════════════════════════════
-//  UTILITAIRES
-// ══════════════════════════════════════
-function log(msg, cls=''){
+// ════════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════════
+function log(msg, cls='dim'){
   const el=document.getElementById('log');
   el.innerHTML+=`<div class="${cls}">${msg}</div>`;
   el.scrollTop=el.scrollHeight;
 }
+
+function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
 function svgAvatar(name){
   const cols=[["#7c4dff","#311b92"],["#ff4d8f","#880e4f"],["#00d4aa","#004d40"],
@@ -112,118 +123,206 @@ function svgAvatar(name){
   )}`;
 }
 
-// JSONP loader — contourne les CORS sur itunes.apple.com
-const CACHE = {};
-let cbN = 0;
-function itunesLookup(appId) {
-  return new Promise(resolve => {
-    if (appId in CACHE) { resolve(CACHE[appId]); return; }
-    const fn = `_itcb${cbN++}`;
-    const s  = document.createElement('script');
-    let done = false;
-    window[fn] = data => {
-      if (done) return; done = true;
+// Test si une URL d'image est valide (charge réellement)
+function testImageUrl(url, timeout=5000){
+  return new Promise(resolve=>{
+    const img=new Image();
+    const t=setTimeout(()=>{ img.src=''; resolve(false); }, timeout);
+    img.onload =()=>{ clearTimeout(t); resolve(img.naturalWidth>10 && img.naturalHeight>10); };
+    img.onerror=()=>{ clearTimeout(t); resolve(false); };
+    img.src=url;
+  });
+}
+
+// JSONP iTunes lookup
+const ITUNES_CACHE={};
+let cbN=0;
+function itunesLookup(appId){
+  return new Promise(resolve=>{
+    if(appId in ITUNES_CACHE){ resolve(ITUNES_CACHE[appId]); return; }
+    const fn=`_c${cbN++}`;
+    const s=document.createElement('script');
+    let done=false;
+    window[fn]=data=>{
+      if(done)return; done=true;
       s.remove(); delete window[fn];
-      const r = data?.results?.[0] || null;
-      CACHE[appId] = r;
-      resolve(r);
+      const r=data?.results?.[0]||null;
+      ITUNES_CACHE[appId]=r; resolve(r);
     };
-    s.onerror = () => { if (!done) { done=true; s.remove(); CACHE[appId]=null; resolve(null); } };
-    setTimeout(() => { if (!done) { done=true; s.remove(); if(window[fn])delete window[fn]; CACHE[appId]=null; resolve(null); } }, 8000);
-    s.src = `https://itunes.apple.com/lookup?id=${appId}&country=fr&callback=${fn}`;
+    s.onerror=()=>{ if(!done){done=true;s.remove();ITUNES_CACHE[appId]=null;resolve(null);} };
+    setTimeout(()=>{ if(!done){done=true;s.remove();if(window[fn])delete window[fn];ITUNES_CACHE[appId]=null;resolve(null);} },8000);
+    s.src=`https://itunes.apple.com/lookup?id=${appId}&country=fr&callback=${fn}`;
     document.head.appendChild(s);
   });
 }
 
-// ══════════════════════════════════════
-//  RUN
-// ══════════════════════════════════════
-async function run() {
-  const btn = document.getElementById('btn');
-  btn.disabled = true; btn.textContent = '⏳ En cours…';
-
-  log('📡 Connexion à l\'API iTunes officielle (JSONP)…', 'info');
-  log('─'.repeat(55));
-
-  const results = {}; // appId → { icon, screenshot }
-  let okIcon=0, okShot=0, fail=0;
-
-  for (const g of GAMES) {
-    if (!g.i) {
-      log(`⬜ ${g.n} — pas d'App ID`, 'warn');
-      results[g.n] = { icon: svgAvatar(g.n), screenshot: null };
-      fail++;
-      continue;
-    }
-
-    const data = await itunesLookup(g.i);
-
-    if (!data) {
-      log(`❌ ${g.n} — API timeout/erreur`, 'err');
-      results[g.n] = { icon: svgAvatar(g.n), screenshot: null };
-      fail++;
-    } else {
-      const icon       = data.artworkUrl100 || data.artworkUrl60 || null;
-      // Prefer iPad screenshots (landscape = better for mosaic), fallback to iPhone
-      const shots      = data.ipadScreenshotUrls?.length ? data.ipadScreenshotUrls
-                       : data.screenshotUrls || [];
-      const screenshot = shots[0] || null;
-
-      results[g.n] = {
-        icon:       icon       || svgAvatar(g.n),
-        screenshot: screenshot || null,
-      };
-
-      const iconOk = icon       ? '🖼️' : '⬛';
-      const shotOk = screenshot ? '📸' : '⬜';
-      log(`${iconOk}${shotOk} ${g.n}`, icon||screenshot ? 'ok' : 'warn');
-      if (icon) okIcon++;
-      if (screenshot) okShot++;
-
-      // Preview screenshots des incontournables
-      if (g.hot && screenshot) {
-        const img = document.createElement('img');
-        img.src = screenshot; img.title = g.n;
-        document.getElementById('preview').appendChild(img);
-      }
-    }
-
-    await new Promise(r => setTimeout(r, 200));
-  }
-
-  log('─'.repeat(55));
-  log(`🖼️ ${okIcon} icônes · 📸 ${okShot} screenshots · ❌ ${fail} échecs`, 'info');
-  log('📦 Génération du fichier HTML final…', 'info');
-
-  // Injecter les données dans les jeux
-  const enriched = GAMES.map(g => ({
-    ...g,
-    iconUrl:       results[g.n]?.icon       || svgAvatar(g.n),
-    screenshotUrl: results[g.n]?.screenshot || null,
-  }));
-
-  const html = buildFinalHTML(enriched);
-  const blob = new Blob([html], { type: 'text/html' });
-  const url  = URL.createObjectURL(blob);
-
-  document.getElementById('dl').style.display = 'block';
-  document.getElementById('dl').innerHTML = `
-    <p style="color:#64ffda;font-weight:700;margin-bottom:12px;">
-      ✅ ${okShot} screenshots officiels récupérés depuis l'App Store !
-    </p>
-    <a href="${url}" download="index.html">⬇️ Télécharger index.html</a>
-  `;
-  btn.textContent = '✅ Terminé !';
-  log('🎉 index.html prêt — screenshots officiels App Store en dur !', 'ok');
+// Fetch HTML d'une page pour y chercher des images og:image / meta image
+async function fetchOgImage(url){
+  try{
+    const res=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(7000)});
+    const html=await res.text();
+    // og:image
+    const og=html.match(/property=["']og:image["'][^>]*content=["']([^"']+)["']/i)
+             ||html.match(/content=["']([^"']+)["'][^>]*property=["']og:image["']/i);
+    if(og) return og[1];
+    // twitter:image
+    const tw=html.match(/name=["']twitter:image["'][^>]*content=["']([^"']+)["']/i)
+             ||html.match(/content=["']([^"']+)["'][^>]*name=["']twitter:image["']/i);
+    if(tw) return tw[1];
+  }catch(e){}
+  return null;
 }
 
-// ══════════════════════════════════════
-//  GÉNÉRATION DU HTML FINAL
-// ══════════════════════════════════════
-function buildFinalHTML(games) {
-  const gJSON = JSON.stringify(games);
+// ════════════════════════════════════════════
+//  LOGIQUE PRINCIPALE : cherche la meilleure image pour un jeu
+// ════════════════════════════════════════════
+async function findBestImage(game){
+  // ── 1. iTunes API
+  if(game.i){
+    const data=await itunesLookup(game.i);
+    if(data){
+      // Préfère iPad screenshots (paysage) pour la mosaïque
+      const ipadShots=data.ipadScreenshotUrls||[];
+      const iphoneShots=data.screenshotUrls||[];
+      const icon=data.artworkUrl100||data.artworkUrl60||null;
+      const sellerUrl=data.sellerUrl||null;
 
-  return `<!DOCTYPE html>
+      // Teste le 1er screenshot iPad
+      if(ipadShots[0]){
+        const ok=await testImageUrl(ipadShots[0]);
+        if(ok){
+          log(`  📸 Screenshot iPad App Store OK`, 'ok');
+          return { screenshot: ipadShots[0], icon, source:'AppStore-iPad' };
+        }
+      }
+      // Teste le 1er screenshot iPhone
+      if(iphoneShots[0]){
+        const ok=await testImageUrl(iphoneShots[0]);
+        if(ok){
+          log(`  📸 Screenshot iPhone App Store OK`, 'ok');
+          return { screenshot: iphoneShots[0], icon, source:'AppStore-iPhone' };
+        }
+      }
+
+      // ── 2. Site officiel (sellerUrl depuis iTunes ou fourni manuellement)
+      const siteUrl = game.officialSite || sellerUrl;
+      if(siteUrl){
+        log(`  🌐 Recherche sur site officiel : ${siteUrl}`, 'info');
+        const ogImg=await fetchOgImage(siteUrl);
+        if(ogImg){
+          const ok=await testImageUrl(ogImg);
+          if(ok){
+            log(`  🌐 Image officielle trouvée (og:image)`, 'ok');
+            return { screenshot: ogImg, icon, source:'OfficialSite' };
+          }
+        }
+      }
+
+      // ── 3. Google Play feature graphic (via AllOrigins)
+      if(game.a){
+        log(`  🤖 Tentative Google Play feature graphic…`, 'info');
+        const gpUrl=`https://play.google.com/store/apps/details?id=${game.a}&hl=fr`;
+        const ogImg=await fetchOgImage(gpUrl);
+        if(ogImg){
+          const ok=await testImageUrl(ogImg);
+          if(ok){
+            log(`  🤖 Feature graphic Google Play OK`, 'ok');
+            return { screenshot: ogImg, icon, source:'GooglePlay' };
+          }
+        }
+      }
+
+      // ── 4. Icône agrandie comme dernier recours
+      if(icon){
+        // Tente la version 512px (remplace 100x100 par 512x512 dans l'URL)
+        const icon512=icon.replace('100x100','512x512').replace('/100/','/512/');
+        const ok=await testImageUrl(icon512);
+        log(`  🔲 Fallback icône App Store`, ok?'warn':'err');
+        return { screenshot: ok ? icon512 : icon, icon, source:'Icon' };
+      }
+
+      return { screenshot: null, icon, source:'none' };
+    }
+  }
+
+  return { screenshot: null, icon: svgAvatar(game.n), source:'none' };
+}
+
+// ════════════════════════════════════════════
+//  MAIN RUN
+// ════════════════════════════════════════════
+async function run(){
+  const btn=document.getElementById('btn');
+  btn.disabled=true; btn.textContent='⏳ En cours…';
+  const previewEl=document.getElementById('previews');
+
+  log('════════════════════════════════════', 'info');
+  log('🚀 Démarrage — Recherche des images officielles', 'info');
+  log('════════════════════════════════════', 'info');
+
+  const enriched=[];
+  let statIcon=0, statShot=0, statFallback=0;
+
+  for(const g of GAMES){
+    log(`\n▶ ${g.n}  [${g.d} Mars]`, g.hot?'info':'dim');
+
+    const result=await findBestImage(g);
+
+    const finalIcon       = result.icon       || svgAvatar(g.n);
+    const finalScreenshot = result.screenshot || finalIcon;
+
+    enriched.push({
+      ...g,
+      iconUrl:       finalIcon,
+      screenshotUrl: finalScreenshot,
+      imgSource:     result.source,
+    });
+
+    if(result.source==='none'){ statFallback++; log(`  ⚠️ Aucune image trouvée — avatar SVG`, 'err'); }
+    else if(result.source==='Icon'){ statFallback++; }
+    else if(result.source.startsWith('AppStore')){ statShot++; }
+    else { statShot++; }
+    if(result.icon) statIcon++;
+
+    // Preview visuel pour les incontournables
+    if(g.hot && finalScreenshot){
+      const fig=document.createElement('figure');
+      const img=document.createElement('img');
+      img.src=finalScreenshot;
+      img.className=result.source!=='none'?'good':'';
+      img.title=`${g.n} (${result.source})`;
+      const cap=document.createElement('figcaption');
+      cap.textContent=`${g.n.substring(0,12)} · ${result.source}`;
+      fig.appendChild(img); fig.appendChild(cap);
+      previewEl.appendChild(fig);
+    }
+
+    await wait(300);
+  }
+
+  log('\n════════════════════════════════════', 'info');
+  log(`✅ ${statShot} screenshots officiels · 🖼️ ${statIcon} icônes · ⚠️ ${statFallback} fallbacks`, 'ok');
+  log('📦 Génération du fichier HTML final…', 'info');
+
+  const html=buildHTML(enriched);
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+
+  document.getElementById('dl').style.display='block';
+  document.getElementById('dl').innerHTML=`
+    <p style="color:#64ffda;font-weight:700;margin-bottom:12px;font-size:13px;">
+      ✅ ${statShot} images officielles (App Store + sites officiels + Google Play)
+    </p>
+    <a href="${url}" download="index.html">⬇️ Télécharger index.html</a>`;
+  btn.textContent='✅ Terminé !';
+}
+
+// ════════════════════════════════════════════
+//  GÉNÈRE LE HTML FINAL
+// ════════════════════════════════════════════
+function buildHTML(games){
+const gJSON=JSON.stringify(games);
+return `<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -243,15 +342,11 @@ body{background:#12111a;color:#e8e6f4;font-family:'Nunito',sans-serif;-webkit-fo
   --ab:rgba(0,212,170,.38);--at:rgba(0,212,170,.13);--ac:#64ffda;
   --mu:#6b6888;--bd:rgba(255,255,255,.07);
 }
-
-/* NAV */
 .nav{position:sticky;top:0;z-index:200;background:var(--bg2);border-bottom:2px solid var(--pu);display:flex;align-items:center;justify-content:space-between;padding:0 14px;height:50px;gap:8px;}
 .nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:5px;white-space:nowrap;}
 .nav-logo span{color:var(--pul);}
 .nav-month{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--pul);letter-spacing:.8px;}
 .nav-badge{display:flex;align-items:center;gap:4px;background:var(--pu2);border:1px solid var(--pub);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:800;color:var(--pul);white-space:nowrap;}
-
-/* HERO */
 .hero{background:linear-gradient(160deg,#1d1535 0%,#12111a 55%);padding:24px 16px 20px;border-bottom:1px solid var(--bd);}
 .eyebrow{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--pul);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
 .eyebrow::before{content:'';width:14px;height:2px;background:var(--pu);display:block;flex-shrink:0;}
@@ -261,58 +356,34 @@ body{background:#12111a;color:#e8e6f4;font-family:'Nunito',sans-serif;-webkit-fo
 .pills{display:flex;gap:7px;flex-wrap:wrap;}
 .pill{background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:800;color:#ccc;}
 .pill b{color:var(--pul);}
-
-/* ── MOSAIC ── */
+/* MOSAIC */
 .mosaic-wrap{padding:20px 14px 8px;}
 .sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pul);display:flex;align-items:center;gap:8px;margin-bottom:12px;}
 .sec-lbl::after{content:'';flex:1;height:1px;background:var(--bd);}
-
 .mosaic{
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
   grid-template-rows:130px 130px 130px;
-  gap:3px;
-  border-radius:14px;
-  overflow:hidden;
+  gap:3px;border-radius:14px;overflow:hidden;
 }
 @media(min-width:380px){.mosaic{grid-template-rows:150px 150px 150px;}}
-@media(min-width:500px){.mosaic{grid-template-rows:170px 170px 170px;}}
-
-/* Cell 0 = big left (spans 2 rows), cells 1-4 = top-right 2×2, cells 5-7 = bottom row */
+@media(min-width:520px){.mosaic{grid-template-rows:180px 180px 180px;}}
 .mc{position:relative;overflow:hidden;cursor:pointer;background:var(--bg3);-webkit-tap-highlight-color:transparent;}
 .mc.big{grid-row:span 2;}
 .mc img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease;}
 .mc:active img.bg{transform:scale(1.05);}
-/* dark overlay */
-.mc::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.05) 100%);pointer-events:none;}
-/* top-left glow for hot */
-.mc.big::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,77,255,.25) 0%,transparent 60%);z-index:1;pointer-events:none;}
+.mc::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.1) 60%,transparent 100%);pointer-events:none;}
+.mc.big::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,77,255,.2) 0%,transparent 55%);z-index:1;pointer-events:none;}
 .mc-info{position:absolute;bottom:0;left:0;right:0;padding:7px 9px;z-index:2;}
-.mc-badge{
-  display:inline-flex;align-items:center;gap:4px;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:10px;font-weight:700;letter-spacing:.6px;
-  background:var(--pu);color:#fff;
-  padding:2px 7px;border-radius:4px;
-  margin-bottom:4px;
-}
-.mc-name{
-  font-weight:900;font-size:12px;color:#fff;line-height:1.25;
-  text-shadow:0 1px 6px rgba(0,0,0,.9);
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-}
-.mc.big .mc-name{font-size:15px;}
-
-/* No screenshot fallback */
-.mc-fallback{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  background:linear-gradient(135deg,#1e1c2c,#2a1f4a);
-}
-.mc-fallback img{width:48px;height:48px;border-radius:11px;object-fit:cover;}
-.mc.big .mc-fallback img{width:64px;height:64px;border-radius:14px;}
-
-/* ── MAIN LIST ── */
+.mc-badge{display:inline-flex;align-items:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;background:var(--pu);color:#fff;padding:2px 7px;border-radius:4px;margin-bottom:3px;}
+.mc-name{font-weight:900;font-size:12px;color:#fff;line-height:1.25;text-shadow:0 1px 6px rgba(0,0,0,.9);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.mc.big .mc-name{font-size:14px;}
+.mc-src{position:absolute;top:6px;left:6px;font-size:8px;background:rgba(0,0,0,.6);color:rgba(255,255,255,.5);padding:2px 5px;border-radius:3px;z-index:3;}
+/* Fallback cell */
+.mc-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e1c2c,#2a1f4a);}
+.mc-fallback img{width:52px;height:52px;border-radius:12px;object-fit:cover;}
+.mc.big .mc-fallback img{width:68px;height:68px;border-radius:16px;}
+/* MAIN */
 .main{padding:16px 14px 80px;}
 .legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:24px;}
 .li{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--mu);font-weight:700;}
@@ -382,59 +453,40 @@ footer{background:var(--bg2);border-top:1px solid var(--bd);padding:18px 16px;fo
   <div id="list"></div>
 </div>
 
-<footer>
-  📡 Screenshots officiels via App Store · Mars 2026 · iOS &amp; Android<br>
-  Les dates et disponibilités peuvent évoluer sans préavis.
-</footer>
+<footer>📡 Images officielles : App Store · Sites officiels · Google Play · Mars 2026<br>Les dates et disponibilités peuvent évoluer sans préavis.</footer>
 
 <script>
 const G=${gJSON};
-
 function iosUrl(id){return id?'https://apps.apple.com/app/id'+id:null;}
 function andUrl(p){return p?'https://play.google.com/store/apps/details?id='+p:null;}
-
 function storeRow(g){
   if(!g.i&&!g.a)return '<div class="sr"><span class="bs bsoon" style="flex:1">⏳ Bientôt disponible</span></div>';
-  function btn(href,ic,lbl,cls){
-    if(href)return \`<a class="bs \${cls}" href="\${href}" target="_blank" rel="noopener">\${ic} \${lbl}</a>\`;
-    return \`<span class="bs bna">\${ic} N/A</span>\`;
-  }
+  function btn(h,ic,l,c){return h?'<a class="bs '+c+'" href="'+h+'" target="_blank" rel="noopener">'+ic+' '+l+'</a>':'<span class="bs bna">'+ic+' N/A</span>';}
   return '<div class="sr">'+btn(iosUrl(g.i),'🍎','App Store','bi')+btn(andUrl(g.a),'🤖','Play','ba')+'</div>';
 }
-
 function renderMosaic(){
   const hot=G.filter(g=>g.hot).slice(0,9);
   const el=document.getElementById('mosaic');
   hot.forEach((g,idx)=>{
-    const cell=document.createElement('div');
-    cell.className='mc'+(idx===0?' big':'');
-
-    if(g.screenshotUrl){
-      // Real screenshot from App Store
-      cell.innerHTML=\`<img class="bg" src="\${g.screenshotUrl}" alt="\${g.n}" loading="lazy">
-        <div class="mc-info">
-          <div class="mc-badge">Mar \${g.d}</div>
-          <div class="mc-name">\${g.n}</div>
-        </div>\`;
-    } else {
-      // Fallback: icon + gradient bg
-      cell.innerHTML=\`<div class="mc-fallback">
-          <img src="\${g.iconUrl}" alt="\${g.n}">
-        </div>
-        <div class="mc-info">
-          <div class="mc-badge">Mar \${g.d}</div>
-          <div class="mc-name">\${g.n}</div>
-        </div>\`;
+    const c=document.createElement('div');
+    c.className='mc'+(idx===0?' big':'');
+    const hasBg=g.screenshotUrl&&!g.screenshotUrl.startsWith('data:');
+    if(hasBg){
+      c.innerHTML='<img class="bg" src="'+g.screenshotUrl+'" alt="'+g.n+'" loading="lazy">'
+        +(g.imgSource&&g.imgSource!=='AppStore-iPad'&&g.imgSource!=='AppStore-iPhone'
+          ?'<div class="mc-src">'+g.imgSource+'</div>':'')
+        +'<div class="mc-info"><div class="mc-badge">Mar '+g.d+'</div><div class="mc-name">'+g.n+'</div></div>';
+    }else{
+      c.innerHTML='<div class="mc-fallback"><img src="'+g.iconUrl+'" alt="'+g.n+'"></div>'
+        +'<div class="mc-info"><div class="mc-badge">Mar '+g.d+'</div><div class="mc-name">'+g.n+'</div></div>';
     }
-
-    cell.addEventListener('click',()=>{
+    c.addEventListener('click',()=>{
       const t=document.getElementById('day'+g.d);
       if(t)t.closest('.dg').scrollIntoView({behavior:'smooth',block:'start'});
     });
-    el.appendChild(cell);
+    el.appendChild(c);
   });
 }
-
 function renderList(){
   const list=document.getElementById('list');
   const grp={};
@@ -445,13 +497,10 @@ function renderList(){
     sec.innerHTML='<div class="dh"><div class="dt"><span class="dn">'+date+'</span><span class="dw">'+w+'</span></div><div class="dhr"></div><div class="dc">'+items.length+' sortie'+(items.length>1?'s':'')+'</div></div>';
     const grid=document.createElement('div');grid.className='gg';
     items.forEach(g=>{
-      const card=document.createElement('div');
-      card.className='gc'+(g.hot?' hot':'');
+      const card=document.createElement('div');card.className='gc'+(g.hot?' hot':'');
       if(g.hot)card.innerHTML='<div class="ribbon">⭐ Top</div>';
       const top=document.createElement('div');top.className='ct';
-      top.innerHTML='<div class="ci"><img src="'+g.iconUrl+'" alt="'+g.n+'" loading="lazy"></div>'
-        +'<div class="cinfo"><div class="cn">'+g.n+'</div>'
-        +'<div class="ctags">'+g.t.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div></div>';
+      top.innerHTML='<div class="ci"><img src="'+g.iconUrl+'" alt="'+g.n+'" loading="lazy"></div><div class="cinfo"><div class="cn">'+g.n+'</div><div class="ctags">'+g.t.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div></div>';
       card.appendChild(top);
       card.insertAdjacentHTML('beforeend',storeRow(g));
       grid.appendChild(card);
@@ -459,20 +508,15 @@ function renderList(){
     sec.appendChild(grid);list.appendChild(sec);
   });
 }
-
 function initVisits(){
   const u=encodeURIComponent(location.href.split('?')[0]);
   fetch('https://hits.seeyoufarm.com/api/count/incr/badge.svg?url='+u+'&count_bg=%237C4DFF&title_bg=%231E1C2C&title=vues&edge_flat=true')
     .then(r=>r.text()).then(svg=>{
       const m=svg.match(/>(\d[\d,]*)</g);
-      document.getElementById('vc').textContent=m&&m.length
-        ?m[m.length-1].replace(/[<>]/g,'').replace(/,/g,''):'actif';
+      document.getElementById('vc').textContent=m&&m.length?m[m.length-1].replace(/[<>]/g,'').replace(/,/g,''):'actif';
     }).catch(()=>{document.getElementById('vc').textContent='actif';});
 }
-
-renderMosaic();
-renderList();
-initVisits();
+renderMosaic();renderList();initVisits();
 <\/script>
 </body>
 </html>`;
