@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚙️ Setup — Génération icônes</title>
+<style>
+  body { font-family: monospace; background: #0d0d14; color: #e0e0e0; padding: 24px; }
+  h1 { color: #9c6fff; margin-bottom: 8px; }
+  p { color: #888; margin-bottom: 24px; }
+  .log { background: #1a1826; border: 1px solid #333; border-radius: 8px; padding: 16px;
+    height: 400px; overflow-y: auto; font-size: 12px; line-height: 1.8; }
+  .ok  { color: #64ffda; }
+  .err { color: #ff6b6b; }
+  .info { color: #7c4dff; }
+  #btn {
+    background: #7c4dff; color: #fff; border: none; border-radius: 8px;
+    padding: 12px 28px; font-size: 16px; font-weight: 700; cursor: pointer;
+    margin-bottom: 20px; display: block;
+  }
+  #btn:hover { background: #9c6fff; }
+  #btn:disabled { background: #333; color: #666; cursor: not-allowed; }
+  #dl { display: none; margin-top: 16px; }
+  #dl a {
+    background: #00d4aa; color: #000; border-radius: 8px;
+    padding: 12px 28px; font-size: 16px; font-weight: 800;
+    text-decoration: none; display: inline-block;
+  }
+</style>
+</head>
+<body>
+<h1>⚙️ Générateur d'icônes — Mars 2026</h1>
+<p>Ce script appelle l'API iTunes pour chaque jeu, récupère les vraies icônes, puis génère un fichier <code>index.html</code> prêt pour GitHub Pages avec toutes les images en dur.</p>
+<button id="btn" onclick="run()">🚀 Lancer la génération</button>
+<div class="log" id="log"></div>
+<div id="dl"></div>
+
+<script>
+const GAMES = [
+  {d:"01",w:"Dim",n:"Fortalis",               t:["Tower Defense"], i:"6754587635", a:"",                                                                       hot:false},
+  {d:"01",w:"Dim",n:"Beasts Evolved 2",        t:["RPG"],           i:"6751095369", a:"com.ntfusion.beastsevolved2",                                             hot:false},
+  {d:"01",w:"Dim",n:"Hyper Bouncy Ball",       t:["Arcade","Casual"],i:"6755916701", a:"com.crearthor.bouncyball",                                               hot:false},
+  {d:"01",w:"Dim",n:"Crazy Gunner: Pixel",     t:["Survivor"],      i:"6757685841", a:"com.leguas.gunstorm",                                                     hot:false},
+  {d:"02",w:"Lun",n:"Sea Fantasy",             t:["RPG"],           i:"6753211881", a:"com.YSK.SF",                                                              hot:false},
+  {d:"03",w:"Mar",n:"Let's Go School",         t:["Casual"],        i:"6756289950", a:"com.run.school",                                                          hot:false},
+  {d:"03",w:"Mar",n:"Iron Saga: ZERO",         t:["RPG","Mecha"],   i:"6754362752", a:"com.gameduchy.jdzdZero.jp",                                               hot:false},
+  {d:"04",w:"Mer",n:"Nowhere Prophet",         t:["Card","Roguelike"],i:"6740233187",a:"com.SharkbombStudios.NowhereProphet",                                    hot:true },
+  {d:"04",w:"Mer",n:"Hatch Dragons",           t:["Simulation"],    i:"6746389113", a:"com.runawayplay.dragons",                                                 hot:false},
+  {d:"05",w:"Jeu",n:"Neo Artifacts",           t:["RPG Tactique"],  i:"6569253108", a:"com.cipaishe.wuhua.google",                                               hot:true },
+  {d:"05",w:"Jeu",n:"Taimanin Squad",          t:["Action RPG"],    i:"6755016024", a:"com.GREMORYGames.TaimaninSquad",                                          hot:false},
+  {d:"05",w:"Jeu",n:"StoneAge: Idle",          t:["Idle","RPG"],    i:"6737408689", a:"com.netmarble.stonkey",                                                   hot:false},
+  {d:"05",w:"Jeu",n:"Heavenhells",             t:["Anime","RPG"],   i:"6755996889", a:"com.clovergames.avalonclient",                                            hot:false},
+  {d:"06",w:"Ven",n:"Catch & Build: Pals",     t:["Catch-em-all"],  i:"6752563811", a:"com.sgclglo.google",                                                      hot:false},
+  {d:"06",w:"Ven",n:"Fantamon: Idle RPG",      t:["Idle","RPG"],    i:"6476379307", a:"com.sdg.socglobal",                                                       hot:false},
+  {d:"06",w:"Ven",n:"Dungeon Antiqua 2",       t:["Dungeon","RPG"], i:"6759427578", a:"",                                                                       hot:false},
+  {d:"06",w:"Ven",n:"Wicked Defense",          t:["Tower Defense"], i:"6748435197", a:"com.superplanet.defense",                                                 hot:false},
+  {d:"06",w:"Ven",n:"Pop Epoch",               t:["Casual"],        i:"6754275296", a:"com.nexwave.popepoch.android",                                            hot:false},
+  {d:"07",w:"Sam",n:"Knightbound",             t:["Dark Fantasy"],  i:"6751602047", a:"",                                                                       hot:false},
+  {d:"10",w:"Mar",n:"Nova Drift",              t:["Roguelike"],     i:"6744329971", a:"",                                                                       hot:true },
+  {d:"10",w:"Mar",n:"Subnautica: Below Zero",  t:["Survival"],      i:"6749406060", a:"com.unknownworlds.subnauticabelowzero",                                   hot:true },
+  {d:"11",w:"Mer",n:"Kuroko's Basketball SR",  t:["Sport","Anime"], i:"6756696362", a:"com.lmdgame.kuroko.sea",                                                  hot:false},
+  {d:"11",w:"Mer",n:"MOCHI-O",                 t:["Casual"],        i:"6670490274", a:"com.zxima.mochio",                                                        hot:false},
+  {d:"12",w:"Jeu",n:"Mattel Match",            t:["Match","Puzzle"],i:"6621181299", a:"com.uken.mattel.match",                                                   hot:false},
+  {d:"12",w:"Jeu",n:"Ragnarok Sharing Hero",   t:["RPG"],           i:"6756650624", a:"com.funigloo.android.sharing.hero",                                       hot:false},
+  {d:"12",w:"Jeu",n:"Stray Cat Doors 3",       t:["Puzzle"],        i:"6755174113", a:"com.pulsmo.StrayCatDoors32nd",                                            hot:false},
+  {d:"13",w:"Ven",n:"BALL x PIT",              t:["Roguelite"],     i:"6738703497", a:"com.devolverdigital.ballxpit",                                            hot:true },
+  {d:"13",w:"Ven",n:"BeyBlade X Xone",         t:["Anime","Action"],i:"6752970992", a:"com.crunchyroll.gv.beybladexxone.game",                                   hot:false},
+  {d:"14",w:"Sam",n:"Iron Defenders",          t:["Tower Defense"], i:"6751635131", a:"com.superbox.aos.ttdefense",                                              hot:false},
+  {d:"16",w:"Lun",n:"Dino Cataclysm",          t:["Survival"],      i:"6757999357", a:"com.slg.dinocataclysm",                                                  hot:false},
+  {d:"16",w:"Lun",n:"City Island 5: Deluxe",   t:["City Builder"],  i:"6757596108", a:"com.sparklingsociety.cityisland5rebuildittownsimskylinelegacyempire",      hot:false},
+  {d:"17",w:"Mar",n:"Baseball Hits 26",        t:["Sport"],         i:"6736774022", a:"com.ares.baseball",                                                       hot:false},
+  {d:"17",w:"Mar",n:"Crazy Tractor",           t:["Arcade"],        i:"6747202202", a:"",                                                                       hot:false},
+  {d:"17",w:"Mar",n:"Genesis War",             t:["Strategy"],      i:"6749479176", a:"com.linegames.gmg",                                                       hot:false},
+  {d:"17",w:"Mar",n:"Tomorrow: A World Beyond",t:["Aventure"],      i:"6759113803", a:"",                                                                       hot:false},
+  {d:"18",w:"Mer",n:"Scritchy Scratchy",       t:["Casual"],        i:"6758328352", a:"",                                                                       hot:false},
+  {d:"19",w:"Jeu",n:"Jetpack Joyride Racing",  t:["Racing","Arcade"],i:"6740550251",a:"com.halfbrick.aeroracer",                                                 hot:true },
+  {d:"19",w:"Jeu",n:"StarSavior",              t:["RPG"],           i:"6443597557", a:"com.studiobside.starMain",                                                hot:false},
+  {d:"19",w:"Jeu",n:"Art of Flora",            t:["Puzzle","Cosy"], i:"6743834964", a:"",                                                                       hot:false},
+  {d:"19",w:"Jeu",n:"EDEN: The Last Line",     t:["RPG"],           i:"6754559095", a:"net.gameduo.dfd",                                                         hot:false},
+  {d:"20",w:"Ven",n:"Furia Rising",            t:["Idle","Action"], i:"6739352636", a:"com.idle.furia",                                                          hot:false},
+  {d:"20",w:"Ven",n:"Order of Kings",          t:["Stratégie"],     i:"6756338531", a:"com.dequ.m3dw2",                                                          hot:false},
+  {d:"23",w:"Lun",n:"Seven Deadly Sins: Origin",t:["RPG","Open World"],i:"6744205088",a:"com.netmarble.nanaori",                                                 hot:true },
+  {d:"26",w:"Jeu",n:"CookieRun: OvenSmash",    t:["Combat"],        i:"6550902247", a:"com.devsisters.cos",                                                     hot:true },
+  {d:"26",w:"Jeu",n:"Mongil: Star Dive",       t:["RPG","Action"],  i:"6483252725", a:"com.netmarble.monster2",                                                 hot:false},
+  {d:"31",w:"Mar",n:"Spirit Summoners",        t:["RPG"],           i:"6754621437", a:"com.f5game.ss",                                                           hot:false},
+];
+
+function log(msg, cls='') {
+  const el = document.getElementById('log');
+  el.innerHTML += `<div class="${cls}">${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+
+async function fetchIcon(appId) {
+  try {
+    const r = await fetch(`https://itunes.apple.com/lookup?id=${appId}&country=fr`);
+    const d = await r.json();
+    if (d.results && d.results[0]) {
+      return d.results[0].artworkUrl100 || d.results[0].artworkUrl60 || null;
+    }
+  } catch(e) {}
+  try {
+    const r = await fetch(`https://itunes.apple.com/lookup?id=${appId}&country=us`);
+    const d = await r.json();
+    if (d.results && d.results[0]) {
+      return d.results[0].artworkUrl100 || null;
+    }
+  } catch(e) {}
+  return null;
+}
+
+async function run() {
+  const btn = document.getElementById('btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ En cours...';
+  
+  log('🚀 Démarrage de la récupération des icônes...', 'info');
+  log(`📋 ${GAMES.length} jeux à traiter`, 'info');
+  log('─'.repeat(50));
+
+  const icons = {};
+  let ok = 0, fail = 0;
+  
+  for (const g of GAMES) {
+    if (!g.i) { log(`⬜ ${g.n} — pas d'App ID`, 'err'); fail++; continue; }
+    const url = await fetchIcon(g.i);
+    if (url) {
+      icons[g.i] = url;
+      log(`✅ ${g.n}`, 'ok');
+      ok++;
+    } else {
+      icons[g.i] = null;
+      log(`❌ ${g.n} (id: ${g.i})`, 'err');
+      fail++;
+    }
+    await new Promise(r => setTimeout(r, 150));
+  }
+  
+  log('─'.repeat(50));
+  log(`✅ ${ok} icônes récupérées · ❌ ${fail} échecs`, 'info');
+  log('📦 Génération du fichier index.html final...', 'info');
+  
+  const html = generateHTML(icons);
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  
+  document.getElementById('dl').style.display = 'block';
+  document.getElementById('dl').innerHTML = `
+    <p style="color:#64ffda;font-size:14px;margin-bottom:12px;">✅ Fichier prêt ! Télécharge-le et remplace ton index.html sur GitHub.</p>
+    <a href="${url}" download="index.html">⬇️ Télécharger index.html (avec icônes)</a>
+  `;
+  
+  btn.textContent = '✅ Terminé !';
+  log('🎉 Fini ! Télécharge le fichier et upload-le sur GitHub.', 'ok');
+}
+
+function svgAvatar(name) {
+  const cols = [["#7c4dff","#311b92"],["#ff4d8f","#880e4f"],["#00d4aa","#004d40"],
+                ["#448aff","#0d47a1"],["#ffca28","#e65100"],["#ea4335","#4e342e"]];
+  const [c1,c2] = cols[name.charCodeAt(0)%cols.length];
+  const l = (name.match(/\b\w/g)||[name[0]]).slice(0,2).join('').toUpperCase();
+  return `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#g)"/><text x="50" y="64" font-family="Arial Black,sans-serif" font-size="38" font-weight="900" fill="white" text-anchor="middle">${l}</text></svg>`
+  )}`;
+}
+
+function generateHTML(icons) {
+  // Inject icons into game data
+  const gamesWithIcons = GAMES.map(g => ({
+    ...g,
+    iconUrl: (g.i && icons[g.i]) ? icons[g.i] : svgAvatar(g.n)
+  }));
+  
+  const gamesJSON = JSON.stringify(gamesWithIcons);
+  
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Sorties Jeux Mobile — Mars 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{background:#12111a;color-scheme:dark}
+body{background:#12111a;color:#e8e6f4;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;}
+:root{
+  --bg:#12111a;--bg2:#1a1826;--bg3:#1e1b2e;--card:#1e1c2c;
+  --pu:#7c4dff;--pul:#9c6fff;--pu2:rgba(124,77,255,.18);--pub:rgba(124,77,255,.4);
+  --pk:#ff4d8f;
+  --ib:rgba(68,138,255,.4);--it:rgba(68,138,255,.15);--ic:#82b1ff;
+  --ab:rgba(0,212,170,.38);--at:rgba(0,212,170,.13);--ac:#64ffda;
+  --mu:#6b6888;--bd:rgba(255,255,255,.07);
+}
+.nav{position:sticky;top:0;z-index:200;background:var(--bg2);border-bottom:2px solid var(--pu);display:flex;align-items:center;justify-content:space-between;padding:0 14px;height:50px;gap:8px;}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;}
+.nav-logo span{color:var(--pul);}
+.nav-month{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--pul);letter-spacing:.8px;white-space:nowrap;}
+.nav-badge{display:flex;align-items:center;gap:4px;background:var(--pu2);border:1px solid var(--pub);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:800;color:var(--pul);white-space:nowrap;flex-shrink:0;}
+.hero{background:linear-gradient(160deg,#1d1535 0%,#12111a 55%);padding:24px 16px 20px;border-bottom:1px solid var(--bd);}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--pul);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.eyebrow::before{content:'';width:14px;height:2px;background:var(--pu);display:block;flex-shrink:0;}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:800;line-height:.95;color:#fff;margin-bottom:8px;}
+.hero-title span{background:linear-gradient(90deg,var(--pul),var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:13px;color:var(--mu);margin-bottom:14px;}
+.pills{display:flex;gap:7px;flex-wrap:wrap;}
+.pill{background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:800;color:#ccc;}
+.pill b{color:var(--pul);}
+.strip-wrap{background:var(--bg2);border-bottom:1px solid var(--bd);padding:14px 16px;}
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pul);display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--bd);}
+.strip{display:flex;gap:9px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;}
+.strip::-webkit-scrollbar{display:none;}
+.sc{flex-shrink:0;width:110px;background:var(--card);border:1px solid var(--pub);border-radius:12px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden;transition:transform .15s;}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pu),var(--pk));}
+.sc:active{transform:scale(.95);}
+.sc-img{width:56px;height:56px;border-radius:13px;overflow:hidden;flex-shrink:0;background:var(--bg3);border:1px solid var(--bd);}
+.sc-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.sc-name{font-weight:800;font-size:10px;color:#fff;text-align:center;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3;width:100%;}
+.sc-date{font-size:10px;color:var(--pul);font-weight:700;background:var(--pu2);padding:2px 7px;border-radius:100px;white-space:nowrap;}
+.main{padding:18px 14px 80px;}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:24px;}
+.li{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--mu);font-weight:700;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.dg{margin-bottom:32px;}
+.dh{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+.dt{background:var(--pu);border-radius:8px;padding:4px 11px;display:flex;align-items:baseline;gap:5px;flex-shrink:0;}
+.dn{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:#fff;line-height:1;}
+.dw{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.dhr{flex:1;height:1px;background:var(--bd);}
+.dc{font-size:11px;font-weight:700;color:var(--mu);white-space:nowrap;}
+.gg{display:flex;flex-direction:column;gap:8px;}
+@media(min-width:560px){.gg{display:grid;grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.gg{grid-template-columns:repeat(3,1fr);}}
+.gc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
+.gc.hot{border-color:var(--pub);}
+.ribbon{position:absolute;top:0;right:12px;background:linear-gradient(135deg,var(--pu),var(--pk));color:#fff;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 8px 3px;border-radius:0 0 6px 6px;}
+.ct{display:flex;align-items:center;gap:10px;}
+.ci{width:52px;height:52px;border-radius:12px;flex-shrink:0;overflow:hidden;background:var(--bg3);border:1px solid var(--bd);}
+.ci img{width:100%;height:100%;object-fit:cover;display:block;}
+.cinfo{flex:1;min-width:0;}
+.cn{font-weight:900;font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px;}
+.ctags{display:flex;flex-wrap:wrap;gap:3px;}
+.tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;background:var(--bg3);color:var(--mu);border:1px solid var(--bd);}
+.sr{display:flex;gap:6px;}
+.bs{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 6px;border-radius:9px;text-decoration:none;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;border:1px solid transparent;-webkit-tap-highlight-color:transparent;transition:opacity .15s;}
+.bs:active{opacity:.7;}
+a.bi{background:var(--it);border-color:var(--ib);color:var(--ic);}
+a.ba{background:var(--at);border-color:var(--ab);color:var(--ac);}
+.bna{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.06);color:rgba(255,255,255,.2);pointer-events:none;}
+.bsoon{background:var(--pu2);border-color:var(--pub);color:var(--pul);pointer-events:none;}
+footer{background:var(--bg2);border-top:1px solid var(--bd);padding:18px 16px;font-size:11px;color:var(--mu);text-align:center;line-height:1.8;}
+</style>
+
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">🎮 <span>Mobile</span></div>
+  <div class="nav-month">Mars 2026</div>
+  <div class="nav-badge">👁 <span id="vc">…</span></div>
+</nav>
+<div class="hero">
+  <div class="eyebrow">Calendrier · iOS &amp; Android</div>
+  <div class="hero-title">Sorties<br><span>Mars 2026</span></div>
+  <div class="hero-sub">Tous les jeux mobiles du mois avec liens directs.</div>
+  <div class="pills">
+    <div class="pill">🎮 <b>60+</b> sorties</div>
+    <div class="pill">📱 iOS &amp; Android</div>
+    <div class="pill">📅 Mars 2026</div>
+  </div>
+</div>
+<div class="strip-wrap">
+  <div class="sec-lbl">⭐ Les incontournables</div>
+  <div class="strip" id="strip"></div>
+</div>
+<div class="main">
+  <div class="legend">
+    <div class="li"><div class="dot" style="background:var(--ic)"></div>App Store (iOS)</div>
+    <div class="li"><div class="dot" style="background:var(--ac)"></div>Google Play</div>
+    <div class="li"><div class="dot" style="background:var(--pul)"></div>Mis en avant</div>
+    <div class="li"><div class="dot" style="background:rgba(255,255,255,.15)"></div>N/A = indisponible</div>
+  </div>
+  <div id="list"></div>
+</div>
+<footer>📡 Source : GamingOnPhone · Mars 2026 · iOS &amp; Android<br>Les dates et disponibilités peuvent évoluer sans préavis.</footer>
+
+<script>
+const G=${gamesJSON};
+
+function iosUrl(id){return id?'https://apps.apple.com/app/id'+id:null;}
+function andUrl(p){return p?'https://play.google.com/store/apps/details?id='+p:null;}
+
+function storeRow(g){
+  if(!g.i&&!g.a) return '<div class="sr"><span class="bs bsoon" style="flex:1">⏳ Bientôt disponible</span></div>';
+  function btn(href,ic,label,cls){
+    if(href) return '<a class="bs '+cls+'" href="'+href+'" target="_blank" rel="noopener noreferrer">'+ic+' '+label+'</a>';
+    return '<span class="bs bna">'+ic+' N/A</span>';
+  }
+  return '<div class="sr">'+btn(iosUrl(g.i),'🍎','App Store','bi')+btn(andUrl(g.a),'🤖','Play','ba')+'</div>';
+}
+
+function renderStrip(){
+  const el=document.getElementById('strip');
+  G.filter(g=>g.hot).forEach(g=>{
+    const c=document.createElement('div');c.className='sc';
+    c.innerHTML='<div class="sc-img"><img src="'+g.iconUrl+'" alt="'+g.n+'" loading="lazy"></div><div class="sc-name">'+g.n+'</div><div class="sc-date">'+g.d+' Mars</div>';
+    c.addEventListener('click',()=>{const t=document.getElementById('day'+g.d);if(t)t.closest('.dg').scrollIntoView({behavior:'smooth',block:'start'});});
+    el.appendChild(c);
+  });
+}
+
+function renderList(){
+  const list=document.getElementById('list');
+  const grp={};
+  G.forEach(g=>{if(!grp[g.d])grp[g.d]={w:g.w,items:[]};grp[g.d].items.push(g);});
+  Object.keys(grp).sort().forEach(date=>{
+    const{w,items}=grp[date];
+    const sec=document.createElement('div');sec.className='dg';sec.id='day'+date;
+    sec.innerHTML='<div class="dh"><div class="dt"><span class="dn">'+date+'</span><span class="dw">'+w+'</span></div><div class="dhr"></div><div class="dc">'+items.length+' sortie'+(items.length>1?'s':'')+'</div></div>';
+    const grid=document.createElement('div');grid.className='gg';
+    items.forEach(g=>{
+      const card=document.createElement('div');card.className='gc'+(g.hot?' hot':'');
+      if(g.hot) card.innerHTML='<div class="ribbon">⭐ Top</div>';
+      const top=document.createElement('div');top.className='ct';
+      top.innerHTML='<div class="ci"><img src="'+g.iconUrl+'" alt="'+g.n+'" loading="lazy"></div><div class="cinfo"><div class="cn">'+g.n+'</div><div class="ctags">'+g.t.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div></div>';
+      card.appendChild(top);
+      card.insertAdjacentHTML('beforeend',storeRow(g));
+      grid.appendChild(card);
+    });
+    sec.appendChild(grid);list.appendChild(sec);
+  });
+}
+
+function initVisits(){
+  const u=encodeURIComponent(location.href.split('?')[0]);
+  fetch('https://hits.seeyoufarm.com/api/count/incr/badge.svg?url='+u+'&count_bg=%237C4DFF&title_bg=%231E1C2C&title=vues&edge_flat=true')
+    .then(r=>r.text()).then(svg=>{
+      const m=svg.match(/>(\d[\d,]*)</g);
+      if(m&&m.length){document.getElementById('vc').textContent=m[m.length-1].replace(/[<>]/g,'').replace(/,/g,'');}
+      else document.getElementById('vc').textContent='actif';
+    }).catch(()=>{document.getElementById('vc').textContent='actif';});
+}
+
+renderStrip();renderList();initVisits();
+<\/script>
+</body>
+</html>`;
+}
+</script>
+
+</body>
+</html>`;
+}
+</script>
+</body>
+</html>
