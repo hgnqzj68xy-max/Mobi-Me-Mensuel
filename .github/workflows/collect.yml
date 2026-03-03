@@ -1,0 +1,72 @@
+name: 📱 Collecte mensuelle des sorties mobiles
+
+on:
+
+# Lance automatiquement le 1er de chaque mois à 8h UTC
+
+schedule:
+- cron: ‘0 8 1 * *’
+
+# Permet aussi de lancer manuellement depuis l’onglet Actions
+
+workflow_dispatch:
+inputs:
+month:
+description: ‘Mois cible (ex: 2026-05) — laisser vide = mois prochain’
+required: false
+default: ‘’
+sources:
+description: ‘Sources à scraper’
+required: false
+default: ‘gamingonphone,toucharcade,itunes’
+
+jobs:
+collect:
+runs-on: ubuntu-latest
+permissions:
+contents: write   # pour committer le JSON généré
+
+```
+steps:
+  - name: ⬇️ Checkout repo
+    uses: actions/checkout@v4
+
+  - name: 🟢 Setup Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: '20'
+
+  - name: 📦 Installer les dépendances
+    run: |
+      cd .github/scripts
+      npm install
+
+  - name: 🕷️ Scraper les sources
+    env:
+      TARGET_MONTH: ${{ github.event.inputs.month }}
+      SOURCES: ${{ github.event.inputs.sources || 'gamingonphone,toucharcade,itunes' }}
+    run: |
+      cd .github/scripts
+      node collect.js
+
+  - name: 📊 Résumé de la collecte
+    run: |
+      MONTH=$(date -d "$(date +%Y-%m-01) + 1 month" +%Y-%m 2>/dev/null || date -v+1m +%Y-%m)
+      FILE="data/${TARGET_MONTH:-$MONTH}.json"
+      if [ -f "$FILE" ]; then
+        COUNT=$(node -e "const d=require('./$FILE');console.log(d.games?.length||0)")
+        echo "✅ $COUNT jeux collectés → $FILE"
+        echo "### 📱 Collecte terminée" >> $GITHUB_STEP_SUMMARY
+        echo "- **Fichier** : \`$FILE\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Jeux trouvés** : $COUNT" >> $GITHUB_STEP_SUMMARY
+        echo "- **Prochaine étape** : ouvrir \`admin.html\` en local pour valider" >> $GITHUB_STEP_SUMMARY
+      fi
+
+  - name: 💾 Committer le fichier JSON
+    run: |
+      git config user.name  "github-actions[bot]"
+      git config user.email "github-actions[bot]@users.noreply.github.com"
+      git add data/
+      git diff --staged --quiet || git commit -m "📱 Collecte automatique $(date +'%B %Y')"
+      git push
+```
