@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🛠️ Admin — Sorties Mobiles</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07080d;--panel:#0e1016;--card:#13161e;--border:#1e2230;
+  --pu:#7b5ea7;--pul:#a78bda;--pk:#e05c8a;
+  --green:#4ade80;--yellow:#facc15;--red:#f87171;--blue:#60a5fa;--teal:#2dd4bf;
+  --text:#dde1f0;--muted:#5a6080;
+  --mono:'DM Mono',monospace;--head:'Syne',sans-serif;--body:'Nunito',sans-serif;
+}
+html,body{background:var(--bg);color:var(--text);min-height:100vh;font-family:var(--mono);font-size:13px;}
+
+/* ── LAYOUT ── */
+.shell{display:grid;grid-template-columns:220px 1fr;grid-template-rows:52px 1fr;min-height:100vh;}
+.topbar{grid-column:1/-1;background:var(–panel);border-bottom:1px solid var(–border);
+display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:12px;}
+.sidebar{background:var(–panel);border-right:1px solid var(–border);padding:16px 12px;
+display:flex;flex-direction:column;gap:4px;overflow-y:auto;}
+.main{overflow-y:auto;padding:20px;}
+
+/* ── TOPBAR ── */
+.logo{font-family:var(–head);font-size:16px;font-weight:900;color:var(–text);
+display:flex;align-items:center;gap:8px;}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(–pul);
+box-shadow:0 0 8px var(–pul);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.month-selector{display:flex;align-items:center;gap:8px;}
+.month-selector select{font-family:var(–mono);background:var(–card);color:var(–text);
+border:1px solid var(–border);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;}
+.top-actions{display:flex;gap:8px;}
+
+/* ── BUTTONS ── */
+.btn{font-family:var(–mono);font-size:11px;font-weight:500;border-radius:6px;
+padding:6px 14px;cursor:pointer;border:1px solid var(–border);
+background:var(–card);color:var(–text);transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(–pul);color:var(–pul);}
+.btn.primary{background:var(–pu);color:#fff;border-color:var(–pu);}
+.btn.primary:hover{background:var(–pul);border-color:var(–pul);}
+.btn.success{background:rgba(74,222,128,.15);color:var(–green);border-color:rgba(74,222,128,.3);}
+.btn.success:hover{background:rgba(74,222,128,.25);}
+.btn.danger{background:rgba(248,113,113,.1);color:var(–red);border-color:rgba(248,113,113,.3);}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+
+/* ── SIDEBAR ── */
+.sidebar-label{font-size:9px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+color:var(–muted);padding:10px 8px 4px;}
+.sidebar-stat{display:flex;align-items:center;justify-content:space-between;
+padding:6px 8px;border-radius:6px;font-size:12px;color:var(–text);}
+.sidebar-stat .val{font-weight:500;color:var(–pul);}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;
+font-size:12px;color:var(–muted);cursor:pointer;transition:all .12s;border:none;
+background:transparent;width:100%;text-align:left;}
+.nav-item:hover{background:var(–card);color:var(–text);}
+.nav-item.active{background:rgba(123,94,167,.2);color:var(–pul);}
+.filter-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;}
+.sec-title{font-family:var(–head);font-size:20px;font-weight:800;color:var(–text);}
+.sec-sub{font-size:11px;color:var(–muted);margin-top:2px;}
+.progress-area{background:var(–panel);border:1px solid var(–border);border-radius:8px;
+padding:12px 14px;margin-bottom:16px;display:none;}
+.progress-area.show{display:block;}
+.prog-bar-bg{background:var(–bg);border-radius:3px;height:4px;overflow:hidden;margin-top:6px;}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(–pu),var(–pk));
+border-radius:3px;transition:width .3s;width:0%;}
+.prog-log{font-size:10px;color:var(–muted);margin-top:6px;height:40px;overflow-y:auto;}
+
+/* ── IMPORT ZONE ── */
+.import-zone{border:2px dashed var(–border);border-radius:10px;padding:32px;
+text-align:center;color:var(–muted);cursor:pointer;transition:all .2s;margin-bottom:16px;}
+.import-zone:hover,.import-zone.drag{border-color:var(–pul);color:var(–pul);
+background:rgba(123,94,167,.05);}
+.import-zone input{display:none;}
+.import-icon{font-size:32px;margin-bottom:8px;}
+.import-text{font-size:13px;}
+.import-sub{font-size:11px;margin-top:4px;opacity:.6;}
+
+/* ── GAME CARDS ── */
+.games-grid{display:flex;flex-direction:column;gap:6px;}
+.day-group{margin-bottom:20px;}
+.day-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.day-badge{background:var(–pu);color:#fff;font-family:var(–head);font-size:13px;
+font-weight:800;padding:3px 10px;border-radius:6px;white-space:nowrap;}
+.day-line{flex:1;height:1px;background:var(–border);}
+.day-count{font-size:11px;color:var(–muted);}
+
+.gc{background:var(–card);border:1px solid var(–border);border-radius:10px;
+padding:10px 12px;display:flex;align-items:center;gap:12px;
+transition:border-color .15s,background .15s;position:relative;}
+.gc:hover{border-color:rgba(123,94,167,.3);}
+.gc.is-hot{border-color:rgba(123,94,167,.5);background:rgba(123,94,167,.05);}
+.gc.is-conflict{border-color:rgba(248,113,113,.4);}
+.gc.is-uncertain{opacity:.7;}
+
+.gc-icon{width:42px;height:42px;border-radius:10px;object-fit:cover;
+background:var(–panel);border:1px solid var(–border);flex-shrink:0;}
+.gc-body{flex:1;min-width:0;}
+.gc-name{font-family:var(–body);font-weight:800;font-size:13px;color:var(–text);
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gc-meta{display:flex;gap:6px;align-items:center;margin-top:4px;flex-wrap:wrap;}
+.gc-date{font-size:11px;color:var(–muted);}
+.gc-conf{font-size:10px;font-weight:500;padding:1px 6px;border-radius:3px;}
+.conf-high{background:rgba(74,222,128,.15);color:var(–green);}
+.conf-mid {background:rgba(250,204,21,.15);color:var(–yellow);}
+.conf-low {background:rgba(248,113,113,.15);color:var(–red);}
+.gc-src{font-size:10px;color:var(–muted);padding:1px 6px;border-radius:3px;
+border:1px solid var(–border);}
+.conflict-badge{font-size:10px;color:var(–red);padding:1px 6px;border-radius:3px;
+border:1px solid rgba(248,113,113,.3);background:rgba(248,113,113,.08);}
+
+.gc-actions{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+.tog-hot{width:28px;height:28px;border-radius:6px;border:1px solid var(–border);
+background:transparent;color:var(–muted);cursor:pointer;font-size:14px;
+display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.tog-hot:hover{border-color:var(–pul);color:var(–pul);}
+.gc.is-hot .tog-hot{background:rgba(123,94,167,.2);border-color:var(–pul);color:var(–pul);}
+.del-btn{width:24px;height:24px;border-radius:5px;border:1px solid transparent;
+background:transparent;color:var(–muted);cursor:pointer;font-size:12px;
+display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.del-btn:hover{border-color:rgba(248,113,113,.3);color:var(–red);}
+
+/* tags éditable */
+.tag-edit{font-size:10px;background:transparent;border:none;border-bottom:1px dashed var(–border);
+color:var(–muted);font-family:var(–mono);width:120px;outline:none;padding:1px 0;}
+.tag-edit:focus{border-color:var(–pul);color:var(–text);}
+
+/* ── ADD GAME FORM ── */
+.add-form{background:var(–panel);border:1px solid var(–border);border-radius:10px;
+padding:16px;margin-bottom:16px;display:none;}
+.add-form.show{display:block;}
+.form-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
+.form-row input{font-family:var(–mono);background:var(–card);color:var(–text);
+border:1px solid var(–border);border-radius:6px;padding:6px 10px;font-size:12px;
+width:100%;outline:none;transition:border-color .15s;}
+.form-row input:focus{border-color:var(–pul);}
+.form-row input::placeholder{color:var(–muted);}
+
+/* ── GENERATE SECTION ── */
+.gen-panel{background:var(–panel);border:1px solid var(–border);border-radius:10px;padding:20px;}
+.gen-title{font-family:var(–head);font-size:16px;font-weight:800;margin-bottom:12px;}
+.gen-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.gen-opt{display:flex;align-items:center;gap:8px;font-size:12px;color:var(–muted);cursor:pointer;}
+.gen-opt input{accent-color:var(–pu);}
+.gen-opt:hover{color:var(–text);}
+.gen-dl{display:none;margin-top:14px;}
+.gen-dl a{display:inline-flex;align-items:center;gap:8px;background:var(–green);color:#000;
+font-family:var(–body);font-weight:800;font-size:14px;padding:12px 24px;
+border-radius:8px;text-decoration:none;transition:background .15s;}
+.gen-dl a:hover{background:#22c55e;}
+
+/* ── EMPTY / PLACEHOLDER ── */
+.empty{text-align:center;padding:50px 20px;color:var(–muted);}
+.empty-icon{font-size:40px;margin-bottom:10px;}
+.empty h3{font-family:var(–head);font-size:16px;color:var(–text);margin-bottom:6px;}
+.empty p{font-size:12px;line-height:1.6;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:20px;right:20px;background:var(–card);border:1px solid var(–border);
+border-radius:8px;padding:10px 16px;font-size:12px;color:var(–text);z-index:1000;
+transform:translateY(60px);opacity:0;transition:all .3s;}
+.toast.show{transform:translateY(0);opacity:1;}
+</style>
+
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- TOPBAR -->
+
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      🛠️ Admin — Sorties Mobiles
+    </div>
+    <div class="month-selector">
+      <span style="color:var(--muted);font-size:11px">Mois :</span>
+      <select id="monthSel" onchange="onMonthChange()">
+        <option value="2026-03">Mars 2026</option>
+        <option value="2026-04">Avril 2026</option>
+        <option value="2026-05">Mai 2026</option>
+        <option value="2026-06">Juin 2026</option>
+      </select>
+    </div>
+    <div class="top-actions">
+      <button class="btn" onclick="verifyAll()" id="verifyBtn">🔍 Vérifier dates</button>
+      <button class="btn primary" onclick="showSection('generate')">⚡ Générer index.html</button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+
+  <div class="sidebar">
+    <div class="sidebar-label">Vue d'ensemble</div>
+    <div class="sidebar-stat"><span>Total</span><span class="val" id="s-total">–</span></div>
+    <div class="sidebar-stat"><span>✅ Confirmés</span><span class="val" id="s-ok" style="color:var(--green)">–</span></div>
+    <div class="sidebar-stat"><span>🟡 Probables</span><span class="val" id="s-mid" style="color:var(--yellow)">–</span></div>
+    <div class="sidebar-stat"><span>⚠️ Conflits</span><span class="val" id="s-conf" style="color:var(--red)">–</span></div>
+    <div class="sidebar-stat"><span>⭐ Incontournables</span><span class="val" id="s-hot" style="color:var(--pul)">–</span></div>
+
+```
+<div class="sidebar-label" style="margin-top:8px">Filtres</div>
+<button class="nav-item active" onclick="setFilter('all',this)">
+  <div class="filter-dot" style="background:var(--pul)"></div> Tous les jeux
+</button>
+<button class="nav-item" onclick="setFilter('hot',this)">
+  <div class="filter-dot" style="background:var(--pul)"></div> ⭐ Incontournables
+</button>
+<button class="nav-item" onclick="setFilter('confirmed',this)">
+  <div class="filter-dot" style="background:var(--green)"></div> Confirmés
+</button>
+<button class="nav-item" onclick="setFilter('conflict',this)">
+  <div class="filter-dot" style="background:var(--red)"></div> Conflits
+</button>
+<button class="nav-item" onclick="setFilter('uncertain',this)">
+  <div class="filter-dot" style="background:var(--yellow)"></div> Incertains
+</button>
+
+<div class="sidebar-label" style="margin-top:8px">Navigation</div>
+<button class="nav-item" onclick="showSection('games')">📋 Liste des jeux</button>
+<button class="nav-item" onclick="showSection('import')">📥 Importer JSON</button>
+<button class="nav-item" onclick="showSection('generate')">⚡ Générer</button>
+```
+
+  </div>
+
+  <!-- MAIN -->
+
+  <div class="main">
+
+```
+<!-- SECTION: IMPORT -->
+<div id="sec-import">
+  <div class="sec-hdr">
+    <div>
+      <div class="sec-title">📥 Importer les données</div>
+      <div class="sec-sub">Charge le fichier JSON généré par GitHub Actions</div>
+    </div>
+    <button class="btn" onclick="loadMars2026()">📂 Charger Mars 2026 (démo)</button>
+  </div>
+
+  <div class="import-zone" id="dropZone" onclick="document.getElementById('fileInput').click()"
+    ondragover="ev.preventDefault();this.classList.add('drag')"
+    ondragleave="this.classList.remove('drag')"
+    ondrop="handleDrop(event)">
+    <input type="file" id="fileInput" accept=".json" onchange="handleFile(this.files[0])">
+    <div class="import-icon">📄</div>
+    <div class="import-text">Glisse le fichier <strong>data/2026-04.json</strong> ici</div>
+    <div class="import-sub">ou clique pour parcourir · Format JSON généré par GitHub Actions</div>
+  </div>
+
+  <div style="text-align:center;color:var(--muted);font-size:12px;margin-top:8px">
+    — ou —
+  </div>
+  <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;">
+    <button class="btn" onclick="pastJSON()">📋 Coller du JSON</button>
+    <button class="btn" onclick="showSection('games');showAddForm()">✏️ Saisie manuelle</button>
+  </div>
+</div>
+
+<!-- SECTION: GAMES -->
+<div id="sec-games" style="display:none">
+  <div class="sec-hdr">
+    <div>
+      <div class="sec-title" id="games-title">Jeux — Mars 2026</div>
+      <div class="sec-sub" id="games-sub">Charge un fichier JSON ou utilise la saisie manuelle</div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn" onclick="showAddForm()">+ Ajouter</button>
+      <button class="btn" onclick="exportJSON()">💾 Exporter JSON</button>
+    </div>
+  </div>
+
+  <!-- Barre de vérification -->
+  <div class="progress-area" id="prog-area">
+    <div style="display:flex;justify-content:space-between;font-size:11px;">
+      <span id="prog-lbl">Vérification iTunes…</span>
+      <span id="prog-cnt" style="color:var(--muted)">0/0</span>
+    </div>
+    <div class="prog-bar-bg"><div class="prog-bar" id="prog-bar"></div></div>
+    <div class="prog-log" id="prog-log"></div>
+  </div>
+
+  <!-- Formulaire d'ajout -->
+  <div class="add-form" id="add-form">
+    <div class="form-row">
+      <input id="f-name" placeholder="Nom du jeu *" type="text">
+      <input id="f-date" placeholder="Date (2026-04-15) *" type="date">
+      <input id="f-ios"  placeholder="App Store ID (ex: 123456)">
+      <input id="f-and"  placeholder="Package Android">
+    </div>
+    <div style="display:flex;gap:8px;">
+      <input id="f-tags" placeholder="Tags (séparés par virgule)" style="flex:1;font-family:var(--mono);background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;outline:none;">
+      <button class="btn primary" onclick="addGame()">Ajouter</button>
+      <button class="btn" onclick="document.getElementById('add-form').classList.remove('show')">Annuler</button>
+    </div>
+  </div>
+
+  <div id="games-list"></div>
+</div>
+
+<!-- SECTION: GENERATE -->
+<div id="sec-generate" style="display:none">
+  <div class="sec-hdr">
+    <div>
+      <div class="sec-title">⚡ Générer index.html</div>
+      <div class="sec-sub">Récupère les images officielles (App Store) puis génère le calendrier</div>
+    </div>
+  </div>
+  <div class="gen-panel">
+    <div class="gen-title">Options de génération</div>
+    <div class="gen-options">
+      <label class="gen-opt"><input type="checkbox" id="opt-screenshots" checked> Screenshots App Store (mosaïque)</label>
+      <label class="gen-opt"><input type="checkbox" id="opt-icons" checked> Icônes App Store (liste)</label>
+      <label class="gen-opt"><input type="checkbox" id="opt-official" checked> Sites officiels en fallback</label>
+      <label class="gen-opt"><input type="checkbox" id="opt-gplay" checked> Google Play en fallback</label>
+    </div>
+    <div class="progress-area show" id="gen-prog" style="margin-bottom:0">
+      <div style="display:flex;justify-content:space-between;font-size:11px;">
+        <span id="gen-lbl">En attente…</span>
+        <span id="gen-cnt" style="color:var(--muted)"></span>
+      </div>
+      <div class="prog-bar-bg"><div class="prog-bar" id="gen-bar"></div></div>
+      <div class="prog-log" id="gen-log"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button class="btn primary" onclick="generate()" id="gen-btn">🚀 Lancer la génération</button>
+    </div>
+    <div class="gen-dl" id="gen-dl">
+      <p style="font-size:12px;color:var(--green);margin-bottom:10px" id="gen-summary"></p>
+      <a id="gen-link" href="#" download="index.html">⬇️ Télécharger index.html</a>
+    </div>
+  </div>
+</div>
+```
+
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════
+let GAMES   = [];
+let MONTH   = '2026-03';
+let FILTER  = 'all';
+
+const MONTH_NAMES = {
+  '01':'Janvier','02':'Février','03':'Mars','04':'Avril','05':'Mai','06':'Juin',
+  '07':'Juillet','08':'Août','09':'Septembre','10':'Octobre','11':'Novembre','12':'Décembre'
+};
+const DAYS = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+
+// ════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════
+function showSection(id) {
+  ['import','games','generate'].forEach(s => {
+    document.getElementById('sec-'+s).style.display = s===id ? 'block' : 'none';
+  });
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+}
+
+function showAddForm(){
+  document.getElementById('add-form').classList.add('show');
+  document.getElementById('f-name').focus();
+}
+
+// ════════════════════════════════════════════════
+//  IMPORT
+// ════════════════════════════════════════════════
+function handleDrop(ev) {
+  ev.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag');
+  const file = ev.dataTransfer.files[0];
+  if (file) handleFile(file);
+}
+
+function handleFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      loadData(data);
+    } catch {
+      toast('❌ Fichier JSON invalide', 'red');
+    }
+  };
+  reader.readAsText(file);
+}
+
+async function pastJSON() {
+  const txt = prompt('Colle le contenu JSON ici :');
+  if (!txt) return;
+  try {
+    loadData(JSON.parse(txt));
+  } catch {
+    toast('❌ JSON invalide', 'red');
+  }
+}
+
+function loadData(data) {
+  // Accepte le format GitHub Actions (data.games) ou un tableau brut
+  const raw = Array.isArray(data) ? data : (data.games || []);
+  MONTH = data.month || MONTH;
+
+  GAMES = raw.map((g, idx) => ({
+    id:         idx,
+    d:          g.d || g.date?.slice(8,10) || '01',
+    date:       g.date || `${MONTH}-${g.d||'01'}`,
+    w:          g.w || dayOfWeek(g.date || `${MONTH}-${g.d||'01'}`),
+    n:          g.n || g.name || g.appStoreName || 'Inconnu',
+    t:          g.t || (g.genre ? [g.genre] : []),
+    i:          g.i || g.appStoreId || '',
+    a:          g.a || '',
+    hot:        !!g.hot,
+    confidence: g.confidence || 50,
+    dateConflict: !!g.dateConflict,
+    sources:    g.sources || ['Manuel'],
+    icon:       g.icon || null,
+    iconUrl:    g.icon || null,
+    screenshotUrl: null,
+  }));
+
+  toast(`✅ ${GAMES.length} jeux chargés`, 'green');
+  showSection('games');
+  renderGames();
+  updateStats();
+}
+
+// ════════════════════════════════════════════════
+//  DONNÉES DÉMO (Mars 2026)
+// ════════════════════════════════════════════════
+function loadMars2026() {
+  const demo = {month:'2026-03', games:[
+    {d:"01",w:"Dim",n:"Fortalis",              t:["Tower Defense"],       i:"6754587635",a:"",                                              hot:false,confidence:72,sources:["GamingOnPhone"]},
+    {d:"01",w:"Dim",n:"Beasts Evolved 2",      t:["RPG"],                 i:"6751095369",a:"com.ntfusion.beastsevolved2",                   hot:false,confidence:68,sources:["GamingOnPhone"]},
+    {d:"01",w:"Dim",n:"Hyper Bouncy Ball",     t:["Arcade","Casual"],     i:"6755916701",a:"com.crearthor.bouncyball",                      hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"01",w:"Dim",n:"Crazy Gunner: Pixel",   t:["Survivor"],            i:"6757685841",a:"com.leguas.gunstorm",                          hot:false,confidence:60,sources:["GamingOnPhone"]},
+    {d:"02",w:"Lun",n:"Sea Fantasy",           t:["RPG"],                 i:"6753211881",a:"com.YSK.SF",                                   hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"03",w:"Mar",n:"Let's Go School",       t:["Casual"],              i:"6756289950",a:"com.run.school",                               hot:false,confidence:60,sources:["GamingOnPhone"]},
+    {d:"03",w:"Mar",n:"Iron Saga: ZERO",       t:["RPG","Mecha"],         i:"6754362752",a:"com.gameduchy.jdzdZero.jp",                    hot:false,confidence:70,sources:["GamingOnPhone"]},
+    {d:"04",w:"Mer",n:"Nowhere Prophet",       t:["Card","Roguelike"],    i:"6740233187",a:"com.SharkbombStudios.NowhereProphet",          hot:true, confidence:92,sources:["GamingOnPhone","iTunes"]},
+    {d:"04",w:"Mer",n:"Hatch Dragons",         t:["Simulation"],          i:"6746389113",a:"com.runawayplay.dragons",                      hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"05",w:"Jeu",n:"Neo Artifacts",         t:["RPG Tactique"],        i:"6569253108",a:"com.cipaishe.wuhua.google",                    hot:true, confidence:88,sources:["GamingOnPhone","iTunes"]},
+    {d:"05",w:"Jeu",n:"Taimanin Squad",        t:["Action RPG"],          i:"6755016024",a:"com.GREMORYGames.TaimaninSquad",               hot:false,confidence:70,sources:["GamingOnPhone"]},
+    {d:"05",w:"Jeu",n:"StoneAge: Idle",        t:["Idle","RPG"],          i:"6737408689",a:"com.netmarble.stonkey",                        hot:false,confidence:75,sources:["GamingOnPhone","iTunes"]},
+    {d:"05",w:"Jeu",n:"Heavenhells",           t:["Anime","RPG"],         i:"6755996889",a:"com.clovergames.avalonclient",                 hot:false,confidence:60,sources:["GamingOnPhone"]},
+    {d:"06",w:"Ven",n:"Catch & Build: Pals",  t:["Catch-em-all"],        i:"6752563811",a:"com.sgclglo.google",                          hot:false,confidence:62,sources:["GamingOnPhone"]},
+    {d:"06",w:"Ven",n:"Fantamon: Idle RPG",   t:["Idle","RPG"],          i:"6476379307",a:"com.sdg.socglobal",                           hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"06",w:"Ven",n:"Dungeon Antiqua 2",    t:["Dungeon","RPG"],       i:"6759427578",a:"",                                             hot:false,confidence:55,sources:["GamingOnPhone"]},
+    {d:"06",w:"Ven",n:"Wicked Defense",       t:["Tower Defense"],       i:"6748435197",a:"com.superplanet.defense",                      hot:false,confidence:68,sources:["GamingOnPhone"]},
+    {d:"06",w:"Ven",n:"Pop Epoch",            t:["Casual"],              i:"6754275296",a:"com.nexwave.popepoch.android",                 hot:false,confidence:62,sources:["GamingOnPhone"]},
+    {d:"07",w:"Sam",n:"Knightbound",          t:["Dark Fantasy","RPG"],  i:"6751602047",a:"",                                             hot:false,confidence:58,sources:["GamingOnPhone"]},
+    {d:"10",w:"Mar",n:"Nova Drift",           t:["Roguelike","Spatial"], i:"6744329971",a:"",                                             hot:true, confidence:90,sources:["GamingOnPhone","iTunes"]},
+    {d:"10",w:"Mar",n:"Subnautica: Below Zero",t:["Survival"],           i:"6749406060",a:"com.unknownworlds.subnauticabelowzero",         hot:true, confidence:94,sources:["GamingOnPhone","iTunes","TouchArcade"]},
+    {d:"11",w:"Mer",n:"Kuroko's Basketball SR",t:["Sport","Anime"],      i:"6756696362",a:"com.lmdgame.kuroko.sea",                       hot:false,confidence:72,sources:["GamingOnPhone"]},
+    {d:"11",w:"Mer",n:"MOCHI-O",              t:["Casual","Puzzle"],     i:"6670490274",a:"com.zxima.mochio",                             hot:false,confidence:60,sources:["GamingOnPhone"]},
+    {d:"12",w:"Jeu",n:"Mattel Match",         t:["Match","Puzzle"],      i:"6621181299",a:"com.uken.mattel.match",                        hot:false,confidence:78,sources:["GamingOnPhone","iTunes"]},
+    {d:"12",w:"Jeu",n:"Ragnarok Sharing Hero",t:["RPG"],                 i:"6756650624",a:"com.funigloo.android.sharing.hero",            hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"12",w:"Jeu",n:"Stray Cat Doors 3",   t:["Escape","Puzzle"],     i:"6755174113",a:"com.pulsmo.StrayCatDoors32nd",                 hot:false,confidence:70,sources:["GamingOnPhone"]},
+    {d:"13",w:"Ven",n:"BALL x PIT",          t:["Devolver","Roguelite"],i:"6738703497",a:"com.devolverdigital.ballxpit",                 hot:true, confidence:95,sources:["GamingOnPhone","iTunes","TouchArcade"]},
+    {d:"13",w:"Ven",n:"BeyBlade X Xone",     t:["Anime","Action"],      i:"6752970992",a:"com.crunchyroll.gv.beybladexxone.game",        hot:false,confidence:68,sources:["GamingOnPhone"]},
+    {d:"14",w:"Sam",n:"Iron Defenders",      t:["Tower Defense"],       i:"6751635131",a:"com.superbox.aos.ttdefense",                   hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"16",w:"Lun",n:"Dino Cataclysm",     t:["Survival","Strategy"], i:"6757999357",a:"com.slg.dinocataclysm",                        hot:false,confidence:62,sources:["GamingOnPhone"]},
+    {d:"16",w:"Lun",n:"City Island 5: Deluxe",t:["City Builder"],       i:"6757596108",a:"com.sparklingsociety.cityisland5rebuildittownsimskylinelegacyempire",hot:false,confidence:78,sources:["GamingOnPhone","iTunes"]},
+    {d:"17",w:"Mar",n:"Baseball Hits 26",    t:["Sport","MLB"],         i:"6736774022",a:"com.ares.baseball",                            hot:false,confidence:72,sources:["GamingOnPhone"]},
+    {d:"17",w:"Mar",n:"Crazy Tractor",       t:["Arcade"],              i:"6747202202",a:"",                                             hot:false,confidence:55,sources:["GamingOnPhone"]},
+    {d:"17",w:"Mar",n:"Genesis War",         t:["Strategy"],            i:"6749479176",a:"com.linegames.gmg",                           hot:false,confidence:68,sources:["GamingOnPhone"]},
+    {d:"17",w:"Mar",n:"Tomorrow: A World Beyond",t:["Aventure"],         i:"6759113803",a:"",                                             hot:false,confidence:58,sources:["GamingOnPhone"]},
+    {d:"18",w:"Mer",n:"Scritchy Scratchy",   t:["Casual","Créatif"],   i:"6758328352",a:"",                                             hot:false,confidence:52,sources:["GamingOnPhone"]},
+    {d:"19",w:"Jeu",n:"Jetpack Joyride Racing",t:["Racing","Arcade"],   i:"6740550251",a:"com.halfbrick.aeroracer",                      hot:true, confidence:91,sources:["GamingOnPhone","iTunes","TouchArcade"]},
+    {d:"19",w:"Jeu",n:"StarSavior",          t:["RPG","Cosmique"],     i:"6443597557",a:"com.studiobside.starMain",                     hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"19",w:"Jeu",n:"Art of Flora",        t:["Puzzle","Cosy"],      i:"6743834964",a:"",                                             hot:false,confidence:62,sources:["GamingOnPhone"]},
+    {d:"19",w:"Jeu",n:"EDEN: The Last Line", t:["RPG"],                 i:"6754559095",a:"net.gameduo.dfd",                             hot:false,confidence:66,sources:["GamingOnPhone"]},
+    {d:"20",w:"Ven",n:"Furia Rising",        t:["Idle","Action"],      i:"6739352636",a:"com.idle.furia",                               hot:false,confidence:62,sources:["GamingOnPhone"]},
+    {d:"20",w:"Ven",n:"Order of Kings",      t:["Stratégie"],          i:"6756338531",a:"com.dequ.m3dw2",                              hot:false,confidence:60,sources:["GamingOnPhone"]},
+    {d:"20",w:"Ven",n:"Coffee Talk: Ep.1",  t:["Visual Novel"],       i:"6738106578",a:"com.chorusworldwide.cteps1",                   hot:false,confidence:75,sources:["GamingOnPhone","iTunes"]},
+    {d:"23",w:"Lun",n:"Seven Deadly Sins: Origin",t:["RPG","Open World"],i:"6744205088",a:"com.netmarble.nanaori",                      hot:true, confidence:93,sources:["GamingOnPhone","iTunes","TouchArcade"]},
+    {d:"24",w:"Mar",n:"Atheria",             t:["RPG"],                 i:"6755227605",a:"co.tamatem.rpg.etheria",                      hot:false,confidence:62,sources:["GamingOnPhone"]},
+    {d:"25",w:"Mer",n:"Dora: Explore & Play",t:["Enfants","Aventure"], i:"6742843999",a:"com.budgestudios.googleplay.DoraDXP",          hot:false,confidence:70,sources:["GamingOnPhone","iTunes"]},
+    {d:"26",w:"Jeu",n:"CookieRun: OvenSmash",t:["Combat","PvP"],       i:"6550902247",a:"com.devsisters.cos",                          hot:true, confidence:90,sources:["GamingOnPhone","iTunes"]},
+    {d:"26",w:"Jeu",n:"Mongil: Star Dive",   t:["RPG","Action"],       i:"6483252725",a:"com.netmarble.monster2",                      hot:false,confidence:72,sources:["GamingOnPhone"]},
+    {d:"26",w:"Jeu",n:"Easy Delivery Co.",  t:["Casual"],              i:"6753945058",a:"com.doghowlgames.EasyDeliveryCo",             hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"26",w:"Jeu",n:"Paranoize",          t:["Arcade"],              i:"6639605332",a:"com.zigzagame.paranoize",                     hot:false,confidence:60,sources:["GamingOnPhone"]},
+    {d:"27",w:"Ven",n:"Gears Tower Defense",t:["Tower Defense","Merge"],i:"6758816312",a:"com.defense.tower.gears.merge",              hot:false,confidence:65,sources:["GamingOnPhone"]},
+    {d:"31",w:"Mar",n:"Spirit Summoners",   t:["RPG"],                 i:"6754621437",a:"com.f5game.ss",                               hot:false,confidence:62,sources:["GamingOnPhone"]},
+    {d:"31",w:"Mar",n:"Soul Guardians 2",   t:["Action RPG"],          i:"6745202397",a:"com.proximadx.projectsoul",                  hot:false,confidence:65,sources:["GamingOnPhone"]},
+  ]};
+  loadData(demo);
+}
+
+// ════════════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════════════
+function renderGames() {
+  const [y,m] = MONTH.split('-');
+  document.getElementById('games-title').textContent =
+    `Jeux — ${MONTH_NAMES[m]} ${y}`;
+  document.getElementById('games-sub').textContent =
+    `${GAMES.length} jeux · ${GAMES.filter(g=>g.hot).length} incontournables`;
+
+  let data = [...GAMES];
+  if (FILTER === 'hot')       data = data.filter(g => g.hot);
+  else if (FILTER === 'confirmed') data = data.filter(g => g.confidence >= 80);
+  else if (FILTER === 'conflict')  data = data.filter(g => g.dateConflict);
+  else if (FILTER === 'uncertain') data = data.filter(g => g.confidence < 50);
+
+  // Groupe par jour
+  const grp = {};
+  data.forEach(g => { if(!grp[g.d]) grp[g.d]=[]; grp[g.d].push(g); });
+
+  const el = document.getElementById('games-list');
+  if (!data.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div>
+      <h3>Aucun jeu</h3><p>Aucun jeu ne correspond au filtre actuel.</p></div>`;
+    return;
+  }
+
+  el.innerHTML = Object.keys(grp).sort().map(d => {
+    const items = grp[d];
+    const dayLabel = items[0].w;
+    return `<div class="day-group">
+      <div class="day-hdr">
+        <div class="day-badge">${d} ${dayLabel}</div>
+        <div class="day-line"></div>
+        <div class="day-count">${items.length} jeu${items.length>1?'x':''}</div>
+      </div>
+      <div class="games-grid">
+        ${items.map(g => gameCard(g)).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function gameCard(g) {
+  const conf = g.confidence || 50;
+  const confCls = conf>=80?'conf-high':conf>=50?'conf-mid':'conf-low';
+  const confLbl = conf>=80?`✅ ${conf}%`:conf>=50?`🟡 ${conf}%`:`⚠️ ${conf}%`;
+  const icon = g.iconUrl || g.icon
+    ? `<img class="gc-icon" src="${g.iconUrl||g.icon}" alt="${g.n}">`
+    : `<div class="gc-icon" style="display:flex;align-items:center;justify-content:center;font-size:20px">🎮</div>`;
+  const srcs = (g.sources||[]).map(s=>`<span class="gc-src">${s}</span>`).join('');
+  const conflict = g.dateConflict ? `<span class="conflict-badge">⚠️ Conflit date</span>` : '';
+
+  return `<div class="gc ${g.hot?'is-hot':''} ${g.dateConflict?'is-conflict':''} ${conf<50?'is-uncertain':''}" id="gc-${g.id}">
+    ${icon}
+    <div class="gc-body">
+      <div class="gc-name">${g.n}</div>
+      <div class="gc-meta">
+        <span class="gc-date">${g.date}</span>
+        <span class="gc-conf ${confCls}">${confLbl}</span>
+        ${srcs}${conflict}
+      </div>
+      <div style="margin-top:4px">
+        <input class="tag-edit" value="${(g.t||[]).join(', ')}" placeholder="tags…"
+          onchange="updateTags(${g.id}, this.value)">
+      </div>
+    </div>
+    <div class="gc-actions">
+      <button class="tog-hot" onclick="toggleHot(${g.id})" title="${g.hot?'Retirer':'Marquer'} incontournable">⭐</button>
+      <button class="del-btn" onclick="deleteGame(${g.id})" title="Supprimer">✕</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════
+//  ACTIONS
+// ════════════════════════════════════════════════
+function toggleHot(id) {
+  const g = GAMES.find(g=>g.id===id);
+  if(g){ g.hot=!g.hot; renderGames(); updateStats(); }
+}
+
+function deleteGame(id) {
+  GAMES = GAMES.filter(g=>g.id!==id);
+  renderGames(); updateStats();
+  toast('Jeu supprimé', 'muted');
+}
+
+function updateTags(id, val) {
+  const g = GAMES.find(g=>g.id===id);
+  if(g) g.t = val.split(',').map(t=>t.trim()).filter(Boolean);
+}
+
+function addGame() {
+  const n    = document.getElementById('f-name').value.trim();
+  const date = document.getElementById('f-date').value;
+  const i    = document.getElementById('f-ios').value.trim();
+  const a    = document.getElementById('f-and').value.trim();
+  const tags = document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  if(!n||!date){ toast('❌ Nom et date requis', 'red'); return; }
+  const d   = date.slice(8,10);
+  const w   = dayOfWeek(date);
+  GAMES.push({ id: Date.now(), d, date, w, n, t:tags, i, a, hot:false, confidence:50, sources:['Manuel'] });
+  GAMES.sort((a,b) => a.date.localeCompare(b.date));
+  ['f-name','f-date','f-ios','f-and','f-tags'].forEach(f=>document.getElementById(f).value='');
+  document.getElementById('add-form').classList.remove('show');
+  renderGames(); updateStats();
+  toast(`✅ ${n} ajouté`, 'green');
+}
+
+// ════════════════════════════════════════════════
+//  VÉRIFICATION iTunes
+// ════════════════════════════════════════════════
+const _cache={};let _cbN=0;
+function iTunes(id){
+  return new Promise(r=>{
+    if(id in _cache){r(_cache[id]);return;}
+    const fn=`_c${_cbN++}`;const s=document.createElement('script');let done=false;
+    window[fn]=d=>{if(done)return;done=true;s.remove();delete window[fn];_cache[id]=d?.results?.[0]||null;r(_cache[id]);};
+    s.onerror=()=>{if(!done){done=true;s.remove();_cache[id]=null;r(null);}};
+    setTimeout(()=>{if(!done){done=true;s.remove();if(window[fn])delete window[fn];_cache[id]=null;r(null);}},8000);
+    s.src=`https://itunes.apple.com/lookup?id=${id}&country=fr&callback=${fn}`;
+    document.head.appendChild(s);
+  });
+}
+
+function plog(msg,cls=''){
+  const el=document.getElementById('prog-log');
+  el.innerHTML+=`<div style="color:var(--${cls||'muted'})">${msg}</div>`;
+  el.scrollTop=el.scrollHeight;
+}
+
+async function verifyAll() {
+  if(!GAMES.length){ toast('Charge d\'abord des jeux', 'yellow'); return; }
+  document.getElementById('prog-area').classList.add('show');
+  document.getElementById('prog-log').innerHTML='';
+  document.getElementById('verifyBtn').disabled=true;
+  const toVerify = GAMES.filter(g=>g.i);
+  const T=toVerify.length;let D=0;
+
+  for(const g of toVerify){
+    const data=await iTunes(g.i);
+    if(data){
+      const storeDate=data.releaseDate?.slice(0,10)||null;
+      g.icon=data.artworkUrl100||null;
+      g.iconUrl=g.icon;
+      if(storeDate){
+        const diff=Math.abs(Math.round((new Date(storeDate)-new Date(g.date))/86400000));
+        g.dateConflict=diff>7;
+        g.confidence=diff===0?Math.min(100,g.confidence+30):diff<=3?Math.min(100,g.confidence+15):diff<=7?g.confidence:Math.max(20,g.confidence-20);
+        plog(`${diff===0?'✅':'⚠️'} ${g.n} — store: ${storeDate}${diff>0?' ('+diff+'j)':''}`,diff===0?'green':diff<=3?'yellow':'red');
+      }else{
+        plog(`❓ ${g.n} — pas encore publié`,'muted');
+      }
+      if(!g.sources.includes('iTunes')) g.sources.push('iTunes');
+    }else{
+      plog(`❌ ${g.n} — introuvable`,'red');
+    }
+    D++;
+    document.getElementById('prog-bar').style.width=`${D/T*100}%`;
+    document.getElementById('prog-cnt').textContent=`${D}/${T}`;
+    document.getElementById('prog-lbl').textContent=g.n;
+    renderGames();updateStats();
+    await new Promise(r=>setTimeout(r,200));
+  }
+  document.getElementById('verifyBtn').disabled=false;
+  document.getElementById('prog-lbl').textContent='✅ Vérification terminée';
+  toast('✅ Vérification terminée','green');
+}
+
+// ════════════════════════════════════════════════
+//  STATS SIDEBAR
+// ════════════════════════════════════════════════
+function updateStats() {
+  document.getElementById('s-total').textContent = GAMES.length;
+  document.getElementById('s-ok').textContent    = GAMES.filter(g=>g.confidence>=80).length;
+  document.getElementById('s-mid').textContent   = GAMES.filter(g=>g.confidence>=50&&g.confidence<80).length;
+  document.getElementById('s-conf').textContent  = GAMES.filter(g=>g.dateConflict).length;
+  document.getElementById('s-hot').textContent   = GAMES.filter(g=>g.hot).length;
+}
+
+function setFilter(f,btn){
+  FILTER=f;
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(GAMES.length) renderGames();
+}
+
+function onMonthChange(){
+  MONTH=document.getElementById('monthSel').value;
+}
+
+function dayOfWeek(iso){return DAYS[new Date(iso+'T12:00:00Z').getDay()];}
+
+// ════════════════════════════════════════════════
+//  EXPORT JSON
+// ════════════════════════════════════════════════
+function exportJSON(){
+  if(!GAMES.length){ toast('Aucune donnée à exporter','yellow'); return; }
+  const out={month:MONTH,generatedAt:new Date().toISOString(),games:GAMES};
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}));
+  a.download=`${MONTH}.json`; a.click();
+  toast('💾 JSON exporté','green');
+}
+
+// ════════════════════════════════════════════════
+//  GÉNÉRATION index.html
+// ════════════════════════════════════════════════
+function glog(msg,cls=''){
+  const el=document.getElementById('gen-log');
+  el.innerHTML+=`<div style="color:var(--${cls||'muted'})">${msg}</div>`;
+  el.scrollTop=el.scrollHeight;
+}
+
+async function generate(){
+  if(!GAMES.length){ toast('Charge d\'abord des jeux','yellow'); return; }
+  const btn=document.getElementById('gen-btn');
+  btn.disabled=true; btn.textContent='⏳ Génération…';
+  document.getElementById('gen-log').innerHTML='';
+  document.getElementById('gen-dl').style.display='none';
+
+  const opts={
+    screenshots: document.getElementById('opt-screenshots').checked,
+    icons:       document.getElementById('opt-icons').checked,
+    official:    document.getElementById('opt-official').checked,
+    gplay:       document.getElementById('opt-gplay').checked,
+  };
+
+  const enriched=[];
+  const T=GAMES.filter(g=>g.i).length;let D=0;
+  let okShot=0,okIcon=0;
+
+  for(const g of GAMES){
+    if(!g.i){enriched.push({...g,iconUrl:svgAvatar(g.n),screenshotUrl:null});continue;}
+
+    const data=await iTunes(g.i);
+    let icon=data?.artworkUrl100||null;
+    let shot=null;
+
+    if(opts.screenshots&&data){
+      const ipad=data.ipadScreenshotUrls||[];
+      const iph=data.screenshotUrls||[];
+      shot=ipad[0]||iph[0]||null;
+      if(shot){okShot++;glog(`📸 ${g.n}`,'green');}
+    }
+
+    if(!icon) icon=svgAvatar(g.n);
+    else okIcon++;
+
+    if(!shot&&opts.official&&data?.sellerUrl){
+      const og=await ogImage(data.sellerUrl);
+      if(og){shot=og;okShot++;glog(`🌐 ${g.n} (site officiel)`,'green');}
+    }
+
+    if(!shot&&opts.gplay&&g.a){
+      const og=await ogImage(`https://play.google.com/store/apps/details?id=${g.a}&hl=fr`);
+      if(og){shot=og;okShot++;glog(`🤖 ${g.n} (Google Play)`,'green');}
+    }
+
+    if(!shot) glog(`⬜ ${g.n} — fallback icône`,'muted');
+
+    enriched.push({...g,iconUrl:icon,screenshotUrl:shot||icon});
+    D++;
+    document.getElementById('gen-bar').style.width=`${D/T*100}%`;
+    document.getElementById('gen-cnt').textContent=`${D}/${T}`;
+    document.getElementById('gen-lbl').textContent=g.n;
+    await new Promise(r=>setTimeout(r,150));
+  }
+
+  const [y,m]=MONTH.split('-');
+  const monthFR=MONTH_NAMES[m];
+  const html=buildIndexHTML(enriched,monthFR,y);
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  document.getElementById('gen-link').href=url;
+  document.getElementById('gen-link').download=`index-${MONTH}.html`;
+  document.getElementById('gen-summary').textContent=
+    `✅ ${enriched.length} jeux · ${okShot} screenshots · ${okIcon} icônes`;
+  document.getElementById('gen-dl').style.display='block';
+  btn.disabled=false; btn.textContent='🚀 Relancer';
+  toast('✅ index.html généré !','green');
+}
+
+async function ogImage(url){
+  try{
+    const r=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,{signal:AbortSignal.timeout(6000)});
+    const h=await r.text();
+    const m=h.match(/property=["']og:image["'][^>]*content=["']([^"']+)["']/i)||h.match(/name=["']twitter:image["'][^>]*content=["']([^"']+)["']/i);
+    return m?m[1]:null;
+  }catch{return null;}
+}
+
+function svgAvatar(name){
+  const cols=[["#7c4dff","#311b92"],["#ff4d8f","#880e4f"],["#00d4aa","#004d40"],["#448aff","#0d47a1"],["#ffca28","#e65100"],["#ea4335","#4e342e"]];
+  const[c1,c2]=cols[name.charCodeAt(0)%cols.length];
+  const l=(name.match(/\b\w/g)||[name[0]]).slice(0,2).join('').toUpperCase();
+  return`data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#g)"/><text x="50" y="64" font-family="Arial Black,sans-serif" font-size="38" font-weight="900" fill="white" text-anchor="middle">${l}</text></svg>`)}`;
+}
+
+// ════════════════════════════════════════════════
+//  TEMPLATE index.html
+// ════════════════════════════════════════════════
+function buildIndexHTML(games, monthFR, year) {
+  const total = games.length;
+  const J = JSON.stringify(games);
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Calendrier des sorties jeux mobiles iOS & Android — ${monthFR} ${year}">
+<title>Sorties Jeux Mobile — ${monthFR} ${year}</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{background:#12111a;color-scheme:dark}
+body{background:#12111a;color:#e8e6f4;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+:root{--bg:#12111a;--bg2:#1a1826;--bg3:#1e1b2e;--card:#1e1c2c;--pu:#7c4dff;--pul:#9c6fff;--pu2:rgba(124,77,255,.18);--pub:rgba(124,77,255,.4);--pk:#ff4d8f;--ib:rgba(68,138,255,.4);--it:rgba(68,138,255,.15);--ic:#82b1ff;--ab:rgba(0,212,170,.38);--at:rgba(0,212,170,.13);--ac:#64ffda;--mu:#6b6888;--bd:rgba(255,255,255,.07);}
+.nav{position:sticky;top:0;z-index:200;background:var(--bg2);border-bottom:2px solid var(--pu);display:flex;align-items:center;justify-content:space-between;padding:0 14px;height:50px;gap:8px;}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.nav-logo span{color:var(--pul);}
+.nav-month{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--pul);letter-spacing:.8px;}
+.nav-badge{display:flex;align-items:center;gap:4px;background:var(--pu2);border:1px solid var(--pub);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:800;color:var(--pul);white-space:nowrap;}
+.hero{background:linear-gradient(160deg,#1d1535 0%,#12111a 55%);padding:24px 16px 20px;border-bottom:1px solid var(--bd);}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--pul);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.eyebrow::before{content:'';width:14px;height:2px;background:var(--pu);display:block;}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:800;line-height:.95;color:#fff;margin-bottom:8px;}
+.hero-title span{background:linear-gradient(90deg,var(--pul),var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:13px;color:var(--mu);margin-bottom:14px;}
+.pills{display:flex;gap:7px;flex-wrap:wrap;}
+.pill{background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:800;color:#ccc;}
+.pill b{color:var(--pul);}
+.mosaic-wrap{padding:20px 14px 8px;}
+.sec-lbl{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pul);display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--bd);}
+.mosaic{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:130px 130px 130px;gap:3px;border-radius:14px;overflow:hidden;}
+@media(min-width:380px){.mosaic{grid-template-rows:150px 150px 150px;}}
+@media(min-width:520px){.mosaic{grid-template-rows:185px 185px 185px;}}
+.mc{position:relative;overflow:hidden;cursor:pointer;background:var(--bg3);-webkit-tap-highlight-color:transparent;}
+.mc.big{grid-row:span 2;}
+.mc img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s;}
+.mc:active img.bg,.mc:hover img.bg{transform:scale(1.05);}
+.mc::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.84) 0%,rgba(0,0,0,.08) 60%,transparent 100%);pointer-events:none;}
+.mc.big::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,77,255,.22) 0%,transparent 55%);z-index:1;pointer-events:none;}
+.mc-info{position:absolute;bottom:0;left:0;right:0;padding:7px 9px;z-index:2;}
+.mc-badge{display:inline-flex;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;background:var(--pu);color:#fff;padding:2px 7px;border-radius:4px;margin-bottom:3px;}
+.mc-name{font-weight:900;font-size:12px;color:#fff;line-height:1.25;text-shadow:0 1px 6px rgba(0,0,0,.9);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.mc.big .mc-name{font-size:14px;}
+.mc-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e1c2c,#2a1f4a);}
+.mc-fallback img{width:52px;height:52px;border-radius:12px;object-fit:cover;}
+.mc.big .mc-fallback img{width:68px;height:68px;border-radius:16px;}
+.main{padding:16px 14px 80px;}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:24px;}
+.li{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--mu);font-weight:700;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.dg{margin-bottom:32px;}
+.dh{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+.dt{background:var(--pu);border-radius:8px;padding:4px 11px;display:flex;align-items:baseline;gap:5px;flex-shrink:0;}
+.dn{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:#fff;line-height:1;}
+.dw{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.dhr{flex:1;height:1px;background:var(--bd);}
+.dc{font-size:11px;font-weight:700;color:var(--mu);white-space:nowrap;}
+.gg{display:flex;flex-direction:column;gap:8px;}
+@media(min-width:560px){.gg{display:grid;grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.gg{grid-template-columns:repeat(3,1fr);}}
+.gc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
+.gc.hot{border-color:var(--pub);}
+.ribbon{position:absolute;top:0;right:12px;background:linear-gradient(135deg,var(--pu),var(--pk));color:#fff;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 8px 3px;border-radius:0 0 6px 6px;}
+.ct{display:flex;align-items:center;gap:10px;}
+.ci{width:52px;height:52px;border-radius:12px;flex-shrink:0;overflow:hidden;background:var(--bg3);border:1px solid var(--bd);}
+.ci img{width:100%;height:100%;object-fit:cover;display:block;}
+.cinfo{flex:1;min-width:0;}
+.cn{font-weight:900;font-size:13px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px;}
+.ctags{display:flex;flex-wrap:wrap;gap:3px;}
+.tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;background:var(--bg3);color:var(--mu);border:1px solid var(--bd);}
+.sr{display:flex;gap:6px;}
+.bs{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 6px;border-radius:9px;text-decoration:none;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;border:1px solid transparent;-webkit-tap-highlight-color:transparent;}
+a.bi{background:var(--it);border-color:var(--ib);color:var(--ic);}
+a.ba{background:var(--at);border-color:var(--ab);color:var(--ac);}
+.bna{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.06);color:rgba(255,255,255,.2);pointer-events:none;}
+.bsoon{background:var(--pu2);border-color:var(--pub);color:var(--pul);pointer-events:none;}
+footer{background:var(--bg2);border-top:1px solid var(--bd);padding:18px 16px;font-size:11px;color:var(--mu);text-align:center;line-height:1.8;}
+</style>
+
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">🎮 <span>Mobile</span></div>
+  <div class="nav-month">${monthFR} ${year}</div>
+  <div class="nav-badge">👁 <span id="vc">…</span></div>
+</nav>
+<div class="hero">
+  <div class="eyebrow">Calendrier · iOS &amp; Android</div>
+  <div class="hero-title">Sorties<br><span>${monthFR} ${year}</span></div>
+  <div class="hero-sub">Dates vérifiées · App Store · Google Play</div>
+  <div class="pills">
+    <div class="pill">🎮 <b>${total}</b> sorties</div>
+    <div class="pill">📱 iOS &amp; Android</div>
+    <div class="pill">✅ Dates vérifiées</div>
+  </div>
+</div>
+<div class="mosaic-wrap">
+  <div class="sec-lbl">⭐ Les incontournables</div>
+  <div class="mosaic" id="mosaic"></div>
+</div>
+<div class="main">
+  <div class="legend">
+    <div class="li"><div class="dot" style="background:var(--ic)"></div>App Store (iOS)</div>
+    <div class="li"><div class="dot" style="background:var(--ac)"></div>Google Play</div>
+    <div class="li"><div class="dot" style="background:var(--pul)"></div>Mis en avant</div>
+    <div class="li"><div class="dot" style="background:rgba(255,255,255,.15)"></div>N/A</div>
+  </div>
+  <div id="list"></div>
+</div>
+<footer>📡 Données vérifiées · App Store · Google Play · ${monthFR} ${year}<br>Images © Apple App Store &amp; Google Play · Les dates peuvent évoluer.</footer>
+<script>
+const G=${J};
+function iosUrl(id){return id?'https://apps.apple.com/app/id'+id:null;}
+function andUrl(p){return p?'https://play.google.com/store/apps/details?id='+p:null;}
+function storeRow(g){
+  if(!g.i&&!g.a)return'<div class="sr"><span class="bs bsoon" style="flex:1">⏳ Bientôt</span></div>';
+  function btn(h,ic,l,c){return h?'<a class="bs '+c+'" href="'+h+'" target="_blank" rel="noopener">'+ic+' '+l+'</a>':'<span class="bs bna">'+ic+' N/A</span>';}
+  return'<div class="sr">'+btn(iosUrl(g.i),'🍎','App Store','bi')+btn(andUrl(g.a),'🤖','Play','ba')+'</div>';
+}
+function renderMosaic(){
+  const hot=G.filter(g=>g.hot).slice(0,9);
+  const el=document.getElementById('mosaic');
+  hot.forEach((g,i)=>{
+    const c=document.createElement('div');c.className='mc'+(i===0?' big':'');
+    const hasBg=g.screenshotUrl&&!g.screenshotUrl.startsWith('data:');
+    c.innerHTML=hasBg?'<img class="bg" src="'+g.screenshotUrl+'" alt="'+g.n+'" loading="lazy"><div class="mc-info"><div class="mc-badge">'+g.d+' ${monthFR.slice(0,3)}.</div><div class="mc-name">'+g.n+'</div></div>':'<div class="mc-fallback"><img src="'+g.iconUrl+'" alt="'+g.n+'"></div><div class="mc-info"><div class="mc-badge">'+g.d+' ${monthFR.slice(0,3)}.</div><div class="mc-name">'+g.n+'</div></div>';
+    c.addEventListener('click',()=>{const t=document.getElementById('day'+g.d);if(t)t.closest('.dg').scrollIntoView({behavior:'smooth',block:'start'});});
+    el.appendChild(c);
+  });
+}
+function renderList(){
+  const list=document.getElementById('list');
+  const grp={};
+  G.forEach(g=>{if(!grp[g.d])grp[g.d]={w:g.w,items:[]};grp[g.d].items.push(g);});
+  Object.keys(grp).sort().forEach(date=>{
+    const{w,items}=grp[date];
+    const sec=document.createElement('div');sec.className='dg';sec.id='day'+date;
+    sec.innerHTML='<div class="dh"><div class="dt"><span class="dn">'+date+'</span><span class="dw">'+w+'</span></div><div class="dhr"></div><div class="dc">'+items.length+' sortie'+(items.length>1?'s':'')+'</div></div>';
+    const grid=document.createElement('div');grid.className='gg';
+    items.forEach(g=>{
+      const card=document.createElement('div');card.className='gc'+(g.hot?' hot':'');
+      if(g.hot)card.innerHTML='<div class="ribbon">⭐ Top</div>';
+      const top=document.createElement('div');top.className='ct';
+      top.innerHTML='<div class="ci"><img src="'+g.iconUrl+'" alt="'+g.n+'" loading="lazy"></div><div class="cinfo"><div class="cn">'+g.n+'</div><div class="ctags">'+g.t.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div></div>';
+      card.appendChild(top);card.insertAdjacentHTML('beforeend',storeRow(g));
+      grid.appendChild(card);
+    });
+    sec.appendChild(grid);list.appendChild(sec);
+  });
+}
+function initVisits(){
+  const u=encodeURIComponent(location.href.split('?')[0]);
+  fetch('https://hits.seeyoufarm.com/api/count/incr/badge.svg?url='+u+'&count_bg=%237C4DFF&title_bg=%231E1C2C&title=vues&edge_flat=true').then(r=>r.text()).then(svg=>{const m=svg.match(/>(\d[\d,]*)</g);document.getElementById('vc').textContent=m?.length?m[m.length-1].replace(/[<>]/g,'').replace(/,/g,''):'actif';}).catch(()=>{document.getElementById('vc').textContent='actif';});
+}
+renderMosaic();renderList();initVisits();
+<\/script>
+</body>
+</html>`;
+}
+
+// ════════════════════════════════════════════════
+//  TOAST
+// ════════════════════════════════════════════════
+function toast(msg, col=‘muted’){
+const el=document.getElementById(‘toast’);
+el.textContent=msg;
+el.style.borderColor=`var(--${col})`;
+el.classList.add(‘show’);
+setTimeout(()=>el.classList.remove(‘show’),2800);
+}
+
+// Init
+showSection(‘import’);
+</script>
+
+</body>
+</html>
