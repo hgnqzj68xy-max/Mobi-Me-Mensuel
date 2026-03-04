@@ -247,14 +247,14 @@ transform:translateY(60px);opacity:0;transition:all .3s;}
     <button class="btn" onclick="loadMars2026()">📂 Charger Mars 2026 (démo)</button>
   </div>
 
-  <div class="import-zone" id="dropZone" onclick="document.getElementById('fileInput').click()"
-    ondragover="ev.preventDefault();this.classList.add('drag')"
+  <div class="import-zone" id="dropZone" onclick="triggerFileInput(event)"
+    ondragover="event.preventDefault();this.classList.add('drag')"
     ondragleave="this.classList.remove('drag')"
     ondrop="handleDrop(event)">
-    <input type="file" id="fileInput" accept=".json" onchange="handleFile(this.files[0])">
+    <input type="file" id="fileInput" accept=".json,.html,.js" onclick="event.stopPropagation()" onchange="handleFile(this.files[0])">
     <div class="import-icon">📄</div>
-    <div class="import-text">Glisse le fichier <strong>data/2026-04.json</strong> ici</div>
-    <div class="import-sub">ou clique pour parcourir · Format JSON généré par GitHub Actions</div>
+    <div class="import-text">Glisse le fichier <strong>data/2026-04.json</strong>, <strong>setup.html</strong> ou <strong>index.html</strong> ici</div>
+    <div class="import-sub">ou clique pour parcourir · Formats acceptés : .json, .html, .js</div>
   </div>
 
   <div style="text-align:center;color:var(--muted);font-size:12px;margin-top:8px">
@@ -368,7 +368,18 @@ function showSection(id) {
   ['import','games','generate'].forEach(s => {
     document.getElementById('sec-'+s).style.display = s===id ? 'block' : 'none';
   });
-  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => {
+    b.classList.remove('active');
+    const txt = b.textContent.toLowerCase();
+    if (id==='import'   && txt.includes('importer')) b.classList.add('active');
+    if (id==='games'    && txt.includes('liste'))    b.classList.add('active');
+    if (id==='generate' && txt.includes('générer'))  b.classList.add('active');
+  });
+}
+
+function triggerFileInput(e) {
+  if (e.target.tagName === 'INPUT') return;
+  document.getElementById('fileInput').click();
 }
 
 function showAddForm(){
@@ -379,10 +390,10 @@ function showAddForm(){
 // ════════════════════════════════════════════════
 //  IMPORT
 // ════════════════════════════════════════════════
-function handleDrop(ev) {
-  ev.preventDefault();
+function handleDrop(event) {
+  event.preventDefault();
   document.getElementById('dropZone').classList.remove('drag');
-  const file = ev.dataTransfer.files[0];
+  const file = event.dataTransfer.files[0];
   if (file) handleFile(file);
 }
 
@@ -390,11 +401,25 @@ function handleFile(file) {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
+    const text = e.target.result.trim();
     try {
-      const data = JSON.parse(e.target.result);
+      // Cas 1 : JSON pur (objet avec .games ou tableau direct)
+      const data = JSON.parse(text);
       loadData(data);
     } catch {
-      toast('❌ Fichier JSON invalide', 'red');
+      // Cas 2 : Fichier JS/HTML contenant const GAMES=[...] — extrait le tableau
+      const match = text.match(/const\s+GAMES\s*=\s*(\[[\s\S]*?\]);/);
+      if (match) {
+        try {
+          // Évalue le tableau JS (notation sans guillemets sur les clés)
+          const arr = Function('"use strict"; return ' + match[1])();
+          loadData({ games: arr });
+          return;
+        } catch(e2) {
+          console.error('Erreur parsing GAMES[]:', e2);
+        }
+      }
+      toast('❌ Format non reconnu — JSON ou fichier contenant const GAMES=[...] attendu', 'red');
     }
   };
   reader.readAsText(file);
@@ -411,27 +436,38 @@ async function pastJSON() {
 }
 
 function loadData(data) {
-  // Accepte le format GitHub Actions (data.games) ou un tableau brut
+  // Accepte : tableau brut, {games:[...]}, {month, games:[...]}
   const raw = Array.isArray(data) ? data : (data.games || []);
-  MONTH = data.month || MONTH;
+  if (!raw.length) { toast('❌ Aucun jeu trouvé dans le fichier', 'red'); return; }
 
-  GAMES = raw.map((g, idx) => ({
-    id:         idx,
-    d:          g.d || g.date?.slice(8,10) || '01',
-    date:       g.date || `${MONTH}-${g.d||'01'}`,
-    w:          g.w || dayOfWeek(g.date || `${MONTH}-${g.d||'01'}`),
-    n:          g.n || g.name || g.appStoreName || 'Inconnu',
-    t:          g.t || (g.genre ? [g.genre] : []),
-    i:          g.i || g.appStoreId || '',
-    a:          g.a || '',
-    hot:        !!g.hot,
-    confidence: g.confidence || 50,
-    dateConflict: !!g.dateConflict,
-    sources:    g.sources || ['Manuel'],
-    icon:       g.icon || null,
-    iconUrl:    g.icon || null,
-    screenshotUrl: null,
-  }));
+  // Le mois vient du fichier ou on le garde en mémoire
+  if (!Array.isArray(data) && data.month) MONTH = data.month;
+
+  GAMES = raw.map((g, idx) => {
+    // Normalise les deux formats de date possibles : {d:"04", date:"2026-03-04"} ou juste l'un d'eux
+    const dateStr = g.date || (g.d ? `${MONTH}-${String(g.d).padStart(2,'0')}` : null);
+    const dayStr  = g.d   || (dateStr ? dateStr.slice(8,10) : '01');
+    return {
+      id:           idx,
+      d:            String(dayStr).padStart(2,'0'),
+      date:         dateStr || `${MONTH}-01`,
+      w:            g.w || dayOfWeek(dateStr || `${MONTH}-01`),
+      n:            g.n || g.name || g.appStoreName || 'Inconnu',
+      t:            Array.isArray(g.t) ? g.t : (g.genre ? [g.genre] : []),
+      i:            String(g.i || g.appStoreId || ''),
+      a:            String(g.a || ''),
+      hot:          !!g.hot,
+      confidence:   typeof g.confidence === 'number' ? g.confidence : 50,
+      dateConflict: !!g.dateConflict,
+      sources:      Array.isArray(g.sources) ? g.sources : ['Manuel'],
+      icon:         g.icon || null,
+      iconUrl:      g.iconUrl || g.icon || null,
+      screenshotUrl: g.screenshotUrl || null,
+    };
+  });
+
+  // Trie par date
+  GAMES.sort((a,b) => a.date.localeCompare(b.date));
 
   toast(`✅ ${GAMES.length} jeux chargés`, 'green');
   showSection('games');
@@ -981,6 +1017,10 @@ setTimeout(()=>el.classList.remove(‘show’),2800);
 
 // Init
 showSection(‘import’);
+// Marque “Importer” actif au démarrage
+document.querySelectorAll(’.nav-item’).forEach(b => {
+if (b.textContent.toLowerCase().includes(‘importer’)) b.classList.add(‘active’);
+});
 </script>
 
 </body>
