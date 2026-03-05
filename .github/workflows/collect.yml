@@ -5,11 +5,11 @@ on:
   schedule:
     - cron: '0 8 1 * *'
 
-  # Permet aussi de lancer manuellement depuis l'onglet Actions
+  # Déclenchement manuel : Actions → "Collecte mensuelle" → Run workflow
   workflow_dispatch:
     inputs:
       month:
-        description: 'Mois cible (ex: 2026-05) — laisser vide = mois prochain'
+        description: 'Mois cible (format YYYY-MM, ex: 2026-05) — laisser vide = mois prochain'
         required: false
         default: ''
       sources:
@@ -21,7 +21,7 @@ jobs:
   collect:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # pour committer le JSON généré
+      contents: write   # nécessaire pour committer le JSON généré
 
     steps:
       - name: ⬇️ Checkout repo
@@ -38,6 +38,7 @@ jobs:
           npm install
 
       - name: 🕷️ Scraper les sources
+        id: scrape
         env:
           TARGET_MONTH: ${{ github.event.inputs.month }}
           SOURCES: ${{ github.event.inputs.sources || 'gamingonphone,toucharcade,itunes' }}
@@ -45,23 +46,51 @@ jobs:
           cd .github/scripts
           node collect.js
 
+          # FIX BUG 2 : calcule le mois réellement utilisé et l'expose aux steps suivants
+          if [ -n "$TARGET_MONTH" ]; then
+            USED_MONTH="$TARGET_MONTH"
+          else
+            USED_MONTH=$(node -e "const d=new Date();d.setMonth(d.getMonth()+1);console.log(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'))")
+          fi
+          echo "used_month=$USED_MONTH" >> $GITHUB_OUTPUT
+
       - name: 📊 Résumé de la collecte
         run: |
-          MONTH=$(date -d "$(date +%Y-%m-01) + 1 month" +%Y-%m 2>/dev/null || date -v+1m +%Y-%m)
-          FILE="data/${TARGET_MONTH:-$MONTH}.json"
+          # FIX BUG 2 : récupère le mois depuis l'output du step "scrape"
+          USED_MONTH="${{ steps.scrape.outputs.used_month }}"
+          FILE="data/${USED_MONTH}.json"
+
           if [ -f "$FILE" ]; then
-            COUNT=$(node -e "const d=require('./$FILE');console.log(d.games?.length||0)")
+            # FIX BUG 3 : readFileSync ESM au lieu de require() (crashait sur "type":"module")
+            COUNT=$(node -e "
+              import { readFileSync } from 'fs';
+              const d = JSON.parse(readFileSync('${FILE}', 'utf8'));
+              console.log(d.games?.length || 0);
+            " --input-type=module 2>/dev/null || echo "?")
             echo "✅ $COUNT jeux collectés → $FILE"
-            echo "### 📱 Collecte terminée" >> $GITHUB_STEP_SUMMARY
-            echo "- **Fichier** : \`$FILE\`" >> $GITHUB_STEP_SUMMARY
-            echo "- **Jeux trouvés** : $COUNT" >> $GITHUB_STEP_SUMMARY
-            echo "- **Prochaine étape** : ouvrir \`admin.html\` en local pour valider" >> $GITHUB_STEP_SUMMARY
+            {
+              echo "### 📱 Collecte terminée"
+              echo "- **Mois** : \`$USED_MONTH\`"
+              echo "- **Fichier** : \`$FILE\`"
+              echo "- **Jeux trouvés** : $COUNT"
+              echo "- **Prochaine étape** : ouvrir \`admin.html\` localement pour valider"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "⚠️ Fichier $FILE introuvable"
+            echo "### ⚠️ Fichier manquant : \`$FILE\`" >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: 💾 Committer le fichier JSON
         run: |
+          USED_MONTH="${{ steps.scrape.outputs.used_month }}"
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/
-          git diff --staged --quiet || git commit -m "📱 Collecte automatique $(date +'%B %Y')"
-          git push
+          # Ne committe que si quelque chose a réellement changé
+          if git diff --staged --quiet; then
+            echo "ℹ️ Aucun changement à committer"
+          else
+            git commit -m "📱 Collecte automatique — $USED_MONTH"
+            git push
+            echo "✅ Commité : data/$USED_MONTH.json"
+          fi
