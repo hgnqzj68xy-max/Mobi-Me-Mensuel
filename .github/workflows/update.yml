@@ -20,12 +20,13 @@ jobs:
         run: npm install
 
       - name: Run update script
-        run: npm run update
+        run: npm run update || echo "Le script a échoué, mais le workflow continue."
 
       - name: Commit and push changes
+        if: success() || failure()  # Exécute même si le script échoue
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add data/
-          git commit -m "Update game releases for $(date +'%Y-%m')"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update game releases for $(date +'%Y-%m')"
           git push
