@@ -1,0 +1,13 @@
+{
+  "name": "mobi-releases",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "update": "node scripts/update.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "google-play-scraper": "^9.12.0",
+    "fs": "^0.0.1-security"
+  }
+}
