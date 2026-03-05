@@ -29,12 +29,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
       - name: 📦 Install dependencies
         run: |
           pip install --upgrade pip
-          pip install requests google-play-scraper
+          pip install -r requirements.txt
 
       - name: 🔄 Full refresh (optional)
         if: ${{ inputs.force_full_refresh == 'true' }}
