@@ -21,6 +21,7 @@
 –yellow: #facc15;
 –red:    #f87171;
 –blue:   #60a5fa;
+–teal:   #2de0c0;
 –text:   #dde1f0;
 –muted:  #5a6080;
 –mono:   ‘DM Mono’, monospace;
@@ -622,7 +623,13 @@ pointer-events: none;
 
     <div class="gen-dl-box" id="genDlBox">
       <p id="genSummary"></p>
-      <a class="dl-link" id="genDlLink" href="#" download="index.html">⬇️ Télécharger index.html</a>
+      <a class="dl-link" id="genDlLink" href="#" download="2026-03.html">⬇️ Télécharger le calendrier</a>
+      <div style="margin-top:14px;padding:12px 14px;background:rgba(45,224,192,.07);border:1px solid rgba(45,224,192,.2);border-radius:8px;font-size:11px;line-height:1.8;color:#6bb8ae;">
+        <strong style="color:var(--teal,#2de0c0)">📂 Déploiement :</strong><br>
+        1. Renomme le fichier téléchargé <code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:3px" id="deployFilename">YYYY-MM.html</code><br>
+        2. Place-le à la <strong>racine du repo</strong> GitHub Pages<br>
+        3. L'<code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:3px">index.html</code> (portail) le détecte automatiquement ✅
+      </div>
     </div>
   </div>
 </div>
@@ -1003,7 +1010,8 @@ async function runGenerate() {
 
   const dlLink = document.getElementById('genDlLink');
   dlLink.href = url;
-  dlLink.download = 'index-' + MONTH + '.html';
+  dlLink.download = MONTH + '.html';
+  document.getElementById('deployFilename').textContent = MONTH + '.html';
   document.getElementById('genSummary').textContent =
     '✅ ' + enriched.length + ' jeux · ' + okShot + ' screenshots · ' + okIcon + ' icônes';
   document.getElementById('genDlBox').style.display = 'block';
