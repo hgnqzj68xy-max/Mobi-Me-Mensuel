@@ -85,19 +85,31 @@ $('article, .post, .entry').each((_, el) => {
     'juillet':7,'août':8,'septembre':9,'octobre':10,'novembre':11,'décembre':12,
   };
 
-  // Cherche une date dans le texte : "March 15", "15 mars", "March 2026"
-  const dateRx = /(\d{1,2})\s+([a-zéû]+)\s+(?:2026)?|([a-zéû]+)\s+(\d{1,2})(?:,?\s+2026)?/gi;
+  // Cherche une date dans le texte — deux formats : "March 15" et "15 mars"
+  // Regex séparés pour éviter le faux positif "March 2026" → "March 20"
+  const RX_MD = /\b(january|february|march|april|may|june|july|august|september|october|november|december|janvier|f\u00e9vrier|mars|avril|mai|juin|juillet|ao\u00fbt|septembre|octobre|novembre|d\u00e9cembre)\s+(\d{1,2})\b(?!\d)/gi;
+  const RX_DM = /\b(\d{1,2})\b(?!\d)\s+(january|february|march|april|may|june|july|august|september|october|november|december|janvier|f\u00e9vrier|mars|avril|mai|juin|juillet|ao\u00fbt|septembre|octobre|novembre|d\u00e9cembre)\b/gi;
   let match;
   let foundDate = null;
 
-  while ((match = dateRx.exec(text)) !== null) {
-    const [, d1, m1, m2, d2] = match;
-    const dayStr  = d1 || d2;
-    const monStr  = (m1 || m2 || '').toLowerCase();
-    const monNum  = monthNames[monStr];
-    if (monNum === MON && dayStr) {
-      foundDate = `${YEAR}-${MON_PAD}-${String(dayStr).padStart(2,'0')}`;
+  RX_MD.lastIndex = 0;
+  while ((match = RX_MD.exec(text)) !== null) {
+    const monNum = monthNames[match[1].toLowerCase()];
+    const day    = parseInt(match[2]);
+    if (monNum === MON && day >= 1 && day <= 31) {
+      foundDate = `${YEAR}-${MON_PAD}-${String(day).padStart(2,'0')}`;
       break;
+    }
+  }
+  if (!foundDate) {
+    RX_DM.lastIndex = 0;
+    while ((match = RX_DM.exec(text)) !== null) {
+      const day    = parseInt(match[1]);
+      const monNum = monthNames[match[2].toLowerCase()];
+      if (monNum === MON && day >= 1 && day <= 31) {
+        foundDate = `${YEAR}-${MON_PAD}-${String(day).padStart(2,'0')}`;
+        break;
+      }
     }
   }
 
@@ -138,9 +150,6 @@ return games;
 async function scrapeTouchArcade() {
 console.log(’\n🎮 TouchArcade — scraping…’);
 const games = [];
-const monthNames3 = [‘jan’,‘feb’,‘mar’,‘apr’,‘may’,‘jun’,‘jul’,‘aug’,‘sep’,‘oct’,‘nov’,‘dec’];
-const monAbbr = monthNames3[MON - 1];
-
 // TouchArcade publie des “New Game Releases” hebdomadaires
 const searchUrl = `https://toucharcade.com/?s=new+releases+${YEAR}`;
 const res = await safeFetch(searchUrl);
