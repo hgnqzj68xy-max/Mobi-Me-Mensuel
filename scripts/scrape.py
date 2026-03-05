@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
 Mobile Games Release Scraper
-- iOS  : iTunes Search API
-- Android : corrélation depuis les résultats iOS (nom + bundleId)
-            + fallback recherche directe Google Play
+- iOS     : iTunes Search API + artwork haute résolution
+- Android : corrélation depuis iOS (bundleId/titre) + headerImage natif Google Play
 """
 
 import json, os, time, hashlib, re
@@ -32,13 +31,13 @@ IOS_SEARCH_TERMS = [
 ]
 
 GENRES = {
-    "6014": "Games",    "7001": "Action",      "7002": "Adventure",
-    "7003": "Arcade",   "7004": "Board",        "7005": "Card",
-    "7006": "Casino",   "7007": "Dice",         "7008": "Educational",
-    "7009": "Family",   "7010": "Kids",         "7011": "Music",
-    "7012": "Puzzle",   "7013": "Racing",       "7014": "Role Playing",
-    "7015": "Simulation","7016":"Sports",        "7017": "Strategy",
-    "7018": "Trivia",   "7019": "Word",
+    "6014":"Games",    "7001":"Action",       "7002":"Adventure",
+    "7003":"Arcade",   "7004":"Board",         "7005":"Card",
+    "7006":"Casino",   "7007":"Dice",          "7008":"Educational",
+    "7009":"Family",   "7010":"Kids",          "7011":"Music",
+    "7012":"Puzzle",   "7013":"Racing",        "7014":"Role Playing",
+    "7015":"Simulation","7016":"Sports",        "7017":"Strategy",
+    "7018":"Trivia",   "7019":"Word",
 }
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -55,55 +54,54 @@ def save_data(data):
         json.dump(data, f, indent=2, ensure_ascii=False)
     print(f"✅ Saved {len(data['games'])} games to {DATA_FILE}")
 
+def ios_artwork_hd(url: str, size: int = 512) -> str:
+    """
+    iTunes retourne une URL de type :
+      https://is1-ssl.mzstatic.com/image/thumb/Purple116/.../100x100bb.jpg
+    On remplace la résolution à la fin pour avoir une image HD.
+    """
+    if not url:
+        return url
+    # Remplace NNNxNNNbb.jpg (ou .png) par {size}x{size}bb.jpg
+    hd = re.sub(r'\d+x\d+bb\.(jpg|png|webp)', f'{size}x{size}bb.jpg', url)
+    return hd
+
+def ios_header_from_artwork(url: str) -> str:
+    """
+    Pour la bannière hero on utilise une image encore plus large (1024px).
+    iTunes n'a pas de vrai header promo, donc on prend l'artwork en 1024.
+    """
+    return ios_artwork_hd(url, size=1024)
+
 def parse_gplay_date(raw: str):
-    """
-    Google Play renvoie des dates dans plein de formats selon la langue/pays.
-    On essaie tous les formats connus + regex fallback.
-    """
     if not raw:
         return None
-
     raw = raw.strip()
-
-    # Formats directs
     for fmt in (
-        "%b %d, %Y",    # Jan 15, 2025
-        "%B %d, %Y",    # January 15, 2025
-        "%d %b %Y",     # 15 Jan 2025
-        "%d %B %Y",     # 15 January 2025
-        "%Y-%m-%d",     # 2025-01-15
-        "%d/%m/%Y",     # 15/01/2025
-        "%m/%d/%Y",     # 01/15/2025
-        "%d-%m-%Y",     # 15-01-2025
+        "%b %d, %Y", "%B %d, %Y", "%d %b %Y", "%d %B %Y",
+        "%Y-%m-%d",  "%d/%m/%Y",  "%m/%d/%Y",  "%d-%m-%Y",
     ):
         try:
             return datetime.strptime(raw, fmt)
         except ValueError:
             pass
-
-    # Regex : extraire une année à 4 chiffres au minimum
     match = re.search(r'(\d{4})', raw)
     if match:
         year = int(match.group(1))
-        # Chercher aussi mois/jour
         nums = re.findall(r'\d+', raw)
         if len(nums) >= 3:
             try:
-                # Essayer toutes les combinaisons year/month/day
                 candidates = [int(n) for n in nums if len(n) <= 4]
-                year_idx = candidates.index(year)
-                rest = [c for i, c in enumerate(candidates) if i != year_idx]
+                year_idx   = candidates.index(year)
+                rest       = [c for i, c in enumerate(candidates) if i != year_idx]
                 if rest[0] <= 12:
                     return datetime(year, rest[0], min(rest[1], 31) if len(rest) > 1 else 1)
             except Exception:
                 pass
-        # Fallback : juste l'année, on prend le 1er janvier
         return datetime(year, 1, 1)
-
     return None
 
 def format_price(price_val) -> str:
-    """Normalise le prix : 0 → Free, sinon montant en €."""
     try:
         if float(price_val) == 0:
             return "Free"
@@ -115,9 +113,9 @@ def format_price(price_val) -> str:
 
 # ── iOS scraping ──────────────────────────────────────────────────────────────
 def fetch_ios_games() -> list[dict]:
-    games     = []
-    seen_ids  = set()
-    cutoff    = datetime.utcnow() - timedelta(days=LOOKBACK_DAYS)
+    games    = []
+    seen_ids = set()
+    cutoff   = datetime.utcnow() - timedelta(days=LOOKBACK_DAYS)
 
     for term in IOS_SEARCH_TERMS:
         try:
@@ -135,7 +133,6 @@ def fetch_ios_games() -> list[dict]:
                     release_dt = datetime.fromisoformat(release_raw.replace("Z", ""))
                 except Exception:
                     continue
-
                 if release_dt < cutoff:
                     continue
 
@@ -150,6 +147,11 @@ def fetch_ios_games() -> list[dict]:
                         genre_label = GENRES[gid]
                         break
 
+                # Artwork : icône normale + version HD pour headerImage
+                artwork_raw = item.get("artworkUrl100", "")
+                icon        = ios_artwork_hd(artwork_raw, size=100)   # taille originale propre
+                header_img  = ios_header_from_artwork(artwork_raw)     # 1024px pour le hero
+
                 games.append({
                     "id":          f"ios_{app_id}",
                     "title":       item.get("trackName", ""),
@@ -157,7 +159,8 @@ def fetch_ios_games() -> list[dict]:
                     "releaseDate": release_dt.strftime("%Y-%m-%d"),
                     "genre":       genre_label,
                     "developer":   item.get("artistName", ""),
-                    "icon":        item.get("artworkUrl100", ""),
+                    "icon":        icon,
+                    "headerImage": header_img,   # ← NOUVEAU
                     "storeUrl":    item.get("trackViewUrl", ""),
                     "price":       format_price(item.get("price", 0)),
                     "rating":      round(item.get("averageUserRating", 0), 1) or None,
@@ -174,10 +177,6 @@ def fetch_ios_games() -> list[dict]:
 
 # ── Android : corrélation depuis iOS ─────────────────────────────────────────
 def find_android_by_bundle(bundle_id: str, title: str) -> dict | None:
-    """
-    Stratégie 1 : bundleId iOS → même package Android (très souvent identique).
-    Stratégie 2 : recherche par titre exact sur Google Play.
-    """
     candidates = []
 
     # Stratégie 1 — bundle ID direct
@@ -195,7 +194,6 @@ def find_android_by_bundle(bundle_id: str, title: str) -> dict | None:
         try:
             results = gplay_search(title, lang="en", country="us", n_hits=5)
             for r in results:
-                # Vérifier que le titre correspond approximativement
                 r_title = r.get("title", "").lower()
                 if title.lower()[:10] in r_title or r_title[:10] in title.lower():
                     try:
@@ -213,23 +211,27 @@ def find_android_by_bundle(bundle_id: str, title: str) -> dict | None:
 
     detail = candidates[0]
 
-    # Parser la date
     release_dt = parse_gplay_date(detail.get("released", ""))
     if not release_dt:
-        # Fallback : date de mise à jour
         updated = detail.get("updated")
         if updated:
             try:
                 release_dt = datetime.fromtimestamp(updated)
             except Exception:
                 pass
-
     if not release_dt:
         return None
 
     pkg   = detail.get("appId", bundle_id)
     price = format_price(detail.get("price", 0))
     score = detail.get("score", None)
+
+    # ── headerImage : Google Play fournit headerImage nativement ──
+    header_img = (
+        detail.get("headerImage")        # champ natif google-play-scraper
+        or detail.get("video")           # parfois un lien vidéo/image promo
+        or detail.get("icon", "")        # fallback : icône
+    )
 
     return {
         "id":          f"android_{pkg.replace('.', '_')}",
@@ -239,6 +241,7 @@ def find_android_by_bundle(bundle_id: str, title: str) -> dict | None:
         "genre":       detail.get("genre", "Games"),
         "developer":   detail.get("developer", ""),
         "icon":        detail.get("icon", ""),
+        "headerImage": header_img,        # ← NOUVEAU
         "storeUrl":    f"https://play.google.com/store/apps/details?id={pkg}",
         "price":       price,
         "rating":      round(score, 1) if score else None,
@@ -246,7 +249,6 @@ def find_android_by_bundle(bundle_id: str, title: str) -> dict | None:
     }
 
 def fetch_android_from_ios(ios_games: list[dict]) -> list[dict]:
-    """Pour chaque jeu iOS, cherche sa version Android."""
     android_games = []
     seen_ids      = set()
     cutoff        = datetime.utcnow() - timedelta(days=LOOKBACK_DAYS)
@@ -264,12 +266,10 @@ def fetch_android_from_ios(ios_games: list[dict]) -> list[dict]:
         if android is None:
             print(f"    ↳ ❌ Pas de version Android trouvée")
             continue
-
         if android["id"] in seen_ids:
             continue
         seen_ids.add(android["id"])
 
-        # Vérifier que la date est dans la fenêtre
         try:
             dt = datetime.strptime(android["releaseDate"], "%Y-%m-%d")
             if dt < cutoff:
@@ -287,7 +287,15 @@ def fetch_android_from_ios(ios_games: list[dict]) -> list[dict]:
 # ── Merge ─────────────────────────────────────────────────────────────────────
 def merge_games(existing: list[dict], new_ios: list[dict], new_android: list[dict]) -> list[dict]:
     all_games = {g["id"]: g for g in existing}
+
+    # Les nouvelles entrées écrasent les anciennes
+    # mais on préserve le headerImage s'il était déjà renseigné manuellement
     for game in new_ios + new_android:
+        existing_entry = all_games.get(game["id"], {})
+        existing_header = existing_entry.get("headerImage", "")
+        # Garder l'ancien header s'il existe et que le nouveau est un fallback icône
+        if existing_header and not game.get("headerImage"):
+            game["headerImage"] = existing_header
         all_games[game["id"]] = game
 
     cutoff = datetime.utcnow() - timedelta(days=90)
@@ -313,24 +321,21 @@ def main():
     existing_games = existing_data.get("games", [])
     print(f"📂 Jeux existants en base : {len(existing_games)}\n")
 
-    # 1. Scraper iOS
-    ios_games = fetch_ios_games()
-
-    # 2. Chercher les versions Android via corrélation iOS
+    ios_games     = fetch_ios_games()
     android_games = fetch_android_from_ios(ios_games)
-
-    # 3. Merge
-    merged = merge_games(existing_games, ios_games, android_games)
+    merged        = merge_games(existing_games, ios_games, android_games)
 
     ios_count     = sum(1 for g in merged if 'ios'     in g.get('platform', []))
     android_count = sum(1 for g in merged if 'android' in g.get('platform', []))
     free_count    = sum(1 for g in merged if g.get('price') == 'Free')
+    header_count  = sum(1 for g in merged if g.get('headerImage'))
 
     print(f"\n📊 Résultat final :")
-    print(f"   Total   : {len(merged)}")
-    print(f"   iOS     : {ios_count}")
-    print(f"   Android : {android_count}")
-    print(f"   Gratuits: {free_count}")
+    print(f"   Total      : {len(merged)}")
+    print(f"   iOS        : {ios_count}")
+    print(f"   Android    : {android_count}")
+    print(f"   Gratuits   : {free_count}")
+    print(f"   Avec image : {header_count}")
 
     save_data({"games": merged})
 
