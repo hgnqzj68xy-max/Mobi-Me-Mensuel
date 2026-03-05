@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import gplay from 'google-play-scraper';
+import cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -31,28 +31,34 @@ async function fetchRecentAppleGames(limit = 200) {
     .filter((app) => app.date.startsWith(MONTH));
 }
 
-// Récupère les jeux récents depuis le Play Store
-async function fetchRecentGoogleGames(limit = 200) {
-  const games = await gplay.list({
-    category: gplay.category.GAME,
-    collection: gplay.collection.TOP_FREE,
-    num: limit,
-  });
-  return games
-    .map((game) => ({
-      name: game.title,
-      date: game.released ? new Date(game.released * 1000).toISOString().split('T')[0] : null,
+// Récupère les jeux récents depuis le Play Store (scraping basique)
+async function scrapeGooglePlayGames(limit = 20) {
+  const url = `https://play.google.com/store/apps/collection/cluster?clp=0g4jCiEKGXRvcHNlbGxpbmdfZ2FtZXNXU0xMRA%3D%3D:S:ANO1ljJvXzo&gsr=CjmiGgoUdG9wc2VsbGluZ19nYW1lc19XU0xMRA%3D%3D:S:ANO1ljL7jAA`;
+  const response = await fetch(url);
+  const html = await response.text();
+  const $ = cheerio.load(html);
+
+  const games = [];
+  $('div.impression-tracker div.WHE7ib.mpg5gc').slice(0, limit).each((i, el) => {
+    const title = $(el).find('div.b8cIId.ReQCgd.Q9MA7b').text().trim();
+    const link = $(el).find('a').attr('href');
+    const fullLink = link.startsWith('http') ? link : `https://play.google.com${link}`;
+    games.push({
+      name: title,
+      date: null, // Date inconnue via scraping basique
       platform: 'Android',
-      url: game.url,
-    }))
-    .filter((game) => game.date && game.date.startsWith(MONTH));
+      url: fullLink,
+    });
+  });
+
+  return games;
 }
 
 // Fusionne et dédoublonne les résultats
 async function fetchAllRecentGames() {
   const [appleGames, googleGames] = await Promise.all([
     fetchRecentAppleGames(),
-    fetchRecentGoogleGames(),
+    scrapeGooglePlayGames(),
   ]);
 
   const allGames = [...appleGames, ...googleGames];
@@ -85,4 +91,4 @@ async function main() {
   console.log(`✅ Données mises à jour pour ${MONTH} (${games.length} jeux)`);
 }
 
-main().catch(console.error);a
+main().catch(console.error);
