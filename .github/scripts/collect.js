@@ -5,11 +5,11 @@
 - Sortie  : data/YYYY-MM.json
   */
 
-import fetch  from ‘node-fetch’;
-import * as cheerio from ‘cheerio’;
-import fs     from ‘fs’;
-import path   from ‘path’;
-import { fileURLToPath } from ‘url’;
+import fetch  from 'node-fetch';
+import * as cheerio from 'cheerio';
+import fs     from 'fs';
+import path   from 'path';
+import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT      = path.resolve(__dirname, ‘..’, ‘..’);
