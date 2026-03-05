@@ -1,0 +1,17 @@
+{
+  "month": "2026-03",
+  "generatedAt": "2026-03-05T05:54:13.607Z",
+  "sources": [
+    "GamingOnPhone",
+    "TouchArcade",
+    "iTunes API"
+  ],
+  "stats": {
+    "total": 0,
+    "confirmed": 0,
+    "probable": 0,
+    "uncertain": 0,
+    "conflicts": 0
+  },
+  "games": []
+}
