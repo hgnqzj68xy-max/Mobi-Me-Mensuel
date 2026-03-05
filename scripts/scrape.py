@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 Mobile Games Release Scraper
-- iOS     : iTunes Search API + artwork haute résolution
-- Android : corrélation depuis iOS (bundleId/titre) + headerImage natif Google Play
+- iOS     : iTunes Search API
+- Android : vérification bundleId iOS sur Google Play (pas d'API tierce)
 """
 
-import json, os, time, hashlib, re
+import json, os, time, re
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -15,11 +15,7 @@ except ImportError:
     os.system("pip install requests --break-system-packages -q")
     import requests
 
-try:
-    from google_play_scraper import search as gplay_search, app as gplay_app
-except ImportError:
-    os.system("pip install google-play-scraper --break-system-packages -q")
-    from google_play_scraper import search as gplay_search, app as gplay_app
+from bs4 import BeautifulSoup
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DATA_FILE     = Path(__file__).parent.parent / "data" / "games.json"
@@ -40,6 +36,15 @@ GENRES = {
     "7018":"Trivia",   "7019":"Word",
 }
 
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Linux; Android 13; Pixel 7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/122.0.0.0 Mobile Safari/537.36"
+    ),
+    "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.8",
+}
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 def load_existing():
     if DATA_FILE.exists():
@@ -55,51 +60,9 @@ def save_data(data):
     print(f"✅ Saved {len(data['games'])} games to {DATA_FILE}")
 
 def ios_artwork_hd(url: str, size: int = 512) -> str:
-    """
-    iTunes retourne une URL de type :
-      https://is1-ssl.mzstatic.com/image/thumb/Purple116/.../100x100bb.jpg
-    On remplace la résolution à la fin pour avoir une image HD.
-    """
     if not url:
         return url
-    # Remplace NNNxNNNbb.jpg (ou .png) par {size}x{size}bb.jpg
-    hd = re.sub(r'\d+x\d+bb\.(jpg|png|webp)', f'{size}x{size}bb.jpg', url)
-    return hd
-
-def ios_header_from_artwork(url: str) -> str:
-    """
-    Pour la bannière hero on utilise une image encore plus large (1024px).
-    iTunes n'a pas de vrai header promo, donc on prend l'artwork en 1024.
-    """
-    return ios_artwork_hd(url, size=1024)
-
-def parse_gplay_date(raw: str):
-    if not raw:
-        return None
-    raw = raw.strip()
-    for fmt in (
-        "%b %d, %Y", "%B %d, %Y", "%d %b %Y", "%d %B %Y",
-        "%Y-%m-%d",  "%d/%m/%Y",  "%m/%d/%Y",  "%d-%m-%Y",
-    ):
-        try:
-            return datetime.strptime(raw, fmt)
-        except ValueError:
-            pass
-    match = re.search(r'(\d{4})', raw)
-    if match:
-        year = int(match.group(1))
-        nums = re.findall(r'\d+', raw)
-        if len(nums) >= 3:
-            try:
-                candidates = [int(n) for n in nums if len(n) <= 4]
-                year_idx   = candidates.index(year)
-                rest       = [c for i, c in enumerate(candidates) if i != year_idx]
-                if rest[0] <= 12:
-                    return datetime(year, rest[0], min(rest[1], 31) if len(rest) > 1 else 1)
-            except Exception:
-                pass
-        return datetime(year, 1, 1)
-    return None
+    return re.sub(r'\d+x\d+bb\.(jpg|png|webp)', f'{size}x{size}bb.jpg', url)
 
 def format_price(price_val) -> str:
     try:
@@ -110,6 +73,23 @@ def format_price(price_val) -> str:
         if str(price_val).strip() in ("0", "0.0", "", "None"):
             return "Free"
         return str(price_val) if price_val else "Free"
+
+def parse_date_flexible(raw: str):
+    if not raw:
+        return None
+    raw = raw.strip()
+    for fmt in (
+        "%d %b %Y", "%b %d, %Y", "%B %d, %Y", "%d %B %Y",
+        "%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y",
+    ):
+        try:
+            return datetime.strptime(raw, fmt)
+        except ValueError:
+            pass
+    match = re.search(r'(\d{4})', raw)
+    if match:
+        return datetime(int(match.group(1)), 1, 1)
+    return None
 
 # ── iOS scraping ──────────────────────────────────────────────────────────────
 def fetch_ios_games() -> list[dict]:
@@ -124,7 +104,10 @@ def fetch_ios_games() -> list[dict]:
                 "entity": "software", "genreId": "6014",
                 "limit": 50, "lang": "fr_fr",
             }
-            resp = requests.get("https://itunes.apple.com/search", params=params, timeout=15)
+            resp = requests.get(
+                "https://itunes.apple.com/search",
+                params=params, timeout=15
+            )
             resp.raise_for_status()
 
             for item in resp.json().get("results", []):
@@ -147,10 +130,9 @@ def fetch_ios_games() -> list[dict]:
                         genre_label = GENRES[gid]
                         break
 
-                # Artwork : icône normale + version HD pour headerImage
                 artwork_raw = item.get("artworkUrl100", "")
-                icon        = ios_artwork_hd(artwork_raw, size=100)   # taille originale propre
-                header_img  = ios_header_from_artwork(artwork_raw)     # 1024px pour le hero
+                icon        = ios_artwork_hd(artwork_raw, 100)
+                header_img  = ios_artwork_hd(artwork_raw, 1024)
 
                 games.append({
                     "id":          f"ios_{app_id}",
@@ -160,7 +142,7 @@ def fetch_ios_games() -> list[dict]:
                     "genre":       genre_label,
                     "developer":   item.get("artistName", ""),
                     "icon":        icon,
-                    "headerImage": header_img,   # ← NOUVEAU
+                    "headerImage": header_img,
                     "storeUrl":    item.get("trackViewUrl", ""),
                     "price":       format_price(item.get("price", 0)),
                     "rating":      round(item.get("averageUserRating", 0), 1) or None,
@@ -175,125 +157,203 @@ def fetch_ios_games() -> list[dict]:
     print(f"📱 iOS: {len(games)} jeux trouvés")
     return games
 
-# ── Android : corrélation depuis iOS ─────────────────────────────────────────
-def find_android_by_bundle(bundle_id: str, title: str) -> dict | None:
-    candidates = []
-
-    # Stratégie 1 — bundle ID direct
-    if bundle_id:
-        try:
-            detail = gplay_app(bundle_id, lang="en", country="us")
-            if detail:
-                candidates.append(detail)
-        except Exception:
-            pass
-        time.sleep(0.2)
-
-    # Stratégie 2 — recherche par titre
-    if not candidates:
-        try:
-            results = gplay_search(title, lang="en", country="us", n_hits=5)
-            for r in results:
-                r_title = r.get("title", "").lower()
-                if title.lower()[:10] in r_title or r_title[:10] in title.lower():
-                    try:
-                        detail = gplay_app(r["appId"], lang="en", country="us")
-                        candidates.append(detail)
-                        break
-                    except Exception:
-                        pass
-            time.sleep(0.3)
-        except Exception:
-            pass
-
-    if not candidates:
+# ── Android : scraping page Google Play via bundleId iOS ─────────────────────
+def scrape_gplay_page(bundle_id: str) -> dict | None:
+    """
+    Charge la fiche Google Play d'un bundleId et extrait :
+    title, icon, headerImage, releaseDate, price, rating, developer, genre.
+    Utilise le même bundleId que l'app iOS (très souvent identique).
+    """
+    url = f"https://play.google.com/store/apps/details?id={bundle_id}&hl=fr&gl=fr"
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=15)
+        # 404 = pas d'app Android avec ce bundleId
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+    except Exception as e:
+        print(f"    ↳ ⚠️  Erreur réseau pour {bundle_id}: {e}")
         return None
 
-    detail = candidates[0]
+    soup = BeautifulSoup(resp.text, "html.parser")
 
-    release_dt = parse_gplay_date(detail.get("released", ""))
+    # ── Vérification que la page est bien une app ──
+    if "Nous n'avons pas pu trouver" in resp.text or "not found" in resp.text.lower():
+        return None
+
+    # ── Extraction JSON embarqué dans la page ──────────────────────────────
+    # Google Play embarque les données dans des blocs AF_initDataCallback
+    raw_text = resp.text
+
+    # Titre
+    title = ""
+    t_match = re.search(r'"name"\s*:\s*"([^"]{2,100})"', raw_text)
+    if t_match:
+        title = t_match.group(1)
+    if not title:
+        og = soup.find("meta", property="og:title")
+        title = og["content"].split(" - ")[0] if og else ""
+
+    if not title:
+        return None
+
+    # Icon
+    icon = ""
+    icon_match = re.search(r'"(https://play-lh\.googleusercontent\.com/[^"]{20,})"', raw_text)
+    if icon_match:
+        icon = icon_match.group(1)
+
+    # Header image (feature graphic — plus large)
+    header_img = icon  # fallback
+    # Les images header sont souvent plus larges dans la page
+    img_urls = re.findall(r'https://play-lh\.googleusercontent\.com/[^\s"\'\\]{20,}', raw_text)
+    # Trier par longueur d'URL (les images HD ont souvent des URLs plus longues)
+    img_urls = list(dict.fromkeys(img_urls))  # dédupliquer
+    if len(img_urls) >= 2:
+        header_img = img_urls[1]  # La 2ème est souvent le feature graphic
+
+    # Prix
+    price = "Free"
+    if '"price"' in raw_text:
+        price_match = re.search(r'"price"\s*:\s*"([^"]*)"', raw_text)
+        if price_match:
+            p = price_match.group(1).strip()
+            price = "Free" if p in ("0", "", "Free", "Gratuit") else p
+
+    # Note
+    rating = None
+    rating_match = re.search(r'"starRating"\s*:\s*"?([\d.]+)"?', raw_text)
+    if not rating_match:
+        rating_match = re.search(r'(\d\.\d)\s*sur\s*5', raw_text)
+    if rating_match:
+        try:
+            rating = round(float(rating_match.group(1)), 1)
+        except Exception:
+            pass
+
+    # Date de sortie
+    release_dt = None
+    # Chercher un pattern date dans le JSON embarqué
+    date_patterns = [
+        r'"releaseDate"\s*:\s*"([^"]+)"',
+        r'"datePublished"\s*:\s*"([^"]+)"',
+        r'(\d{1,2}\s+\w+\s+\d{4})',   # ex: "15 mars 2026"
+        r'(\w+\s+\d{1,2},\s+\d{4})',  # ex: "Mar 5, 2026"
+    ]
+    for pattern in date_patterns:
+        m = re.search(pattern, raw_text)
+        if m:
+            release_dt = parse_date_flexible(m.group(1))
+            if release_dt:
+                break
+
+    # Fallback : date dans les métadonnées schema.org
     if not release_dt:
-        updated = detail.get("updated")
-        if updated:
+        schema = soup.find("script", type="application/ld+json")
+        if schema:
             try:
-                release_dt = datetime.fromtimestamp(updated)
+                sd = json.loads(schema.string)
+                raw_date = sd.get("datePublished") or sd.get("dateModified", "")
+                release_dt = parse_date_flexible(raw_date)
             except Exception:
                 pass
+
     if not release_dt:
+        print(f"    ↳ ⚠️  Date introuvable pour {bundle_id}")
         return None
 
-    pkg   = detail.get("appId", bundle_id)
-    price = format_price(detail.get("price", 0))
-    score = detail.get("score", None)
+    # Développeur
+    developer = ""
+    dev_match = re.search(r'"developerName"\s*:\s*"([^"]+)"', raw_text)
+    if not dev_match:
+        dev_match = re.search(r'"author"\s*:\s*\{[^}]*"name"\s*:\s*"([^"]+)"', raw_text)
+    if dev_match:
+        developer = dev_match.group(1)
 
-    # ── headerImage : Google Play fournit headerImage nativement ──
-    header_img = (
-        detail.get("headerImage")        # champ natif google-play-scraper
-        or detail.get("video")           # parfois un lien vidéo/image promo
-        or detail.get("icon", "")        # fallback : icône
-    )
+    # Genre
+    genre = "Games"
+    genre_match = re.search(r'"genre"\s*:\s*"([^"]+)"', raw_text)
+    if genre_match:
+        genre = genre_match.group(1)
 
     return {
-        "id":          f"android_{pkg.replace('.', '_')}",
-        "title":       detail.get("title", title),
+        "id":          f"android_{bundle_id.replace('.', '_')}",
+        "title":       title,
         "platform":    ["android"],
         "releaseDate": release_dt.strftime("%Y-%m-%d"),
-        "genre":       detail.get("genre", "Games"),
-        "developer":   detail.get("developer", ""),
-        "icon":        detail.get("icon", ""),
-        "headerImage": header_img,        # ← NOUVEAU
-        "storeUrl":    f"https://play.google.com/store/apps/details?id={pkg}",
+        "genre":       genre,
+        "developer":   developer,
+        "icon":        icon,
+        "headerImage": header_img,
+        "storeUrl":    f"https://play.google.com/store/apps/details?id={bundle_id}",
         "price":       price,
-        "rating":      round(score, 1) if score else None,
-        "bundleId":    pkg,
+        "rating":      rating,
+        "bundleId":    bundle_id,
     }
 
 def fetch_android_from_ios(ios_games: list[dict]) -> list[dict]:
+    """
+    Pour chaque jeu iOS, tente de trouver sa version Android
+    en utilisant le même bundleId sur Google Play.
+    """
     android_games = []
     seen_ids      = set()
     cutoff        = datetime.utcnow() - timedelta(days=LOOKBACK_DAYS)
 
-    print(f"🔍 Recherche Android pour {len(ios_games)} jeux iOS...")
+    print(f"🔍 Vérification Android pour {len(ios_games)} jeux iOS (via bundleId)...")
 
     for i, ios_game in enumerate(ios_games):
-        title     = ios_game.get("title", "")
         bundle_id = ios_game.get("bundleId", "")
+        title     = ios_game.get("title", "")
 
-        print(f"  [{i+1}/{len(ios_games)}] {title}")
+        if not bundle_id:
+            continue
 
-        android = find_android_by_bundle(bundle_id, title)
+        print(f"  [{i+1}/{len(ios_games)}] {title} ({bundle_id})")
+
+        android = scrape_gplay_page(bundle_id)
 
         if android is None:
-            print(f"    ↳ ❌ Pas de version Android trouvée")
+            print(f"    ↳ ❌ Pas de version Android")
+            time.sleep(0.3)
             continue
+
         if android["id"] in seen_ids:
             continue
         seen_ids.add(android["id"])
 
+        # Vérifier la fenêtre de date
         try:
             dt = datetime.strptime(android["releaseDate"], "%Y-%m-%d")
             if dt < cutoff:
                 print(f"    ↳ ⏭️  Trop ancien ({android['releaseDate']})")
+                time.sleep(0.3)
                 continue
         except Exception:
             pass
 
-        print(f"    ↳ ✅ {android['title']} ({android['releaseDate']}) — {android['price']}")
+        # Hériter de l'icon/header iOS si Google Play n'en a pas fourni
+        if not android.get("icon"):
+            android["icon"] = ios_game.get("icon", "")
+        if not android.get("headerImage") or android["headerImage"] == android["icon"]:
+            android["headerImage"] = ios_game.get("headerImage", "")
+
+        print(f"    ↳ ✅ Trouvé ! ({android['releaseDate']}) — {android['price']}")
         android_games.append(android)
 
-    print(f"🤖 Android: {len(android_games)} jeux trouvés via corrélation iOS")
+        # Pause polie pour ne pas se faire bannir
+        time.sleep(1.0)
+
+    print(f"\n🤖 Android: {len(android_games)} jeux trouvés")
     return android_games
 
 # ── Merge ─────────────────────────────────────────────────────────────────────
-def merge_games(existing: list[dict], new_ios: list[dict], new_android: list[dict]) -> list[dict]:
+def merge_games(existing, new_ios, new_android) -> list[dict]:
     all_games = {g["id"]: g for g in existing}
 
-    # Les nouvelles entrées écrasent les anciennes
-    # mais on préserve le headerImage s'il était déjà renseigné manuellement
     for game in new_ios + new_android:
-        existing_entry = all_games.get(game["id"], {})
+        existing_entry  = all_games.get(game["id"], {})
         existing_header = existing_entry.get("headerImage", "")
-        # Garder l'ancien header s'il existe et que le nouveau est un fallback icône
         if existing_header and not game.get("headerImage"):
             game["headerImage"] = existing_header
         all_games[game["id"]] = game
@@ -319,23 +379,23 @@ def main():
 
     existing_data  = load_existing()
     existing_games = existing_data.get("games", [])
-    print(f"📂 Jeux existants en base : {len(existing_games)}\n")
+    print(f"📂 Jeux existants : {len(existing_games)}\n")
 
     ios_games     = fetch_ios_games()
     android_games = fetch_android_from_ios(ios_games)
     merged        = merge_games(existing_games, ios_games, android_games)
 
-    ios_count     = sum(1 for g in merged if 'ios'     in g.get('platform', []))
-    android_count = sum(1 for g in merged if 'android' in g.get('platform', []))
-    free_count    = sum(1 for g in merged if g.get('price') == 'Free')
-    header_count  = sum(1 for g in merged if g.get('headerImage'))
+    ios_c     = sum(1 for g in merged if 'ios'     in g.get('platform', []))
+    android_c = sum(1 for g in merged if 'android' in g.get('platform', []))
+    free_c    = sum(1 for g in merged if g.get('price') == 'Free')
+    header_c  = sum(1 for g in merged if g.get('headerImage'))
 
-    print(f"\n📊 Résultat final :")
+    print(f"\n📊 Résultat :")
     print(f"   Total      : {len(merged)}")
-    print(f"   iOS        : {ios_count}")
-    print(f"   Android    : {android_count}")
-    print(f"   Gratuits   : {free_count}")
-    print(f"   Avec image : {header_count}")
+    print(f"   iOS        : {ios_c}")
+    print(f"   Android    : {android_c}")
+    print(f"   Gratuits   : {free_c}")
+    print(f"   Avec image : {header_c}")
 
     save_data({"games": merged})
 
