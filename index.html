@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobile Games Calendar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #0a0b0f;
+      --surface:   #111318;
+      --surface2:  #181b22;
+      --border:    #ffffff0f;
+      --border2:   #ffffff1a;
+      --text:      #e8eaf0;
+      --muted:     #6b7280;
+      --ios:       #3b82f6;
+      --ios-bg:    #3b82f615;
+      --android:   #22c55e;
+      --android-bg:#22c55e15;
+      --both:      #f59e0b;
+      --both-bg:   #f59e0b15;
+      --today:     #7c3aed;
+      --accent:    #7c3aed;
+      --radius:    12px;
+      --radius-sm: 8px;
+    }
+    html { font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% -10%, #7c3aed18 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 110%, #3b82f612 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .app {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .header-left h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(135deg, #e8eaf0 0%, #9ca3af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header-left h1 span {
+      background: linear-gradient(135deg, #7c3aed, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header-left .subtitle {
+      margin-top: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .last-updated { font-size: 0.7rem; color: var(--muted); text-align: right; }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .month-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 0.4rem;
+    }
+    .btn-nav {
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      width: 32px; height: 32px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+      font-size: 1rem;
+    }
+    .btn-nav:hover { background: var(--border2); }
+    .month-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      min-width: 160px;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+    .filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-left: auto; }
+    .filter-btn {
+      padding​​​​​​​​​​​​​​​​
