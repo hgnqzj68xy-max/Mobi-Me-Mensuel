@@ -98,7 +98,7 @@
     .modal-close{position:absolute;top:1rem;right:1rem;background:var(--border);border:none;color:var(--text);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;}
     .modal-close:hover{background:var(--border2);}
     .modal-date{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:1rem;color:var(--text);}
-    .modal-game{display:flex;flex-direction:column;border-radius:var(--radius-sm);background:var(--surface2);border:1px solid var(--border);margin-bottom:0.5rem;overflow:hidden;transition:border-color 0.15s;text-decoration:none;color:var(--text);}
+    .modal-game{display:flex;flex-direction:column;border-radius:var(--radius-sm);background:var(--surface2);border:1px solid var(--border);margin-bottom:0.5rem;overflow:hidden;transition:border-color 0.15s;color:var(--text);}
     .modal-game:hover{border-color:var(--border2);}
     .modal-game.modal-featured{border-color:var(--featured);}
     .modal-game.modal-featured:hover{box-shadow:0 4px 20px #f59e0b22;}
@@ -116,6 +116,11 @@
     .badge-price{background:var(--border);color:var(--muted);}
     .badge-featured{background:var(--both-bg);color:var(--featured);}
     .stars{color:var(--featured);font-size:0.65rem;}
+    .store-btns{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+    .store-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;font-size:0.65rem;text-decoration:none;font-family:'DM Mono',monospace;transition:opacity 0.15s;}
+    .store-btn:hover{opacity:0.8;}
+    .store-btn-ios{background:var(--ios-bg);border:1px solid #3b82f655;color:var(--ios);}
+    .store-btn-android{background:var(--android-bg);border:1px solid #22c55e55;color:var(--android);}
     ::-webkit-scrollbar{width:6px;height:6px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
     @media(max-width:600px){.day-cell{min-height:70px;padding:0.35rem;}.chip-title{display:none;}.chip{padding:3px;}.controls{gap:0.5rem;}.filters{margin-left:0;}.featured-card{width:155px;}.featured-card-img,.featured-card-img-fallback{height:85px;}}
   </style>
@@ -335,12 +340,27 @@ function openModal(dateStr,games){
   const[y,m,d]=dateStr.split('-').map(Number);
   document.getElementById('modalDate').textContent=`${d} ${MONTHS_FR[m-1]} ${y} — ${games.length} jeu${games.length>1?'x':''}`;
   const container=document.getElementById('modalGames');container.innerHTML='';
-  const sorted=[...games].sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
+
+  // Regrouper iOS + Android du même titre en une seule carte
+  const grouped={};
+  games.forEach(g=>{
+    const key=g.title.toLowerCase();
+    if(!grouped[key]){grouped[key]={...g,_ios:null,_android:null,platform:[...g.platform]};}
+    if(g.platform.includes('ios')){grouped[key]._ios=g.storeUrl;grouped[key].featured=grouped[key].featured||g.featured;}
+    if(g.platform.includes('android')){grouped[key]._android=g.storeUrl;grouped[key].featured=grouped[key].featured||g.featured;}
+    g.platform.forEach(p=>{if(!grouped[key].platform.includes(p))grouped[key].platform.push(p);});
+    if(!grouped[key].headerImage&&g.headerImage)grouped[key].headerImage=g.headerImage;
+    if(!grouped[key].icon&&g.icon)grouped[key].icon=g.icon;
+    if(!grouped[key].rating&&g.rating)grouped[key].rating=g.rating;
+  });
+
+  const sorted=Object.values(grouped).sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
+
   sorted.forEach(game=>{
     const isFeat=game.featured;
-    const link=document.createElement('a');
-    link.className=`modal-game${isFeat?' modal-featured':''}`;
-    link.href=game.storeUrl||'#';link.target='_blank';link.rel='noopener noreferrer';
+    const card=document.createElement('div');
+    card.className=`modal-game${isFeat?' modal-featured':''}`;
+
     let bannerHtml='';
     if(isFeat){
       const hasHeader=game.headerImage&&!game.headerImage.includes('picsum');
@@ -348,7 +368,15 @@ function openModal(dateStr,games){
         ?`<img class="modal-game-banner" src="${game.headerImage}" alt="" onerror="this.style.display='none'" />`
         :`<div class="modal-game-banner-placeholder"><img class="modal-game-banner-icon" src="${game.icon||''}" alt="" onerror="this.style.display='none'" /></div>`;
     }
-    link.innerHTML=`
+
+    const iosBtn=game._ios
+      ?`<a href="${game._ios}" target="_blank" rel="noopener" class="store-btn store-btn-ios">🍎 App Store</a>`
+      :'';
+    const androidBtn=game._android
+      ?`<a href="${game._android}" target="_blank" rel="noopener" class="store-btn store-btn-android">🤖 Google Play</a>`
+      :'';
+
+    card.innerHTML=`
       ${bannerHtml}
       <div class="modal-game-row">
         <img class="modal-game-icon" src="${game.icon||''}" alt="" onerror="this.style.display='none'" />
@@ -363,10 +391,12 @@ function openModal(dateStr,games){
             ${starsHtml(game.rating)}
           </div>
           ${game.developer?`<div style="font-size:0.62rem;color:var(--muted);margin-top:4px">${game.developer}</div>`:''}
+          <div class="store-btns">${iosBtn}${androidBtn}</div>
         </div>
       </div>`;
-    container.appendChild(link);
+    container.appendChild(card);
   });
+
   document.getElementById('overlay').classList.add('open');
 }
 
