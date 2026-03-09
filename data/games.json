@@ -129,6 +129,22 @@
       "bundleId": "studio.gammate.farmloop"
     },
     {
+      "id": "ios_6758007738",
+      "title": "YAFOY !",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-09",
+      "genre": "Puzzle",
+      "developer": "Peniel M'bailly",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a1/16/cba1164a-ffeb-c9b6-adbd-8e56f1958e2b/AppIcon-1x_U007emarketing-0-6-0-85-220-0.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cb/a1/16/cba1164a-ffeb-c9b6-adbd-8e56f1958e2b/AppIcon-1x_U007emarketing-0-6-0-85-220-0.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/yafoy/id6758007738?uo=4",
+      "price": "Free",
+      "rating": 4.6,
+      "bundleId": "com.MEDYN.CO.Yafoy"
+    },
+    {
       "id": "ios_6754688040",
       "title": "Last Light: Rebirth",
       "platform": [
@@ -141,7 +157,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/2c/bb/3d2cbbe0-86a4-c6db-49fc-c04ac329ed6e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/last-light-rebirth/id6754688040?uo=4",
       "price": "Free",
-      "rating": 4.9,
+      "rating": 4.8,
       "bundleId": "com.light.eu"
     },
     {
@@ -153,12 +169,28 @@
       "releaseDate": "2026-02-11",
       "genre": "Simulation",
       "developer": "WISENESS GAME ONLINE INTERNATIONAL LTD",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/99/b7/2e/99b72ede-9482-063a-dfa3-1ab797fd8ac4/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/99/b7/2e/99b72ede-9482-063a-dfa3-1ab797fd8ac4/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9a/9c/a4/9a9ca4cd-2408-9301-4f6e-f91861b22837/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9a/9c/a4/9a9ca4cd-2408-9301-4f6e-f91861b22837/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/last-asylum-plague/id6756989323?uo=4",
       "price": "Free",
       "rating": 4.8,
       "bundleId": "com.phs.global.ios"
+    },
+    {
+      "id": "ios_6758939002",
+      "title": "Brainzot Survival: Lava Run",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-11",
+      "genre": "Action",
+      "developer": "Nguyen Dang Hoang Vu",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/79/4e/4b/794e4ba3-27b5-d86e-f506-0a288a51159f/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/79/4e/4b/794e4ba3-27b5-d86e-f506-0a288a51159f/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/brainzot-survival-lava-run/id6758939002?uo=4",
+      "price": "Free",
+      "rating": 4.8,
+      "bundleId": "com.magma.survive2026"
     },
     {
       "id": "ios_6754588812",
@@ -205,7 +237,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/e9/d1/77/e9d177a5-c108-44a5-3375-bddd0fdaa2e4/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/i-am-taxi-driver/id6757801241?uo=4",
       "price": "Free",
-      "rating": 4.9,
+      "rating": 4.8,
       "bundleId": "com.NewFolderGames.TaxiDriver"
     },
     {
@@ -221,7 +253,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4d/8a/6c/4d8a6cbc-e0df-ae57-c5c0-d1158dec6501/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/i-am-airport-security/id6755672171?uo=4",
       "price": "Free",
-      "rating": 4.4,
+      "rating": 4.2,
       "bundleId": "com.NewFolderGames.IAmSecurityAirport"
     },
     {
@@ -233,11 +265,11 @@
       "releaseDate": "2026-02-17",
       "genre": "Arcade",
       "developer": "Bushiroad Inc.",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/8c/76/f5/8c76f552-e788-35ab-de42-c11c2061da4e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/8c/76/f5/8c76f552-e788-35ab-de42-c11c2061da4e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/64/9e/2f/649e2fe9-8df3-5eba-0e9e-9837a3d31c2a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/64/9e/2f/649e2fe9-8df3-5eba-0e9e-9837a3d31c2a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/hunter-hunter-nen-survivor/id6753738566?uo=4",
       "price": "Free",
-      "rating": 4.4,
+      "rating": 4.5,
       "bundleId": "com.hxh.survivor"
     },
     {
@@ -255,6 +287,38 @@
       "price": "Free",
       "rating": 4.1,
       "bundleId": "com.nintendo.zata"
+    },
+    {
+      "id": "ios_6759256704",
+      "title": "My Voice Zoo Animals Simulator",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-17",
+      "genre": "Music",
+      "developer": "Sampath Udayakumara",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c8/45/19/c8451996-99df-df1e-34d2-bf1539d8d8db/AppIcon-0-0-1x_U007epad-0-1-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c8/45/19/c8451996-99df-df1e-34d2-bf1539d8d8db/AppIcon-0-0-1x_U007epad-0-1-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/my-voice-zoo-animals-simulator/id6759256704?uo=4",
+      "price": "Free",
+      "rating": 5,
+      "bundleId": "com.firemarkstudio.Voice-Zoo-Animals"
+    },
+    {
+      "id": "ios_6747068510",
+      "title": "Wild Words Duel",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-17",
+      "genre": "Word",
+      "developer": "IsCool Entertainment",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1e/a5/6b/1ea56bcd-243b-664c-726a-c0fa07a7f73e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1e/a5/6b/1ea56bcd-243b-664c-726a-c0fa07a7f73e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/wild-words-duel/id6747068510?uo=4",
+      "price": "Free",
+      "rating": 4.8,
+      "bundleId": "com.iscoolentertainment.wild.words"
     },
     {
       "id": "ios_6755482314",
@@ -281,8 +345,8 @@
       "releaseDate": "2026-02-19",
       "genre": "Puzzle",
       "developer": "Ashita Games",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f5/89/54/f5895477-ce63-41aa-b3c0-284f791f1233/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f5/89/54/f5895477-ce63-41aa-b3c0-284f791f1233/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/14/78/3d147810-8d31-20d6-2a0e-9ec05008e3c3/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/14/78/3d147810-8d31-20d6-2a0e-9ec05008e3c3/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/fl%C3%A8ches-puzzle-casse-t%C3%AAte/id6756872090?uo=4",
       "price": "Free",
       "rating": 4.9,
@@ -301,7 +365,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d2/5f/90/d25f908e-43bb-2d7f-e273-f752df85039b/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/draw-sprint-game/id6759247590?uo=4",
       "price": "Free",
-      "rating": 3.2,
+      "rating": 3.9,
       "bundleId": "com.michaelbeasley.drawsprintgame"
     },
     {
@@ -317,8 +381,24 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/40/fa/47/40fa47e1-b8d6-6520-eeeb-90ccd40a6084/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/brain-test-5-d%C3%A9fi-difficile/id6753282229?uo=4",
       "price": "Free",
-      "rating": 4.6,
+      "rating": 4.7,
       "bundleId": "com.unicostudio.braintest5"
+    },
+    {
+      "id": "ios_6759680248",
+      "title": "My Voice Zoo App",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-25",
+      "genre": "Music",
+      "developer": "JESSICA NASCIMENTO",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/33/0e/b0330edf-2421-87ee-c8d6-ce934a36c22c/AppIcon-0-0-1x_U007epad-0-1-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/33/0e/b0330edf-2421-87ee-c8d6-ce934a36c22c/AppIcon-0-0-1x_U007epad-0-1-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/my-voice-zoo-app/id6759680248?uo=4",
+      "price": "Free",
+      "rating": 4.4,
+      "bundleId": "com.myvoicezoo.game"
     },
     {
       "id": "ios_6504188939",
@@ -345,8 +425,8 @@
       "releaseDate": "2026-02-27",
       "genre": "Arcade",
       "developer": "VoyagerOne",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/73/72/e7/7372e79b-6bcc-18a5-12d9-99fb53f96580/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/73/72/e7/7372e79b-6bcc-18a5-12d9-99fb53f96580/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ce/a0/fd/cea0fdf2-0bca-d9d5-e482-b9dd2fb381ba/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ce/a0/fd/cea0fdf2-0bca-d9d5-e482-b9dd2fb381ba/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/hollywood-merge/id6755455500?uo=4",
       "price": "Free",
       "rating": 4.7,
@@ -445,7 +525,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d0/b2/2d/d0b22dcd-4962-de61-d0c6-9034d032cd8c/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/hatch-dragons/id6746389113?uo=4",
       "price": "Free",
-      "rating": null,
+      "rating": 4.9,
       "bundleId": "com.runawayplay.dragons"
     },
     {
@@ -559,6 +639,134 @@
       "bundleId": "com.gamehouse.jigsaw.puzzle.free.brain.games.tile.twist"
     },
     {
+      "id": "ios_1539411904",
+      "title": "Oceanhorn 3",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-05",
+      "genre": "Adventure",
+      "developer": "Cornfox & Brothers Ltd.",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3a/56/7c/3a567cf7-eea8-2750-c498-166e56fc5a6e/AppIcon-0-0-1x_U007emarketing-0-4-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3a/56/7c/3a567cf7-eea8-2750-c498-166e56fc5a6e/AppIcon-0-0-1x_U007emarketing-0-4-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/oceanhorn-3/id1539411904?uo=4",
+      "price": "Free",
+      "rating": 4.5,
+      "bundleId": "com.cornfox.oceanhorn3"
+    },
+    {
+      "id": "ios_6759238910",
+      "title": "Ultra Limit Awakening",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-05",
+      "genre": "Games",
+      "developer": "Tianjin Daxing Technology Co., Ltd",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/18/64/c3/1864c3db-5a51-18a9-d14e-3b31f4fd35f9/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/18/64/c3/1864c3db-5a51-18a9-d14e-3b31f4fd35f9/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/ultra-limit-awakening/id6759238910?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.loncme.game"
+    },
+    {
+      "id": "ios_6755996889",
+      "title": "HEAVENHELLS: Anime Squad RPG",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-05",
+      "genre": "Strategy",
+      "developer": "Clover Games Corp.",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f1/3f/b9/f13fb9df-b53b-7beb-6bd4-9b054ae62240/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f1/3f/b9/f13fb9df-b53b-7beb-6bd4-9b054ae62240/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/heavenhells-anime-squad-rpg/id6755996889?uo=4",
+      "price": "Free",
+      "rating": 4.3,
+      "bundleId": "com.clovergames.avalonclient"
+    },
+    {
+      "id": "ios_6751190902",
+      "title": "Doraemon Dorayaki Shop Story+",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-05",
+      "genre": "Simulation",
+      "developer": "Kairosoft Co.,Ltd",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c3/94/aa/c394aa13-1916-1359-29f7-1d70da347292/AppIcon-0-0-1x_U007emarketing-0-6-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c3/94/aa/c394aa13-1916-1359-29f7-1d70da347292/AppIcon-0-0-1x_U007emarketing-0-6-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/doraemon-dorayaki-shop-story/id6751190902?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "net.kairosoft.iOS.dorayakiAA"
+    },
+    {
+      "id": "ios_6751602047",
+      "title": "KnightBound - Dark Fantasy",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-07",
+      "genre": "Adventure",
+      "developer": "Supereo LTD",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b4/b9/c9/b4b9c9cc-1597-048a-c28b-50151083fad8/AppIcon-0-0-1x_U007epad-0-1-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b4/b9/c9/b4b9c9cc-1597-048a-c28b-50151083fad8/AppIcon-0-0-1x_U007epad-0-1-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/knightbound-dark-fantasy/id6751602047?uo=4",
+      "price": "Free",
+      "rating": 4.7,
+      "bundleId": "dev.supereo.knightbound"
+    },
+    {
+      "id": "ios_6752009729",
+      "title": "Cheap Car Mechanic Repair Shop",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-07",
+      "genre": "Simulation",
+      "developer": "Hamza Khan",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1d/ef/a6/1defa624-3edd-f99d-1fe2-a632781d6958/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1d/ef/a6/1defa624-3edd-f99d-1fe2-a632781d6958/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/cheap-car-mechanic-repair-shop/id6752009729?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.hk.cheap.car.repair"
+    },
+    {
+      "id": "ios_6759160688",
+      "title": "Culture Royale",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-08",
+      "genre": "Trivia",
+      "developer": "ETIENNE ARMEL DOMINIQUE BAUDIN",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/3d/78/92/3d7892ce-2487-706e-596c-891238875a17/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/3d/78/92/3d7892ce-2487-706e-596c-891238875a17/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/culture-royale/id6759160688?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.cultureroyale.app"
+    },
+    {
+      "id": "ios_6758839020",
+      "title": "Outhold",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-09",
+      "genre": "Strategy",
+      "developer": "MinMax Software AB",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/61/e1/aa/61e1aa03-a6f3-b608-9b41-0bf6d894971d/AppIcon-0-0-1x_U007ephone-0-11-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/61/e1/aa/61e1aa03-a6f3-b608-9b41-0bf6d894971d/AppIcon-0-0-1x_U007ephone-0-11-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/outhold/id6758839020?uo=4",
+      "price": "3.99€",
+      "rating": null,
+      "bundleId": "com.tellusgames.outhold"
+    },
+    {
       "id": "ios_6745761596",
       "title": "Coin Master - Board Adventure",
       "platform": [
@@ -647,8 +855,8 @@
       "releaseDate": "2026-04-02",
       "genre": "Simulation",
       "developer": "Nexwave Tech Limited",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c2/34/94/c234944c-29cb-6f73-b2a1-ac608b7a0f4c/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c2/34/94/c234944c-29cb-6f73-b2a1-ac608b7a0f4c/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/01/d7/7d/01d77d0c-d0a0-4a0b-3f23-4f6134aa2395/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/01/d7/7d/01d77d0c-d0a0-4a0b-3f23-4f6134aa2395/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/pop-epoch/id6754275296?uo=4",
       "price": "Free",
       "rating": null,
@@ -671,5 +879,5 @@
       "bundleId": "com.devsisters.cos"
     }
   ],
-  "lastUpdated": "2026-03-06T10:04:51.538068Z"
+  "lastUpdated": "2026-03-09T08:02:28.774241Z"
 }
