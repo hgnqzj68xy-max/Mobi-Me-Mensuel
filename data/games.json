@@ -157,7 +157,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/2c/bb/3d2cbbe0-86a4-c6db-49fc-c04ac329ed6e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/last-light-rebirth/id6754688040?uo=4",
       "price": "Free",
-      "rating": 4.8,
+      "rating": 4.9,
       "bundleId": "com.light.eu"
     },
     {
@@ -169,8 +169,8 @@
       "releaseDate": "2026-02-11",
       "genre": "Simulation",
       "developer": "WISENESS GAME ONLINE INTERNATIONAL LTD",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9a/9c/a4/9a9ca4cd-2408-9301-4f6e-f91861b22837/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9a/9c/a4/9a9ca4cd-2408-9301-4f6e-f91861b22837/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/dc/b8/a5/dcb8a585-9516-4a86-9ab1-9741d4500f44/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/dc/b8/a5/dcb8a585-9516-4a86-9ab1-9741d4500f44/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/last-asylum-plague/id6756989323?uo=4",
       "price": "Free",
       "rating": 4.8,
@@ -191,6 +191,22 @@
       "price": "Free",
       "rating": 4.8,
       "bundleId": "com.magma.survive2026"
+    },
+    {
+      "id": "ios_6758611499",
+      "title": "Water Sort! 3D Color Match Puz",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-11",
+      "genre": "Arcade",
+      "developer": "Flyfox Games",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/18/c0/df/18c0df2d-04ec-fc7c-4a9b-06dd1d1403e8/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/18/c0/df/18c0df2d-04ec-fc7c-4a9b-06dd1d1403e8/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/water-sort-3d-color-match-puz/id6758611499?uo=4",
+      "price": "Free",
+      "rating": 4.9,
+      "bundleId": "water.sort.master.color.match.offline.puzzle"
     },
     {
       "id": "ios_6754588812",
@@ -313,8 +329,8 @@
       "releaseDate": "2026-02-17",
       "genre": "Word",
       "developer": "IsCool Entertainment",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1e/a5/6b/1ea56bcd-243b-664c-726a-c0fa07a7f73e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1e/a5/6b/1ea56bcd-243b-664c-726a-c0fa07a7f73e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/bb/9c/1e/bb9c1e82-f382-fb6f-f5bf-a4d23a0cc48d/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/bb/9c/1e/bb9c1e82-f382-fb6f-f5bf-a4d23a0cc48d/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/wild-words-duel/id6747068510?uo=4",
       "price": "Free",
       "rating": 4.8,
@@ -365,7 +381,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d2/5f/90/d25f908e-43bb-2d7f-e273-f752df85039b/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/draw-sprint-game/id6759247590?uo=4",
       "price": "Free",
-      "rating": 3.9,
+      "rating": 3,
       "bundleId": "com.michaelbeasley.drawsprintgame"
     },
     {
@@ -397,7 +413,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/33/0e/b0330edf-2421-87ee-c8d6-ce934a36c22c/AppIcon-0-0-1x_U007epad-0-1-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/my-voice-zoo-app/id6759680248?uo=4",
       "price": "Free",
-      "rating": 4.4,
+      "rating": 4.6,
       "bundleId": "com.myvoicezoo.game"
     },
     {
@@ -417,6 +433,22 @@
       "bundleId": "com.sybogames.subway.surfers.game"
     },
     {
+      "id": "ios_6759666323",
+      "title": "Strong Whisper Expert",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-26",
+      "genre": "Adventure",
+      "developer": "Allan Brannon",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f1/d6/8e/f1d68e4b-078e-ac03-8d58-f6026b993416/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f1/d6/8e/f1d68e4b-078e-ac03-8d58-f6026b993416/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/strong-whisper-expert/id6759666323?uo=4",
+      "price": "Free",
+      "rating": 1,
+      "bundleId": "com.allanbrannon.strongwhisperexpert"
+    },
+    {
       "id": "ios_6755455500",
       "title": "Hollywood Merge",
       "platform": [
@@ -425,8 +457,8 @@
       "releaseDate": "2026-02-27",
       "genre": "Arcade",
       "developer": "VoyagerOne",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ce/a0/fd/cea0fdf2-0bca-d9d5-e482-b9dd2fb381ba/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ce/a0/fd/cea0fdf2-0bca-d9d5-e482-b9dd2fb381ba/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4c/bf/56/4cbf5601-4471-c4c6-4128-038d92c2ef10/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4c/bf/56/4cbf5601-4471-c4c6-4128-038d92c2ef10/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/hollywood-merge/id6755455500?uo=4",
       "price": "Free",
       "rating": 4.7,
@@ -651,7 +683,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3a/56/7c/3a567cf7-eea8-2750-c498-166e56fc5a6e/AppIcon-0-0-1x_U007emarketing-0-4-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/oceanhorn-3/id1539411904?uo=4",
       "price": "Free",
-      "rating": 4.5,
+      "rating": 4.4,
       "bundleId": "com.cornfox.oceanhorn3"
     },
     {
@@ -667,7 +699,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/18/64/c3/1864c3db-5a51-18a9-d14e-3b31f4fd35f9/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/ultra-limit-awakening/id6759238910?uo=4",
       "price": "Free",
-      "rating": null,
+      "rating": 3,
       "bundleId": "com.loncme.game"
     },
     {
@@ -711,8 +743,8 @@
       "releaseDate": "2026-03-07",
       "genre": "Adventure",
       "developer": "Supereo LTD",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b4/b9/c9/b4b9c9cc-1597-048a-c28b-50151083fad8/AppIcon-0-0-1x_U007epad-0-1-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b4/b9/c9/b4b9c9cc-1597-048a-c28b-50151083fad8/AppIcon-0-0-1x_U007epad-0-1-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6a/9a/8d/6a9a8ddb-afbb-61f9-1a61-f3ba5ca4e2f8/AppIcon-0-0-1x_U007epad-0-1-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6a/9a/8d/6a9a8ddb-afbb-61f9-1a61-f3ba5ca4e2f8/AppIcon-0-0-1x_U007epad-0-1-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/knightbound-dark-fantasy/id6751602047?uo=4",
       "price": "Free",
       "rating": 4.7,
@@ -765,6 +797,102 @@
       "price": "3.99€",
       "rating": null,
       "bundleId": "com.tellusgames.outhold"
+    },
+    {
+      "id": "ios_6759824235",
+      "title": "Gribli",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-09",
+      "genre": "Games",
+      "developer": "Patrice Cassard",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/cd/55/df/cd55df56-78bb-9fee-f21c-c364e18ea33c/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/cd/55/df/cd55df56-78bb-9fee-f21c-c364e18ea33c/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/gribli/id6759824235?uo=4",
+      "price": "Free",
+      "rating": 5,
+      "bundleId": "com.misericode.Gribli"
+    },
+    {
+      "id": "ios_6754621437",
+      "title": "Spirit Summoners",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-10",
+      "genre": "Role Playing",
+      "developer": "Proficient City Hong Kong",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ca/15/90/ca159088-9710-b1ba-74cf-ac5f9161bb6d/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ca/15/90/ca159088-9710-b1ba-74cf-ac5f9161bb6d/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/spirit-summoners/id6754621437?uo=4",
+      "price": "Free",
+      "rating": 5,
+      "bundleId": "com.f5game.ss"
+    },
+    {
+      "id": "ios_6749406060",
+      "title": "Subnautica : Below Zero",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-10",
+      "genre": "Adventure",
+      "developer": "Unknown Worlds",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/31/62/03/316203bf-f64c-08e5-840d-cb9d9bc159cc/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/31/62/03/316203bf-f64c-08e5-840d-cb9d9bc159cc/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/subnautica-below-zero/id6749406060?uo=4",
+      "price": "8.99€",
+      "rating": null,
+      "bundleId": "com.UnknownWorlds.SubnauticaBelowZero"
+    },
+    {
+      "id": "ios_6759252870",
+      "title": "Objets Cachés : Crime Shadows",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-10",
+      "genre": "Puzzle",
+      "developer": "DO GAMES LIMITED",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/a6/63/f5/a663f527-f612-654c-c0b4-901f29f69d8a/AppIconFremium-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/a6/63/f5/a663f527-f612-654c-c0b4-901f29f69d8a/AppIconFremium-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/objets-cach%C3%A9s-crime-shadows/id6759252870?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.dominigames.cs1.ios.freemium"
+    },
+    {
+      "id": "ios_6760120612",
+      "title": "MyVoiceZoo Game",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-10",
+      "genre": "Music",
+      "developer": "Elena Vasileva",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7c/76/cf/7c76cfc1-c4b8-8c02-b83b-db061eaa7f75/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7c/76/cf/7c76cfc1-c4b8-8c02-b83b-db061eaa7f75/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/myvoicezoo-game/id6760120612?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.MyVoiceZoo"
+    },
+    {
+      "id": "ios_6754081548",
+      "title": "Mahjong Matching - Slide Match",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-11",
+      "genre": "Board",
+      "developer": "Guru Smart Holding Limited",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/79/56/be/7956be37-a024-376e-9024-ba52c72ff104/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/79/56/be/7956be37-a024-376e-9024-ba52c72ff104/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/mahjong-matching-slide-match/id6754081548?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "slide.match.mahjong.tile.connect.pair.puzzle.games"
     },
     {
       "id": "ios_6745761596",
@@ -877,7 +1005,23 @@
       "price": "Free",
       "rating": null,
       "bundleId": "com.devsisters.cos"
+    },
+    {
+      "id": "android_slide_match_mahjong_tile_connect_pair_puzzle_games",
+      "title": "Jeu Glissé - Mahjong Connect",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "485-01-01",
+      "genre": "Games",
+      "developer": "Guru Puzzle Game",
+      "icon": "https://play-lh.googleusercontent.com/1roP5RKm7w2sNX9tmipfxWWnhCdFOLuZ9Au26kZxfosx_ZeEVW-E0M21Dr7YWqfLhl8FGJKFsDYp9JWDVSUo",
+      "headerImage": "https://play-lh.googleusercontent.com/1roP5RKm7w2sNX9tmipfxWWnhCdFOLuZ9Au26kZxfosx_ZeEVW-E0M21Dr7YWqfLhl8FGJKFsDYp9JWDVSUo=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=slide.match.mahjong.tile.connect.pair.puzzle.games",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "slide.match.mahjong.tile.connect.pair.puzzle.games"
     }
   ],
-  "lastUpdated": "2026-03-09T08:02:28.774241Z"
+  "lastUpdated": "2026-03-11T20:46:45.035171Z"
 }
