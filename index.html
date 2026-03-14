@@ -13,7 +13,8 @@
       --border2:#ffffff1a;--text:#e8eaf0;--muted:#6b7280;
       --ios:#3b82f6;--ios-bg:#3b82f615;--android:#22c55e;--android-bg:#22c55e15;
       --both:#f59e0b;--both-bg:#f59e0b15;--today:#7c3aed;--accent:#7c3aed;
-      --featured:#f59e0b;--radius:12px;--radius-sm:8px;
+      --featured:#f59e0b;--upcoming:#a855f7;--upcoming-bg:#a855f715;
+      --radius:12px;--radius-sm:8px;
     }
     html{font-size:16px;}
     body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;min-height:100vh;overflow-x:hidden;}
@@ -58,7 +59,7 @@
     .legend{display:flex;gap:1.2rem;margin-bottom:1.5rem;font-size:0.7rem;color:var(--muted);flex-wrap:wrap;}
     .legend-item{display:flex;align-items:center;gap:0.4rem;}
     .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-    .dot-ios{background:var(--ios);}.dot-android{background:var(--android);}.dot-both{background:var(--both);}.dot-featured{background:var(--featured);border-radius:2px;}
+    .dot-ios{background:var(--ios);}.dot-android{background:var(--android);}.dot-both{background:var(--both);}.dot-featured{background:var(--featured);border-radius:2px;}.dot-upcoming{background:var(--upcoming);}
     /* STATS */
     .stats-bar{display:flex;gap:1.5rem;padding:0.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1.5rem;font-size:0.72rem;flex-wrap:wrap;}
     .stat{display:flex;flex-direction:column;gap:2px;}
@@ -75,7 +76,10 @@
     .day-cell.has-games:hover{border-color:var(--border2);background:var(--surface2);}
     .day-cell.has-featured{border-color:var(--featured)!important;background:#f59e0b08!important;box-shadow:0 0 0 1px #f59e0b33,inset 0 0 20px #f59e0b08;}
     .day-cell.has-featured .day-number{color:var(--featured);}
+    .day-cell.has-upcoming{border-style:dashed!important;border-color:var(--upcoming)!important;background:#a855f708!important;}
+    .day-cell.has-upcoming .day-number{color:var(--upcoming);}
     .featured-corner{position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 18px 18px 0;border-color:transparent var(--featured) transparent transparent;border-radius:0 var(--radius-sm) 0 0;}
+    .upcoming-corner{position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 18px 18px 0;border-color:transparent var(--upcoming) transparent transparent;border-radius:0 var(--radius-sm) 0 0;}
     .day-number{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;color:var(--muted);margin-bottom:0.4rem;}
     .day-cell.today .day-number{color:var(--accent);}
     .game-chips{display:flex;flex-direction:column;gap:3px;}
@@ -85,10 +89,12 @@
     .chip.android{background:var(--android-bg);border-left:2px solid var(--android);}
     .chip.both{background:var(--both-bg);border-left:2px solid var(--both);}
     .chip.featured-chip{background:#f59e0b18!important;border-left:2px solid var(--featured)!important;font-weight:600;}
+    .chip.upcoming-chip{background:var(--upcoming-bg)!important;border-left:2px solid var(--upcoming)!important;font-style:italic;}
     .chip-icon{width:14px;height:14px;border-radius:3px;object-fit:cover;flex-shrink:0;}
     .chip-icon-placeholder{width:14px;height:14px;border-radius:3px;background:var(--border2);flex-shrink:0;}
     .chip-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
     .chip-star{font-size:0.55rem;color:var(--featured);flex-shrink:0;}
+    .chip-bell{font-size:0.55rem;flex-shrink:0;}
     .more-badge{font-size:0.6rem;color:var(--muted);padding:2px 4px;background:var(--border);border-radius:4px;cursor:pointer;}
     /* MODAL */
     .overlay{display:none;position:fixed;inset:0;background:#00000088;backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:1rem;}
@@ -102,6 +108,8 @@
     .modal-game:hover{border-color:var(--border2);}
     .modal-game.modal-featured{border-color:var(--featured);}
     .modal-game.modal-featured:hover{box-shadow:0 4px 20px #f59e0b22;}
+    .modal-game.modal-upcoming{border-color:var(--upcoming);border-style:dashed;}
+    .modal-game.modal-upcoming:hover{box-shadow:0 4px 20px #a855f722;}
     .modal-game-banner{width:100%;height:110px;object-fit:cover;display:block;}
     .modal-game-banner-placeholder{width:100%;height:80px;background:linear-gradient(135deg,#1a1d28,#12151e);display:flex;align-items:center;justify-content:center;}
     .modal-game-banner-icon{width:48px;height:48px;border-radius:10px;object-fit:cover;}
@@ -115,6 +123,7 @@
     .badge-android{background:var(--android-bg);color:var(--android);}
     .badge-price{background:var(--border);color:var(--muted);}
     .badge-featured{background:var(--both-bg);color:var(--featured);}
+    .badge-upcoming{background:var(--upcoming-bg);color:var(--upcoming);}
     .stars{color:var(--featured);font-size:0.65rem;}
     .store-btns{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
     .store-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;font-size:0.65rem;text-decoration:none;font-family:'DM Mono',monospace;transition:opacity 0.15s;}
@@ -162,6 +171,7 @@
     <div class="stat"><span class="stat-val" style="color:var(--ios)" id="statIos">—</span><span class="stat-label">iOS</span></div>
     <div class="stat"><span class="stat-val" style="color:var(--android)" id="statAndroid">—</span><span class="stat-label">Android</span></div>
     <div class="stat"><span class="stat-val" style="color:var(--featured)" id="statFeatured">—</span><span class="stat-label">à la une</span></div>
+    <div class="stat"><span class="stat-val" style="color:var(--upcoming)" id="statUpcoming">—</span><span class="stat-label">🔔 bientôt</span></div>
     <div class="stat"><span class="stat-val" id="statFree">—</span><span class="stat-label">gratuits</span></div>
   </div>
 
@@ -170,6 +180,7 @@
     <div class="legend-item"><div class="dot dot-android"></div>Android</div>
     <div class="legend-item"><div class="dot dot-both"></div>Les deux</div>
     <div class="legend-item"><div class="dot dot-featured"></div>À la une</div>
+    <div class="legend-item"><div class="dot dot-upcoming"></div>Bientôt</div>
   </div>
 
   <div class="calendar-grid" id="calendarGrid"></div>
@@ -211,7 +222,10 @@ function starsHtml(r){
 function formatDateShort(ds){const[y,m,d]=ds.split('-').map(Number);return `${MONTHS_SHORT[m-1]} ${d}`;}
 
 function computeFeatured(games,year,month){
-  const mg=games.filter(g=>{const[y,m]=g.releaseDate.split('-').map(Number);return y===year&&m-1===month;});
+  const mg=games.filter(g=>{
+    const[y,m]=g.releaseDate.split('-').map(Number);
+    return y===year&&m-1===month&&g.status!=='upcoming';
+  });
   const byTitle={};
   mg.forEach(g=>{const k=g.title.toLowerCase();if(!byTitle[k]||g.platform.includes('ios'))byTitle[k]=g;});
   const unique=Object.values(byTitle);
@@ -229,11 +243,14 @@ async function loadData(){
     const res=await fetch(base+'/data/games.json?_='+Date.now());
     const data=await res.json();
     allGames=data.games||[];
+    // S'assurer que status est défini
+    allGames.forEach(g=>{if(!g.status)g.status='released';});
+    // Auto-featured sur les jeux sortis
     const hasManual=allGames.some(g=>g.featured===true);
     if(!hasManual){
       const featured=computeFeatured(allGames,curYear,curMonth);
       const ft=new Set(featured.map(g=>g.title.toLowerCase()));
-      allGames.forEach(g=>{g.featured=ft.has(g.title.toLowerCase());});
+      allGames.forEach(g=>{g.featured=g.status!=='upcoming'&&ft.has(g.title.toLowerCase());});
     }
     document.getElementById('lastUpdated').textContent=data.lastUpdated?'Mis à jour : '+new Date(data.lastUpdated).toLocaleDateString('fr-FR'):'';
   }catch(e){console.error(e);allGames=[];}
@@ -289,11 +306,13 @@ function renderCalendar(){
   });
   const monthGames=filtered.filter(g=>{const[y,m]=g.releaseDate.split('-').map(Number);return y===curYear&&m-1===curMonth;});
   const featuredMonth=allGames.filter(g=>{const[y,m]=g.releaseDate.split('-').map(Number);return g.featured&&y===curYear&&m-1===curMonth;});
+  const upcomingMonth=allGames.filter(g=>{const[y,m]=g.releaseDate.split('-').map(Number);return g.status==='upcoming'&&y===curYear&&m-1===curMonth;});
   const featuredTitles=new Set(featuredMonth.map(g=>g.title.toLowerCase()));
   document.getElementById('statTotal').textContent=monthGames.length;
   document.getElementById('statIos').textContent=monthGames.filter(g=>g.platform.includes('ios')).length;
   document.getElementById('statAndroid').textContent=monthGames.filter(g=>g.platform.includes('android')).length;
   document.getElementById('statFeatured').textContent=featuredTitles.size;
+  document.getElementById('statUpcoming').textContent=new Set(upcomingMonth.map(g=>g.title.toLowerCase())).size;
   document.getElementById('statFree').textContent=monthGames.filter(g=>g.price==='Free').length;
   document.getElementById('monthLabel').textContent=`${MONTHS_FR[curMonth]} ${curYear}`;
   const firstDay=new Date(curYear,curMonth,1).getDay();
@@ -305,13 +324,27 @@ function renderCalendar(){
     const isToday=today.getFullYear()===curYear&&today.getMonth()===curMonth&&today.getDate()===d;
     const games=gamesByDate[dateStr]||[];
     const hasFeat=games.some(g=>g.featured);
+    const hasUpcoming=games.some(g=>g.status==='upcoming');
     const cell=document.createElement('div');
-    cell.className='day-cell'+(isToday?' today':'')+(games.length?' has-games':'')+(hasFeat?' has-featured':'');
-    if(hasFeat){const corner=document.createElement('div');corner.className='featured-corner';cell.appendChild(corner);}
+    cell.className='day-cell'
+      +(isToday?' today':'')
+      +(games.length?' has-games':'')
+      +(hasFeat?' has-featured':'')
+      +(!hasFeat&&hasUpcoming?' has-upcoming':'');
+    // Coin
+    if(hasFeat){const c=document.createElement('div');c.className='featured-corner';cell.appendChild(c);}
+    else if(hasUpcoming){const c=document.createElement('div');c.className='upcoming-corner';cell.appendChild(c);}
     const num=document.createElement('div');num.className='day-number';num.textContent=d;cell.appendChild(num);
     if(games.length){
       const chipsEl=document.createElement('div');chipsEl.className='game-chips';
-      const sorted=[...games].sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
+      // Tri : featured > released > upcoming
+      const sorted=[...games].sort((a,b)=>{
+        if(a.featured&&!b.featured)return -1;
+        if(!a.featured&&b.featured)return 1;
+        if(a.status==='released'&&b.status==='upcoming')return -1;
+        if(a.status==='upcoming'&&b.status==='released')return 1;
+        return 0;
+      });
       sorted.slice(0,3).forEach(g=>{
         const chip=buildChip(g);
         chip.addEventListener('click',e=>{e.stopPropagation();openModal(dateStr,sorted);});
@@ -327,12 +360,14 @@ function renderCalendar(){
 
 function buildChip(game){
   const cls=getPlatformClass(game);
+  const isUpcoming=game.status==='upcoming';
   const chip=document.createElement('div');
-  chip.className=`chip ${cls}${game.featured?' featured-chip':''}`;
+  chip.className=`chip ${cls}${game.featured?' featured-chip':''}${isUpcoming?' upcoming-chip':''}`;
   if(game.icon){const img=document.createElement('img');img.className='chip-icon';img.src=game.icon;img.alt='';img.onerror=()=>{img.style.display='none';};chip.appendChild(img);}
   else{const ph=document.createElement('div');ph.className='chip-icon-placeholder';chip.appendChild(ph);}
   const title=document.createElement('span');title.className='chip-title';title.textContent=game.title;chip.appendChild(title);
   if(game.featured){const star=document.createElement('span');star.className='chip-star';star.textContent='★';chip.appendChild(star);}
+  else if(isUpcoming){const bell=document.createElement('span');bell.className='chip-bell';bell.textContent='🔔';chip.appendChild(bell);}
   return chip;
 }
 
@@ -341,7 +376,7 @@ function openModal(dateStr,games){
   document.getElementById('modalDate').textContent=`${d} ${MONTHS_FR[m-1]} ${y} — ${games.length} jeu${games.length>1?'x':''}`;
   const container=document.getElementById('modalGames');container.innerHTML='';
 
-  // Regrouper iOS + Android du même titre en une seule carte
+  // Regrouper iOS + Android du même titre
   const grouped={};
   games.forEach(g=>{
     const key=g.title.toLowerCase();
@@ -352,14 +387,23 @@ function openModal(dateStr,games){
     if(!grouped[key].headerImage&&g.headerImage)grouped[key].headerImage=g.headerImage;
     if(!grouped[key].icon&&g.icon)grouped[key].icon=g.icon;
     if(!grouped[key].rating&&g.rating)grouped[key].rating=g.rating;
+    // Statut : si l'un est upcoming, la carte l'est aussi
+    if(g.status==='upcoming'&&grouped[key].status!=='released')grouped[key].status='upcoming';
   });
 
-  const sorted=Object.values(grouped).sort((a,b)=>(b.featured?1:0)-(a.featured?1:0));
+  const sorted=Object.values(grouped).sort((a,b)=>{
+    if(a.featured&&!b.featured)return -1;
+    if(!a.featured&&b.featured)return 1;
+    if(a.status==='released'&&b.status==='upcoming')return -1;
+    if(a.status==='upcoming'&&b.status==='released')return 1;
+    return 0;
+  });
 
   sorted.forEach(game=>{
     const isFeat=game.featured;
+    const isUpcoming=game.status==='upcoming';
     const card=document.createElement('div');
-    card.className=`modal-game${isFeat?' modal-featured':''}`;
+    card.className=`modal-game${isFeat?' modal-featured':''}${isUpcoming&&!isFeat?' modal-upcoming':''}`;
 
     let bannerHtml='';
     if(isFeat){
@@ -370,11 +414,9 @@ function openModal(dateStr,games){
     }
 
     const iosBtn=game._ios
-      ?`<a href="${game._ios}" target="_blank" rel="noopener" class="store-btn store-btn-ios">🍎 App Store</a>`
-      :'';
+      ?`<a href="${game._ios}" target="_blank" rel="noopener" class="store-btn store-btn-ios">🍎 App Store</a>`:'';
     const androidBtn=game._android
-      ?`<a href="${game._android}" target="_blank" rel="noopener" class="store-btn store-btn-android">🤖 Google Play</a>`
-      :'';
+      ?`<a href="${game._android}" target="_blank" rel="noopener" class="store-btn store-btn-android">🤖 Google Play</a>`:'';
 
     card.innerHTML=`
       ${bannerHtml}
@@ -384,6 +426,7 @@ function openModal(dateStr,games){
           <div class="modal-game-title">${game.title}</div>
           <div class="modal-game-meta">
             ${isFeat?'<span class="badge badge-featured">★ À la une</span>':''}
+            ${isUpcoming?'<span class="badge badge-upcoming">🔔 Bientôt</span>':''}
             ${game.platform.includes('ios')?'<span class="badge badge-ios">iOS</span>':''}
             ${game.platform.includes('android')?'<span class="badge badge-android">Android</span>':''}
             <span class="badge badge-price">${game.price}</span>
