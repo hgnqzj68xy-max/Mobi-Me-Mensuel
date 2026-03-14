@@ -254,7 +254,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/i-am-taxi-driver/id6757801241?uo=4",
       "price": "Free",
       "rating": 4.8,
-      "bundleId": "com.NewFolderGames.TaxiDriver"
+      "bundleId": "com.NewFolderGames.TaxiDriver",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6755672171",
@@ -270,7 +272,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/i-am-airport-security/id6755672171?uo=4",
       "price": "Free",
       "rating": 4.1,
-      "bundleId": "com.NewFolderGames.IAmSecurityAirport"
+      "bundleId": "com.NewFolderGames.IAmSecurityAirport",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6753738566",
@@ -366,7 +370,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/jewel-coloring/id6759081967?uo=4",
       "price": "Free",
       "rating": 5,
-      "bundleId": "com.red.brilliantsort.ios"
+      "bundleId": "com.red.brilliantsort.ios",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6756872090",
@@ -382,7 +388,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/fl%C3%A8ches-puzzle-casse-t%C3%AAte/id6756872090?uo=4",
       "price": "Free",
       "rating": 4.9,
-      "bundleId": "com.arrow.madness.games.arrows.escape.puzzle.game"
+      "bundleId": "com.arrow.madness.games.arrows.escape.puzzle.game",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6759247590",
@@ -398,7 +406,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/draw-sprint-game/id6759247590?uo=4",
       "price": "Free",
       "rating": 2.5,
-      "bundleId": "com.michaelbeasley.drawsprintgame"
+      "bundleId": "com.michaelbeasley.drawsprintgame",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6753282229",
@@ -414,7 +424,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/brain-test-5-d%C3%A9fi-difficile/id6753282229?uo=4",
       "price": "Free",
       "rating": 4.7,
-      "bundleId": "com.unicostudio.braintest5"
+      "bundleId": "com.unicostudio.braintest5",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6759556652",
@@ -430,7 +442,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/smart-hints-hunt/id6759556652?uo=4",
       "price": "Free",
       "rating": 1,
-      "bundleId": "com.daryllfutch.smarthintshunt"
+      "bundleId": "com.daryllfutch.smarthintshunt",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6759680248",
@@ -446,7 +460,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/my-voice-zoo-app/id6759680248?uo=4",
       "price": "Free",
       "rating": 4.4,
-      "bundleId": "com.myvoicezoo.game"
+      "bundleId": "com.myvoicezoo.game",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6504188939",
@@ -462,7 +478,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/subway-surfers-city/id6504188939?uo=4",
       "price": "Free",
       "rating": 4.9,
-      "bundleId": "com.sybogames.subway.surfers.game"
+      "bundleId": "com.sybogames.subway.surfers.game",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6759666323",
@@ -478,7 +496,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/strong-whisper-expert/id6759666323?uo=4",
       "price": "Free",
       "rating": 2.7,
-      "bundleId": "com.allanbrannon.strongwhisperexpert"
+      "bundleId": "com.allanbrannon.strongwhisperexpert",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6755455500",
@@ -494,7 +514,27 @@
       "storeUrl": "https://apps.apple.com/fr/app/hollywood-merge/id6755455500?uo=4",
       "price": "Free",
       "rating": 4.7,
-      "bundleId": "com.hollywood.merge"
+      "bundleId": "com.hollywood.merge",
+      "status": "released",
+      "source": "itunes"
+    },
+    {
+      "id": "android_com_netmarble_nanaori",
+      "title": "The Seven Deadly Sins: Origin – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-02",
+      "genre": "Games",
+      "developer": "Netmarble",
+      "icon": "https://play-lh.googleusercontent.com/dSO5yDCNRCzgBMkhFNzCbInuEsg-jpjFQq2rXR7JrqHxj1YvBV-nHiqNYPXiGpxU1Ix-5xSi94pnqSYhdrj7",
+      "headerImage": "https://play-lh.googleusercontent.com/dSO5yDCNRCzgBMkhFNzCbInuEsg-jpjFQq2rXR7JrqHxj1YvBV-nHiqNYPXiGpxU1Ix-5xSi94pnqSYhdrj7=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.netmarble.nanaori",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.netmarble.nanaori",
+      "status": "upcoming",
+      "source": "gplay"
     },
     {
       "id": "ios_6737408689",
@@ -590,7 +630,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/hatch-dragons/id6746389113?uo=4",
       "price": "Free",
       "rating": 4.8,
-      "bundleId": "com.runawayplay.dragons"
+      "bundleId": "com.runawayplay.dragons",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6756936283",
@@ -621,6 +663,24 @@
       "price": "Free",
       "rating": null,
       "bundleId": "com.ultimate.colorgm"
+    },
+    {
+      "id": "android_com_sybogames_subway_surfers_game",
+      "title": "Subway Surfers City – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-04",
+      "genre": "Games",
+      "developer": "SYBO Games",
+      "icon": "https://play-lh.googleusercontent.com/03aa9B2_VkQHtkTY9XVdmbDWYar7F7OMWfGBXHzTuwkiVHFT_H6NJHRrPcanuXYY63h4",
+      "headerImage": "https://play-lh.googleusercontent.com/03aa9B2_VkQHtkTY9XVdmbDWYar7F7OMWfGBXHzTuwkiVHFT_H6NJHRrPcanuXYY63h4=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.sybogames.subway.surfers.game",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.sybogames.subway.surfers.game",
+      "status": "released",
+      "source": "gplay"
     },
     {
       "id": "ios_6745787291",
@@ -684,7 +744,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/flow-free/id6746876060?uo=4",
       "price": "Free",
       "rating": 5,
-      "bundleId": "com.bigduckgames.flowplus"
+      "bundleId": "com.bigduckgames.flowplus",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6745890173",
@@ -716,7 +778,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/oceanhorn-3/id1539411904?uo=4",
       "price": "Free",
       "rating": 4.4,
-      "bundleId": "com.cornfox.oceanhorn3"
+      "bundleId": "com.cornfox.oceanhorn3",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6759238910",
@@ -732,7 +796,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/ultra-limit-awakening/id6759238910?uo=4",
       "price": "Free",
       "rating": 2.4,
-      "bundleId": "com.loncme.game"
+      "bundleId": "com.loncme.game",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6755996889",
@@ -767,6 +833,60 @@
       "bundleId": "net.kairosoft.iOS.dorayakiAA"
     },
     {
+      "id": "android_com_wikigacha_app",
+      "title": "Wikipedia Gacha – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-05",
+      "genre": "Games",
+      "developer": "Oasys Wallet Inc.",
+      "icon": "https://play-lh.googleusercontent.com/KqJ4AU7QHY848Cf_rqFcG5y8Li5EFxI63qrW_RYtKEEtMpQXpGzfDQ4ABe95C7uj1b1z01-IgwFtP7nZ5gvH9g",
+      "headerImage": "https://play-lh.googleusercontent.com/KqJ4AU7QHY848Cf_rqFcG5y8Li5EFxI63qrW_RYtKEEtMpQXpGzfDQ4ABe95C7uj1b1z01-IgwFtP7nZ5gvH9g=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.wikigacha.app",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.wikigacha.app",
+      "status": "released",
+      "source": "gplay"
+    },
+    {
+      "id": "android_com_devolverdigital_ballxpit",
+      "title": "BALL x PIT – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-06",
+      "genre": "Games",
+      "developer": "DevolverDigital",
+      "icon": "https://play-lh.googleusercontent.com/0j3oRYHzry2gYMEsxUQ0OIbSslX81dA9eZ720wGnAuqOuF0TzfSD5PBL-FeSlXuAXXy6BuQr-gB0l1FhD1jpVg",
+      "headerImage": "https://play-lh.googleusercontent.com/0j3oRYHzry2gYMEsxUQ0OIbSslX81dA9eZ720wGnAuqOuF0TzfSD5PBL-FeSlXuAXXy6BuQr-gB0l1FhD1jpVg=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.devolverdigital.ballxpit",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.devolverdigital.ballxpit",
+      "status": "released",
+      "source": "gplay"
+    },
+    {
+      "id": "android_com_unicostudio_braintest5",
+      "title": "Brain Test 5 : Défi difficile – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-06",
+      "genre": "Games",
+      "developer": "Unico Studio",
+      "icon": "https://play-lh.googleusercontent.com/IG-afmfw0vmlfa_GMmzJZa5YoJKynLbUWsX6s7L5cLJ2aTIKsc33IEq5bIafvhog0bU",
+      "headerImage": "https://play-lh.googleusercontent.com/IG-afmfw0vmlfa_GMmzJZa5YoJKynLbUWsX6s7L5cLJ2aTIKsc33IEq5bIafvhog0bU=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.unicostudio.braintest5",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.unicostudio.braintest5",
+      "status": "released",
+      "source": "gplay"
+    },
+    {
       "id": "ios_6751602047",
       "title": "KnightBound - Dark Fantasy",
       "platform": [
@@ -780,7 +900,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/knightbound-dark-fantasy/id6751602047?uo=4",
       "price": "Free",
       "rating": 4.7,
-      "bundleId": "dev.supereo.knightbound"
+      "bundleId": "dev.supereo.knightbound",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6752009729",
@@ -815,6 +937,24 @@
       "bundleId": "com.cultureroyale.app"
     },
     {
+      "id": "android_com_f5game_ss",
+      "title": "Spirit Summoners – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-08",
+      "genre": "Games",
+      "developer": "Proficient City Hong Kong",
+      "icon": "https://play-lh.googleusercontent.com/GECFwy2Jwk1U8KqRrO2dexM6eiQ1MW1aBcSvQ2k0d49Jrql3uxQRkm3be7byxEsh-88",
+      "headerImage": "https://play-lh.googleusercontent.com/GECFwy2Jwk1U8KqRrO2dexM6eiQ1MW1aBcSvQ2k0d49Jrql3uxQRkm3be7byxEsh-88=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.f5game.ss",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.f5game.ss",
+      "status": "released",
+      "source": "gplay"
+    },
+    {
       "id": "ios_6758839020",
       "title": "Outhold",
       "platform": [
@@ -847,6 +987,24 @@
       "bundleId": "com.misericode.Gribli"
     },
     {
+      "id": "android_com_moonactive_cmboard",
+      "title": "Coin Master",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-09",
+      "genre": "Games",
+      "developer": "Moon Active",
+      "icon": "https://play-lh.googleusercontent.com/pFMYxxHpIsLKeaxO9wjVRpAsgMaLKbT1kPwofNQtGi69-6fF_eUyIViAMY66auDrvsJnw2h6S5rpF8XaZcrm",
+      "headerImage": "https://play-lh.googleusercontent.com/pFMYxxHpIsLKeaxO9wjVRpAsgMaLKbT1kPwofNQtGi69-6fF_eUyIViAMY66auDrvsJnw2h6S5rpF8XaZcrm=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.moonactive.cmboard",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.moonactive.cmboard",
+      "status": "released",
+      "source": "gplay"
+    },
+    {
       "id": "ios_6754621437",
       "title": "Spirit Summoners",
       "platform": [
@@ -860,7 +1018,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/spirit-summoners/id6754621437?uo=4",
       "price": "Free",
       "rating": 4.8,
-      "bundleId": "com.f5game.ss"
+      "bundleId": "com.f5game.ss",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6749406060",
@@ -908,7 +1068,45 @@
       "storeUrl": "https://apps.apple.com/fr/app/myvoicezoo-game/id6760120612?uo=4",
       "price": "Free",
       "rating": 4.3,
-      "bundleId": "com.MyVoiceZoo"
+      "bundleId": "com.MyVoiceZoo",
+      "status": "released",
+      "source": "itunes"
+    },
+    {
+      "id": "android_leyi_frozenislandpro",
+      "title": "Ice Haven — Refuge glacé – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-10",
+      "genre": "Games",
+      "developer": "LeyiGames",
+      "icon": "https://play-lh.googleusercontent.com/Ht-_im9_LNqPwyWxuHiZUvueX5DU83Tm6_Eh9Rfr7blZf1IZdkgAMgZKtYhqZIvc0ifSAnug2lziz3cwgl7LKVw",
+      "headerImage": "https://play-lh.googleusercontent.com/Ht-_im9_LNqPwyWxuHiZUvueX5DU83Tm6_Eh9Rfr7blZf1IZdkgAMgZKtYhqZIvc0ifSAnug2lziz3cwgl7LKVw=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=leyi.frozenislandpro",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "leyi.frozenislandpro",
+      "status": "released",
+      "source": "gplay"
+    },
+    {
+      "id": "android_com_NewFolderGames_TaxiDriver",
+      "title": "I Am Taxi Driver – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-10",
+      "genre": "Games",
+      "developer": "Estoty",
+      "icon": "https://play-lh.googleusercontent.com/21NqFTC9lghTZWPSf0UJXIf5Sm0V8KeVWrwTm6fDlnY12kbPZrB27xynucuQm_2Uz5kna0Wjba_VMciQyCsZJg",
+      "headerImage": "https://play-lh.googleusercontent.com/21NqFTC9lghTZWPSf0UJXIf5Sm0V8KeVWrwTm6fDlnY12kbPZrB27xynucuQm_2Uz5kna0Wjba_VMciQyCsZJg=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.NewFolderGames.TaxiDriver",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.NewFolderGames.TaxiDriver",
+      "status": "released",
+      "source": "gplay"
     },
     {
       "id": "ios_6754081548",
@@ -940,7 +1138,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/wikigacha-game/id6760240806?uo=4",
       "price": "Free",
       "rating": 3,
-      "bundleId": "com.wikigacha.app"
+      "bundleId": "com.wikigacha.app",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6758497112",
@@ -956,7 +1156,27 @@
       "storeUrl": "https://apps.apple.com/fr/app/dexmon-evolution-battle/id6758497112?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.dexmon.evolut"
+      "bundleId": "com.dexmon.evolut",
+      "status": "released",
+      "source": "itunes"
+    },
+    {
+      "id": "android_com_MyVoiceZoo",
+      "title": "My Voice Zoo Game – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-11",
+      "genre": "Games",
+      "developer": "vwidoo",
+      "icon": "https://play-lh.googleusercontent.com/5gEFyznhmf5gP_WrL5EI6dtfynHV1kj-Q08nSxd9TWWcstmb1np6Hx-QCJ6Sm1AQu5_GPuAk6LV9nFv8Qrov",
+      "headerImage": "https://play-lh.googleusercontent.com/5gEFyznhmf5gP_WrL5EI6dtfynHV1kj-Q08nSxd9TWWcstmb1np6Hx-QCJ6Sm1AQu5_GPuAk6LV9nFv8Qrov=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.MyVoiceZoo",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.MyVoiceZoo",
+      "status": "released",
+      "source": "gplay"
     },
     {
       "id": "ios_6745761596",
@@ -972,7 +1192,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/coin-master-board-adventure/id6745761596?uo=4",
       "price": "Free",
       "rating": 4.4,
-      "bundleId": "com.moonactive.cmboard"
+      "bundleId": "com.moonactive.cmboard",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6751095369",
@@ -988,7 +1210,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/beasts-evolved-2/id6751095369?uo=4",
       "price": "Free",
       "rating": 4.5,
-      "bundleId": "net.ntalent.beastsevolved2"
+      "bundleId": "net.ntalent.beastsevolved2",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6738703497",
@@ -1004,7 +1228,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/ball-x-pit/id6738703497?uo=4",
       "price": "Free",
       "rating": 3.8,
-      "bundleId": "com.devolverdigital.ballxpit"
+      "bundleId": "com.devolverdigital.ballxpit",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6758926494",
@@ -1020,7 +1246,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/ice-haven-refuge-glac%C3%A9/id6758926494?uo=4",
       "price": "Free",
       "rating": 4,
-      "bundleId": "leyi.frozenislandpro"
+      "bundleId": "leyi.frozenislandpro",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6745988897",
@@ -1036,7 +1264,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/tomb-raider-i-iii-remastered/id6745988897?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.aspyr.tmr"
+      "bundleId": "com.aspyr.tmr",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6758759799",
@@ -1052,7 +1282,45 @@
       "storeUrl": "https://apps.apple.com/fr/app/hidden-legacy-1-bonus-f2p/id6758759799?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.dominigames.hl1ce.ios.free2play"
+      "bundleId": "com.dominigames.hl1ce.ios.free2play",
+      "status": "released",
+      "source": "itunes"
+    },
+    {
+      "id": "android_com_hollywood_merge",
+      "title": "Hollywood Merge – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-12",
+      "genre": "Games",
+      "developer": "VoyagerOne IE",
+      "icon": "https://play-lh.googleusercontent.com/5mzN7_uKeXNnloF-zlXGxiwKuepToEdRwbFUK_aQqk7ORLUGPsMwQK__J9IL9DBMWty-zuLvZ4FYHikK2xCttIw",
+      "headerImage": "https://play-lh.googleusercontent.com/5mzN7_uKeXNnloF-zlXGxiwKuepToEdRwbFUK_aQqk7ORLUGPsMwQK__J9IL9DBMWty-zuLvZ4FYHikK2xCttIw=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.hollywood.merge",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.hollywood.merge",
+      "status": "released",
+      "source": "gplay"
+    },
+    {
+      "id": "android_com_arrow_madness_games_arrows_escape_puzzle_game",
+      "title": "Touchez flèches: Arrow Madness – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-12",
+      "genre": "Games",
+      "developer": "Ashita Games",
+      "icon": "https://play-lh.googleusercontent.com/5zBzPy1EUYZWR9Moj0_EappkL42notU4yj722Hzox3au3PMueLIcdN-UIESj0M7NPEuryqy1sv_gNx4BEYRe",
+      "headerImage": "https://play-lh.googleusercontent.com/5zBzPy1EUYZWR9Moj0_EappkL42notU4yj722Hzox3au3PMueLIcdN-UIESj0M7NPEuryqy1sv_gNx4BEYRe=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.arrow.madness.games.arrows.escape.puzzle.game",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.arrow.madness.games.arrows.escape.puzzle.game",
+      "status": "released",
+      "source": "gplay"
     },
     {
       "id": "ios_6757263092",
@@ -1068,7 +1336,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/jeux-nettoyage-jeux-de-maison/id6757263092?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.ftg.cleaning.games"
+      "bundleId": "com.ftg.cleaning.games",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6758465761",
@@ -1084,7 +1354,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/fringe-of-reality-l%C3%AEle/id6758465761?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.friendlyfoxgames.eor10"
+      "bundleId": "com.friendlyfoxgames.eor10",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6753749012",
@@ -1100,7 +1372,63 @@
       "storeUrl": "https://apps.apple.com/fr/app/jeux-chat-peindre-par-num%C3%A9ro/id6753749012?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.tr.cozy.cat.cute.color.by.number.games"
+      "bundleId": "com.tr.cozy.cat.cute.color.by.number.games",
+      "status": "released",
+      "source": "itunes"
+    },
+    {
+      "id": "android_com_ftg_cleaning_games",
+      "title": "Tidy Home Cleaning Game ASMR – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-13",
+      "genre": "Games",
+      "developer": "Connect Technologies",
+      "icon": "https://play-lh.googleusercontent.com/zaGRzDQNpXmmgwelXSnwm6BE0gsVZglWerxnjTBpYn42Qgcz6aBdAO67rile6_jUyBT4pbwFQtF4ag2V1hQTuH4",
+      "headerImage": "https://play-lh.googleusercontent.com/zaGRzDQNpXmmgwelXSnwm6BE0gsVZglWerxnjTBpYn42Qgcz6aBdAO67rile6_jUyBT4pbwFQtF4ag2V1hQTuH4=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.ftg.cleaning.games",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.ftg.cleaning.games",
+      "status": "released",
+      "source": "gplay"
+    },
+    {
+      "id": "android_com_runawayplay_dragons",
+      "title": "Hatch Dragons – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-13",
+      "genre": "Games",
+      "developer": "Runaway Play",
+      "icon": "https://play-lh.googleusercontent.com/tWSpMMixH1mx7Yv5DnEZdRaiHK68V6tZGYpr7WvgiluvGmuuRY_RefxseSKMcg5oV4YBUAtJZONrExg1qFkn",
+      "headerImage": "https://play-lh.googleusercontent.com/tWSpMMixH1mx7Yv5DnEZdRaiHK68V6tZGYpr7WvgiluvGmuuRY_RefxseSKMcg5oV4YBUAtJZONrExg1qFkn=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.runawayplay.dragons",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.runawayplay.dragons",
+      "status": "upcoming",
+      "source": "gplay"
+    },
+    {
+      "id": "android_com_ubisoft_the_division_mobile_combat_shooting_open_world_rpg",
+      "title": "The Division Resurgence – Applications sur Google Play",
+      "platform": [
+        "android"
+      ],
+      "releaseDate": "2026-03-13",
+      "genre": "Games",
+      "developer": "Ubisoft Entertainment",
+      "icon": "https://play-lh.googleusercontent.com/5N8G-P7HYt3S8tkLWG0KX4GyV4L9uPEsZ5_d4vvpGuZPszEQMVUlu1rTbL81s1ZQoQ",
+      "headerImage": "https://play-lh.googleusercontent.com/5N8G-P7HYt3S8tkLWG0KX4GyV4L9uPEsZ5_d4vvpGuZPszEQMVUlu1rTbL81s1ZQoQ=w600-h300-pc0xffffff-pd",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.ubisoft.the.division.mobile.combat.shooting.open.world.rpg",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.ubisoft.the.division.mobile.combat.shooting.open.world.rpg",
+      "status": "released",
+      "source": "gplay"
     },
     {
       "id": "ios_6744205088",
@@ -1116,7 +1444,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/the-seven-deadly-sins-origin/id6744205088?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.netmarble.nanaori"
+      "bundleId": "com.netmarble.nanaori",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6550902247",
@@ -1132,7 +1462,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/cookierun-ovensmash/id6550902247?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.devsisters.cos"
+      "bundleId": "com.devsisters.cos",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_1606349410",
@@ -1148,7 +1480,9 @@
       "storeUrl": "https://apps.apple.com/fr/app/the-division-resurgence/id1606349410?uo=4",
       "price": "Free",
       "rating": null,
-      "bundleId": "com.ubisoft.the.division.mobile.combat.shooting.open.world.rpg"
+      "bundleId": "com.ubisoft.the.division.mobile.combat.shooting.open.world.rpg",
+      "status": "released",
+      "source": "itunes"
     },
     {
       "id": "ios_6480398822",
@@ -1183,22 +1517,6 @@
       "bundleId": "com.nexwave.popepoch.ios"
     },
     {
-      "id": "android_com_devsisters_cos",
-      "title": "CookieRun: OvenSmash",
-      "platform": [
-        "android"
-      ],
-      "releaseDate": "2118-01-01",
-      "genre": "Games",
-      "developer": "Devsisters Corporation",
-      "icon": "https://play-lh.googleusercontent.com/obaSWO03mUw1L7BZGJ-LW4_S9nLiFBdQbgBMjW3Qvx8Gy90EVRMGXAec49RkjgUkIRO-",
-      "headerImage": "https://play-lh.googleusercontent.com/obaSWO03mUw1L7BZGJ-LW4_S9nLiFBdQbgBMjW3Qvx8Gy90EVRMGXAec49RkjgUkIRO-=w600-h300-pc0xffffff-pd",
-      "storeUrl": "https://play.google.com/store/apps/details?id=com.devsisters.cos",
-      "price": "Free",
-      "rating": null,
-      "bundleId": "com.devsisters.cos"
-    },
-    {
       "id": "android_slide_match_mahjong_tile_connect_pair_puzzle_games",
       "title": "Jeu Glissé - Mahjong Connect",
       "platform": [
@@ -1215,5 +1533,5 @@
       "bundleId": "slide.match.mahjong.tile.connect.pair.puzzle.games"
     }
   ],
-  "lastUpdated": "2026-03-14T19:56:44.914251Z"
+  "lastUpdated": "2026-03-14T22:10:16.312714Z"
 }
