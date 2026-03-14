@@ -265,11 +265,11 @@
       "releaseDate": "2026-02-17",
       "genre": "Role Playing",
       "developer": "Estoty",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4d/8a/6c/4d8a6cbc-e0df-ae57-c5c0-d1158dec6501/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4d/8a/6c/4d8a6cbc-e0df-ae57-c5c0-d1158dec6501/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/28/18/e4/2818e409-8e7a-38fa-1de1-95823cd072b7/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/28/18/e4/2818e409-8e7a-38fa-1de1-95823cd072b7/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/i-am-airport-security/id6755672171?uo=4",
       "price": "Free",
-      "rating": 4.2,
+      "rating": 4.1,
       "bundleId": "com.NewFolderGames.IAmSecurityAirport"
     },
     {
@@ -353,6 +353,22 @@
       "bundleId": "com.easybrain.arrow.puzzle.game"
     },
     {
+      "id": "ios_6759081967",
+      "title": "Jewel Coloring",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-18",
+      "genre": "Puzzle",
+      "developer": "Ta Ta Game Technology Limited",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f4/10/85/f4108591-6856-8cf3-e7aa-1593091d8553/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f4/10/85/f4108591-6856-8cf3-e7aa-1593091d8553/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/jewel-coloring/id6759081967?uo=4",
+      "price": "Free",
+      "rating": 5,
+      "bundleId": "com.red.brilliantsort.ios"
+    },
+    {
       "id": "ios_6756872090",
       "title": "Flèches: Puzzle & Casse-Tête",
       "platform": [
@@ -361,8 +377,8 @@
       "releaseDate": "2026-02-19",
       "genre": "Puzzle",
       "developer": "Ashita Games",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/14/78/3d147810-8d31-20d6-2a0e-9ec05008e3c3/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/14/78/3d147810-8d31-20d6-2a0e-9ec05008e3c3/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/41/48/99/414899d0-3a84-abe1-d41f-5ba96b701ebc/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/41/48/99/414899d0-3a84-abe1-d41f-5ba96b701ebc/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/fl%C3%A8ches-puzzle-casse-t%C3%AAte/id6756872090?uo=4",
       "price": "Free",
       "rating": 4.9,
@@ -381,7 +397,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d2/5f/90/d25f908e-43bb-2d7f-e273-f752df85039b/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/draw-sprint-game/id6759247590?uo=4",
       "price": "Free",
-      "rating": 3,
+      "rating": 2.5,
       "bundleId": "com.michaelbeasley.drawsprintgame"
     },
     {
@@ -401,6 +417,22 @@
       "bundleId": "com.unicostudio.braintest5"
     },
     {
+      "id": "ios_6759556652",
+      "title": "Smart Hints Hunt",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-02-24",
+      "genre": "Trivia",
+      "developer": "Daryll Futch",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d8/aa/f0/d8aaf079-5705-6b8d-1f55-6db890e1e9a6/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d8/aa/f0/d8aaf079-5705-6b8d-1f55-6db890e1e9a6/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/smart-hints-hunt/id6759556652?uo=4",
+      "price": "Free",
+      "rating": 1,
+      "bundleId": "com.daryllfutch.smarthintshunt"
+    },
+    {
       "id": "ios_6759680248",
       "title": "My Voice Zoo App",
       "platform": [
@@ -413,7 +445,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b0/33/0e/b0330edf-2421-87ee-c8d6-ce934a36c22c/AppIcon-0-0-1x_U007epad-0-1-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/my-voice-zoo-app/id6759680248?uo=4",
       "price": "Free",
-      "rating": 4.6,
+      "rating": 4.4,
       "bundleId": "com.myvoicezoo.game"
     },
     {
@@ -445,7 +477,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f1/d6/8e/f1d68e4b-078e-ac03-8d58-f6026b993416/AppIcon-0-0-1x_U007emarketing-0-6-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/strong-whisper-expert/id6759666323?uo=4",
       "price": "Free",
-      "rating": 1,
+      "rating": 2.7,
       "bundleId": "com.allanbrannon.strongwhisperexpert"
     },
     {
@@ -457,8 +489,8 @@
       "releaseDate": "2026-02-27",
       "genre": "Arcade",
       "developer": "VoyagerOne",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4c/bf/56/4cbf5601-4471-c4c6-4128-038d92c2ef10/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4c/bf/56/4cbf5601-4471-c4c6-4128-038d92c2ef10/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a0/6d/97/a06d9702-e743-b906-4d3e-afe72a80d3e9/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a0/6d/97/a06d9702-e743-b906-4d3e-afe72a80d3e9/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/hollywood-merge/id6755455500?uo=4",
       "price": "Free",
       "rating": 4.7,
@@ -557,7 +589,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d0/b2/2d/d0b22dcd-4962-de61-d0c6-9034d032cd8c/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/hatch-dragons/id6746389113?uo=4",
       "price": "Free",
-      "rating": 4.9,
+      "rating": 4.8,
       "bundleId": "com.runawayplay.dragons"
     },
     {
@@ -651,7 +683,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/a5/e7/82/a5e7829f-f7c0-6d1d-215a-0da663345e05/AppIcon-0-0-1x_U007epad-0-1-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/flow-free/id6746876060?uo=4",
       "price": "Free",
-      "rating": null,
+      "rating": 5,
       "bundleId": "com.bigduckgames.flowplus"
     },
     {
@@ -679,8 +711,8 @@
       "releaseDate": "2026-03-05",
       "genre": "Adventure",
       "developer": "Cornfox & Brothers Ltd.",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3a/56/7c/3a567cf7-eea8-2750-c498-166e56fc5a6e/AppIcon-0-0-1x_U007emarketing-0-4-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3a/56/7c/3a567cf7-eea8-2750-c498-166e56fc5a6e/AppIcon-0-0-1x_U007emarketing-0-4-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/23/94/91/23949126-06e1-6305-6152-bd6433343bec/AppIcon-0-0-1x_U007emarketing-0-4-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/23/94/91/23949126-06e1-6305-6152-bd6433343bec/AppIcon-0-0-1x_U007emarketing-0-4-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/oceanhorn-3/id1539411904?uo=4",
       "price": "Free",
       "rating": 4.4,
@@ -699,7 +731,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/18/64/c3/1864c3db-5a51-18a9-d14e-3b31f4fd35f9/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/ultra-limit-awakening/id6759238910?uo=4",
       "price": "Free",
-      "rating": 3,
+      "rating": 2.4,
       "bundleId": "com.loncme.game"
     },
     {
@@ -827,7 +859,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ca/15/90/ca159088-9710-b1ba-74cf-ac5f9161bb6d/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/spirit-summoners/id6754621437?uo=4",
       "price": "Free",
-      "rating": 5,
+      "rating": 4.8,
       "bundleId": "com.f5game.ss"
     },
     {
@@ -875,7 +907,7 @@
       "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7c/76/cf/7c76cfc1-c4b8-8c02-b83b-db061eaa7f75/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/myvoicezoo-game/id6760120612?uo=4",
       "price": "Free",
-      "rating": null,
+      "rating": 4.3,
       "bundleId": "com.MyVoiceZoo"
     },
     {
@@ -895,6 +927,38 @@
       "bundleId": "slide.match.mahjong.tile.connect.pair.puzzle.games"
     },
     {
+      "id": "ios_6760240806",
+      "title": "Wikigacha Game",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-11",
+      "genre": "Card",
+      "developer": "Leila Nasri",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/31/05/80/31058084-a08f-531a-bba0-42a9993246cd/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/31/05/80/31058084-a08f-531a-bba0-42a9993246cd/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/wikigacha-game/id6760240806?uo=4",
+      "price": "Free",
+      "rating": 3,
+      "bundleId": "com.wikigacha.app"
+    },
+    {
+      "id": "ios_6758497112",
+      "title": "Dexmon Evolution Battle",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-11",
+      "genre": "Games",
+      "developer": "YAYAO GAME",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/28/7c/09/287c0936-a0e4-5f04-fb30-4dea206b7a2e/AppIcon-1x_U007epad-0-1-85-220-0.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/28/7c/09/287c0936-a0e4-5f04-fb30-4dea206b7a2e/AppIcon-1x_U007epad-0-1-85-220-0.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/dexmon-evolution-battle/id6758497112?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.dexmon.evolut"
+    },
+    {
       "id": "ios_6745761596",
       "title": "Coin Master - Board Adventure",
       "platform": [
@@ -903,12 +967,156 @@
       "releaseDate": "2026-03-12",
       "genre": "Arcade",
       "developer": "Moon Active",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/2f/fa/f92ffa3c-96bf-495f-c112-d9336dfcb500/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/2f/fa/f92ffa3c-96bf-495f-c112-d9336dfcb500/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cc/23/dc/cc23dcf6-aaa6-4398-cfe9-002b0da37014/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cc/23/dc/cc23dcf6-aaa6-4398-cfe9-002b0da37014/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/coin-master-board-adventure/id6745761596?uo=4",
       "price": "Free",
-      "rating": null,
+      "rating": 4.4,
       "bundleId": "com.moonactive.cmboard"
+    },
+    {
+      "id": "ios_6751095369",
+      "title": "Beasts Evolved 2",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-12",
+      "genre": "Adventure",
+      "developer": "NTalent",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b8/f1/7b/b8f17bf4-02bc-e6e5-5933-bc2e505a0d85/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b8/f1/7b/b8f17bf4-02bc-e6e5-5933-bc2e505a0d85/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/beasts-evolved-2/id6751095369?uo=4",
+      "price": "Free",
+      "rating": 4.5,
+      "bundleId": "net.ntalent.beastsevolved2"
+    },
+    {
+      "id": "ios_6738703497",
+      "title": "BALL x PIT",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-12",
+      "genre": "Adventure",
+      "developer": "Devolver",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d9/e8/3f/d9e83f86-35f6-b1fc-f43e-f868a19bc2bf/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d9/e8/3f/d9e83f86-35f6-b1fc-f43e-f868a19bc2bf/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/ball-x-pit/id6738703497?uo=4",
+      "price": "Free",
+      "rating": 3.8,
+      "bundleId": "com.devolverdigital.ballxpit"
+    },
+    {
+      "id": "ios_6758926494",
+      "title": "Ice Haven — Refuge glacé",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-12",
+      "genre": "Strategy",
+      "developer": "LEXIANGCO.,LIMITED",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/3e/a3/5a/3ea35a5b-b1bb-a6de-82d3-db413e4e41c2/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/3e/a3/5a/3ea35a5b-b1bb-a6de-82d3-db413e4e41c2/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/ice-haven-refuge-glac%C3%A9/id6758926494?uo=4",
+      "price": "Free",
+      "rating": 4,
+      "bundleId": "leyi.frozenislandpro"
+    },
+    {
+      "id": "ios_6745988897",
+      "title": "Tomb Raider I-III Remastered",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-12",
+      "genre": "Adventure",
+      "developer": "Aspyr Media, Inc.",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c5/22/5e/c5225e1d-1dc5-bd9f-dc10-7aa4a8e2f07e/AppIcon-1x_U007epad-0-1-85-220-0.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c5/22/5e/c5225e1d-1dc5-bd9f-dc10-7aa4a8e2f07e/AppIcon-1x_U007epad-0-1-85-220-0.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/tomb-raider-i-iii-remastered/id6745988897?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.aspyr.tmr"
+    },
+    {
+      "id": "ios_6758759799",
+      "title": "Hidden Legacy 1 : Bonus F2P",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-12",
+      "genre": "Adventure",
+      "developer": "DO GAMES LIMITED",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ff/47/cc/ff47cc5a-db3a-0c4e-66a9-47b873a8b984/AppIconF2P-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ff/47/cc/ff47cc5a-db3a-0c4e-66a9-47b873a8b984/AppIconF2P-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/hidden-legacy-1-bonus-f2p/id6758759799?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.dominigames.hl1ce.ios.free2play"
+    },
+    {
+      "id": "ios_6757263092",
+      "title": "Jeux Nettoyage: Jeux de Maison",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-13",
+      "genre": "Simulation",
+      "developer": "Sabahat Tallat",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/19/e2/64/19e26405-7e39-f5d7-aebb-5ab79e24468f/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/19/e2/64/19e26405-7e39-f5d7-aebb-5ab79e24468f/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/jeux-nettoyage-jeux-de-maison/id6757263092?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.ftg.cleaning.games"
+    },
+    {
+      "id": "ios_6758465761",
+      "title": "Fringe of Reality: L'Île",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-13",
+      "genre": "Puzzle",
+      "developer": "Friendly Fox Games Limited",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ea/4d/44/ea4d4440-109d-6fce-03f1-26de2da2da4b/AppIconPrimary-0-0-1x_U007emarketing-0-11-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ea/4d/44/ea4d4440-109d-6fce-03f1-26de2da2da4b/AppIconPrimary-0-0-1x_U007emarketing-0-11-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/fringe-of-reality-l%C3%AEle/id6758465761?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.friendlyfoxgames.eor10"
+    },
+    {
+      "id": "ios_6753749012",
+      "title": "Jeux Chat Peindre Par Numéro",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-13",
+      "genre": "Board",
+      "developer": "Touchzing Media",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b3/84/03/b38403f4-d91e-1714-a86f-e99d7e622f05/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b3/84/03/b38403f4-d91e-1714-a86f-e99d7e622f05/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/jeux-chat-peindre-par-num%C3%A9ro/id6753749012?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.tr.cozy.cat.cute.color.by.number.games"
+    },
+    {
+      "id": "ios_6744205088",
+      "title": "The Seven Deadly Sins: Origin",
+      "platform": [
+        "ios"
+      ],
+      "releaseDate": "2026-03-24",
+      "genre": "Adventure",
+      "developer": "Netmarble Corporation",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/37/a5/c2/37a5c21b-0997-94a8-86d8-8313164354a2/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/37/a5/c2/37a5c21b-0997-94a8-86d8-8313164354a2/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/1024x1024bb.jpg",
+      "storeUrl": "https://apps.apple.com/fr/app/the-seven-deadly-sins-origin/id6744205088?uo=4",
+      "price": "Free",
+      "rating": null,
+      "bundleId": "com.netmarble.nanaori"
     },
     {
       "id": "ios_6550902247",
@@ -927,22 +1135,6 @@
       "bundleId": "com.devsisters.cos"
     },
     {
-      "id": "ios_6744205088",
-      "title": "The Seven Deadly Sins: Origin",
-      "platform": [
-        "ios"
-      ],
-      "releaseDate": "2026-03-31",
-      "genre": "Adventure",
-      "developer": "Netmarble Corporation",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/37/a5/c2/37a5c21b-0997-94a8-86d8-8313164354a2/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/37/a5/c2/37a5c21b-0997-94a8-86d8-8313164354a2/AppIcon-1x_U007emarketing-0-8-0-85-220-0.png/1024x1024bb.jpg",
-      "storeUrl": "https://apps.apple.com/fr/app/the-seven-deadly-sins-origin/id6744205088?uo=4",
-      "price": "Free",
-      "rating": null,
-      "bundleId": "com.netmarble.nanaori"
-    },
-    {
       "id": "ios_1606349410",
       "title": "The Division Resurgence",
       "platform": [
@@ -951,8 +1143,8 @@
       "releaseDate": "2026-03-31",
       "genre": "Action",
       "developer": "Ubisoft",
-      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c8/f3/12/c8f312c3-12f3-047f-9103-b4184d80f875/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
-      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c8/f3/12/c8f312c3-12f3-047f-9103-b4184d80f875/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
+      "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/30/25/a1/3025a12d-bafd-c406-5686-b88abecccc4a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/100x100bb.jpg",
+      "headerImage": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/30/25/a1/3025a12d-bafd-c406-5686-b88abecccc4a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1024x1024bb.jpg",
       "storeUrl": "https://apps.apple.com/fr/app/the-division-resurgence/id1606349410?uo=4",
       "price": "Free",
       "rating": null,
@@ -1023,5 +1215,5 @@
       "bundleId": "slide.match.mahjong.tile.connect.pair.puzzle.games"
     }
   ],
-  "lastUpdated": "2026-03-11T20:46:45.035171Z"
+  "lastUpdated": "2026-03-14T19:56:44.914251Z"
 }
