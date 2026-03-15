@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
 Mobile Games Release Scraper
-- iOS                    : iTunes Search API
-- Android                : corrélation bundleId iOS → Google Play (scraping direct)
-- Upcoming iOS/Android   : PocketGamer Agenda
-- Upcoming Android       : Google Play Pre-registration (détecté lors du scraping)
+- iOS     : iTunes Search API
+- Android : corrélation bundleId iOS → Google Play (scraping direct)
+            détection automatique pre-registration Google Play
 """
 
 import json, os, time, re
@@ -50,16 +49,6 @@ HEADERS_MOBILE = {
         "Chrome/122.0.0.0 Mobile Safari/537.36"
     ),
     "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.8",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-}
-
-HEADERS_DESKTOP = {
-    "User-Agent": (
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/122.0.0.0 Safari/537.36"
-    ),
-    "Accept-Language": "en-US,en;q=0.9",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
 }
 
@@ -135,12 +124,6 @@ def parse_date_flexible(raw: str):
         return datetime(year, 1, 1)
     return None
 
-def is_upcoming(date_str: str) -> bool:
-    try:
-        return datetime.strptime(date_str, "%Y-%m-%d").date() > datetime.utcnow().date()
-    except Exception:
-        return False
-
 # ── iOS ───────────────────────────────────────────────────────────────────────
 def fetch_ios_games() -> list[dict]:
     games    = []
@@ -203,6 +186,11 @@ def fetch_ios_games() -> list[dict]:
 
 # ── Android via bundleId ──────────────────────────────────────────────────────
 def scrape_gplay_page(bundle_id: str) -> dict | None:
+    """
+    Charge la fiche Google Play officielle d'un bundleId.
+    Détecte automatiquement le statut pre-registration.
+    Utilise uniquement l'API publique de Google Play.
+    """
     url = f"https://play.google.com/store/apps/details?id={bundle_id}&hl=fr&gl=fr"
     try:
         resp = requests.get(url, headers=HEADERS_MOBILE, timeout=15)
@@ -231,7 +219,7 @@ def scrape_gplay_page(bundle_id: str) -> dict | None:
     if not title:
         return None
 
-    # ── Statut pre-registration ──
+    # Statut pre-registration (données publiques Google Play)
     status = "released"
     if any(kw in raw.lower() for kw in ["pre-register","préinscription","preregister","pre_register"]):
         status = "upcoming"
@@ -282,7 +270,9 @@ def scrape_gplay_page(bundle_id: str) -> dict | None:
         if schema:
             try:
                 sd = json.loads(schema.string)
-                release_dt = parse_date_flexible(sd.get("datePublished") or sd.get("dateModified",""))
+                release_dt = parse_date_flexible(
+                    sd.get("datePublished") or sd.get("dateModified","")
+                )
             except Exception:
                 pass
     if not release_dt:
@@ -363,137 +353,6 @@ def fetch_android_from_ios(ios_games: list[dict]) -> list[dict]:
     print(f"\n🤖 Android: {len(android_games)} jeux trouvés")
     return android_games
 
-# ── PocketGamer Upcoming ──────────────────────────────────────────────────────
-def fetch_pocketgamer_upcoming() -> list[dict]:
-    print("📡 PocketGamer: scraping upcoming...")
-    games = []
-    now   = datetime.utcnow()
-
-    try:
-        resp = requests.get(
-            "https://www.pocketgamer.com/upcoming-games/",
-            headers=HEADERS_DESKTOP,
-            timeout=15
-        )
-        resp.raise_for_status()
-    except Exception as e:
-        print(f"  ⚠️  PocketGamer inaccessible: {e}")
-        return []
-
-    soup = BeautifulSoup(resp.text, "html.parser")
-
-    rows = (
-        soup.find_all(class_=re.compile(r"upcoming|game.?item|release|article", re.I)) or
-        soup.find_all("article") or
-        soup.find_all("li", class_=re.compile(r"game|item", re.I))
-    )
-
-    seen_titles = set()
-
-    for row in rows[:80]:
-        try:
-            title_el = row.find(["h2","h3","h4","strong"])
-            if not title_el:
-                a = row.find("a")
-                title_el = a
-            if not title_el:
-                continue
-            title = title_el.get_text(strip=True)
-            if not title or len(title) < 3:
-                continue
-            key = title.lower().strip()
-            if key in seen_titles:
-                continue
-            seen_titles.add(key)
-
-            # Date
-            text = row.get_text(" ", strip=True)
-            release_dt = None
-
-            # Chercher date dans attribut time
-            time_el = row.find("time")
-            if time_el:
-                release_dt = parse_date_flexible(
-                    time_el.get("datetime","") or time_el.get_text(strip=True)
-                )
-
-            # Chercher dans le texte
-            if not release_dt:
-                candidates = re.findall(
-                    r'(Q[1-4]\s+\d{4}|\d{1,2}\s+\w+\s+\d{4}|\w+\s+\d{1,2},?\s+\d{4}|\d{4}-\d{2}-\d{2})',
-                    text
-                )
-                for c in candidates:
-                    release_dt = parse_date_flexible(c)
-                    if release_dt:
-                        break
-
-            if not release_dt:
-                continue
-
-            # Fenêtre : passé récent + futur
-            future_limit = now + timedelta(days=LOOKAHEAD_DAYS)
-            if release_dt < now - timedelta(days=7) or release_dt > future_limit:
-                continue
-
-            # Plateforme
-            text_lower = text.lower()
-            platform = []
-            if any(kw in text_lower for kw in ["ios","iphone","ipad","apple"]):
-                platform.append("ios")
-            if any(kw in text_lower for kw in ["android","google play"]):
-                platform.append("android")
-            if not platform:
-                platform = ["ios","android"]
-
-            # Image
-            icon = ""
-            img = row.find("img")
-            if img:
-                icon = (img.get("src","") or img.get("data-src","") or
-                        img.get("data-lazy-src",""))
-                if icon.startswith("//"):
-                    icon = "https:" + icon
-
-            # Store URL
-            store_url = ""
-            for a in row.find_all("a", href=True):
-                href = a["href"]
-                if "play.google.com" in href or "apps.apple.com" in href:
-                    store_url = href
-                    break
-            if not store_url:
-                a = row.find("a", href=True)
-                if a:
-                    href = a["href"]
-                    store_url = href if href.startswith("http") else f"https://www.pocketgamer.com{href}"
-
-            status = "upcoming" if release_dt.date() > now.date() else "released"
-            game_id = f"pg_{re.sub(r'[^a-z0-9]','_', key)[:40]}"
-
-            games.append({
-                "id":          game_id,
-                "title":       title,
-                "platform":    platform,
-                "releaseDate": release_dt.strftime("%Y-%m-%d"),
-                "genre":       "Games",
-                "developer":   "",
-                "icon":        icon,
-                "headerImage": icon,
-                "storeUrl":    store_url,
-                "price":       "Free",
-                "rating":      None,
-                "bundleId":    "",
-                "status":      status,
-                "source":      "pocketgamer",
-            })
-
-        except Exception:
-            continue
-
-    print(f"  📡 PocketGamer: {len(games)} jeux trouvés")
-    return games
-
 # ── Merge ─────────────────────────────────────────────────────────────────────
 def merge_games(existing, *new_lists) -> list[dict]:
     all_games = {g["id"]: g for g in existing}
@@ -501,7 +360,6 @@ def merge_games(existing, *new_lists) -> list[dict]:
     for game_list in new_lists:
         for game in game_list:
             existing_entry = all_games.get(game["id"], {})
-            # Préserver headerImage existant
             if existing_entry.get("headerImage") and not game.get("headerImage"):
                 game["headerImage"] = existing_entry["headerImage"]
             # Ne pas rétrograder released → upcoming
@@ -509,8 +367,8 @@ def merge_games(existing, *new_lists) -> list[dict]:
                 game["status"] = "released"
             all_games[game["id"]] = game
 
-    # Fusion par titre (PocketGamer peut dupliquer un jeu iTunes)
-    source_priority = {"itunes": 0, "gplay": 1, "pocketgamer": 2}
+    # Fusion par titre : iOS + Android du même jeu
+    source_priority = {"itunes": 0, "gplay": 1}
     by_title: dict[str, list] = {}
     for g in all_games.values():
         by_title.setdefault(g["title"].lower().strip(), []).append(g)
@@ -531,7 +389,7 @@ def merge_games(existing, *new_lists) -> list[dict]:
                 primary["storeUrl"] = secondary["storeUrl"]
         merged_final[primary["id"]] = primary
 
-    # Pruning
+    # Pruning : 90j passé + LOOKAHEAD_DAYS futur
     cutoff       = datetime.utcnow() - timedelta(days=90)
     future_limit = datetime.utcnow() + timedelta(days=LOOKAHEAD_DAYS)
     pruned = []
@@ -556,14 +414,14 @@ def main():
 
     ios_games     = fetch_ios_games()
     android_games = fetch_android_from_ios(ios_games)
-    pg_games      = fetch_pocketgamer_upcoming()
 
-    merged = merge_games(existing_games, ios_games, android_games, pg_games)
+    merged = merge_games(existing_games, ios_games, android_games)
 
     ios_c      = sum(1 for g in merged if "ios"     in g.get("platform",[]))
     android_c  = sum(1 for g in merged if "android" in g.get("platform",[]))
     upcoming_c = sum(1 for g in merged if g.get("status") == "upcoming")
     free_c     = sum(1 for g in merged if g.get("price") == "Free")
+    header_c   = sum(1 for g in merged if g.get("headerImage"))
 
     print(f"\n📊 Résultat :")
     print(f"   Total       : {len(merged)}")
@@ -571,9 +429,10 @@ def main():
     print(f"   Android     : {android_c}")
     print(f"   🔔 Upcoming  : {upcoming_c}")
     print(f"   Gratuits    : {free_c}")
-    for src in ("itunes","gplay","pocketgamer"):
+    print(f"   Avec image  : {header_c}")
+    for src in ("itunes","gplay"):
         n = sum(1 for g in merged if g.get("source") == src)
-        print(f"   [{src}]  : {n}")
+        print(f"   [{src}]     : {n}")
 
     save_data({"games": merged})
 
